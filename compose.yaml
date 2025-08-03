@@ -1,4 +1,9 @@
+
 services:
+  backend:
+    build: src/main/java/
+  frontend:
+    build: src/main/frontend/
   mysql:
     image: 'mysql:latest'
     environment:

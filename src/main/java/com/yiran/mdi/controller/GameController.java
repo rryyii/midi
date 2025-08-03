@@ -2,6 +2,7 @@ package com.yiran.mdi.controller;
 
 import com.yiran.mdi.model.Game;
 import com.yiran.mdi.model.HibernateUtil;
+import jakarta.persistence.Query;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -23,6 +24,7 @@ public class GameController {
     public List<Game> getGames() {
          try (Session session = HibernateUtil.buildSessionFactory().openSession()) {
              Transaction transaction = session.beginTransaction();
+             Query query = null;
              List<Game> list = session.createQuery("from Game", com.yiran.mdi.model.Game.class).getResultList();
              transaction.commit();
              for (Game game : list) {
