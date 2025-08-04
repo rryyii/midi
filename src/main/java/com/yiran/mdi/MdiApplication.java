@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * Starting point for the MDI Application.
+ *
  * @author rryyii
  */
 @SpringBootApplication

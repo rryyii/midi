@@ -7,25 +7,19 @@ import java.util.Date;
 
 /**
  * Baseline User model class for Hibernate.
+ *
  * @author rryyii
  */
 @Data
 @Entity
-@Table(name="dmi_users")
+@Table(name = "users")
 public class User {
 
     public User() {}
 
-    public User(String username, char[] password, Date creationDate, String email) {
-        this.username = username;
-        this.password = password;
-        this.creationDate = creationDate;
-        this.email = email;
-    }
-
     @Override
     public String toString() {
-        return String.format("Username: %s, Date Created: %s", username, creationDate.toString());
+        return String.format("Username: %s, Date Created: %s", username, email);
     }
 
     @Id
@@ -33,9 +27,9 @@ public class User {
     private Long id;
 
     @Column
-    private String username;
-    private char[] password;
     private Date creationDate;
     private String email;
+    private String password;
+    private String username;
 
 }

@@ -1,10 +1,7 @@
 package com.yiran.mdi.controller;
 
 import com.yiran.mdi.model.Game;
-import com.yiran.mdi.model.HibernateUtil;
-import jakarta.persistence.TypedQuery;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
+import com.yiran.mdi.repository.GameRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -19,45 +16,30 @@ import java.util.List;
 public class GameController {
 
     private static final Logger logger = LoggerFactory.getLogger(GameController.class);
+    private final GameRepository repository;
+
+    public GameController(GameRepository repository) {
+        this.repository = repository;
+    }
 
     @GetMapping("/games")
     public List<Game> getGames() {
         logger.debug("Beginning get request for all games.");
-         try (Session session = HibernateUtil.buildSessionFactory().openSession()) {
-             String hql = "SELECT g from Game g";
-             TypedQuery<Game> query = session.createQuery(hql, Game.class);
-             return query.getResultList();
-         } catch (HibernateException hbe) {
-             logger.error(hbe.getMessage());
-             return null;
-         }
+        return repository.findAll();
     }
 
     @PostMapping("/add_game")
-    public boolean addGame(@RequestBody Game newGame) {
+    public boolean addGame(@RequestBody Game game) {
         logger.debug("Beginning add game request.");
-        try (Session session = HibernateUtil.buildSessionFactory().openSession()) {
-            session.beginTransaction();
-            session.persist(newGame);
-            session.getTransaction().commit();
-            return true;
-        } catch (HibernateException hbe) {
-            logger.error(hbe.getMessage());
-            return false;
-        }
+        repository.save(game);
+        return true;
     }
 
-    @DeleteMapping("/rm_game")
-    public boolean removeGame(@RequestBody Game game) {
-        logger.debug("Beginning removing a game from database.");
-        try (Session session = HibernateUtil.buildSessionFactory().openSession()){
-            session.beginTransaction();
-            session.remove(game);
-            session.getTransaction().commit();
-            return true;
-        } catch (HibernateException hbe) {
-            logger.error(hbe.getMessage());
-            return false;
-        }
+    @DeleteMapping("/rm_game/{id}")
+    public boolean removeGame(@RequestBody Long id) {
+        logger.debug
+                ("Beginning removing a game from database.");
+        repository.deleteById(id);
+        return true;
     }
 }

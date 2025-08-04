@@ -1,17 +1,19 @@
 package com.yiran.mdi.controller;
 
-import com.yiran.mdi.model.HibernateUtil;
+import com.yiran.mdi.model.LoginRequest;
 import com.yiran.mdi.model.User;
-import jakarta.persistence.TypedQuery;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
+import com.yiran.mdi.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,31 +22,42 @@ import java.util.List;
  */
 @RestController
 public class UserController {
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    @GetMapping("/users")
-    public List<User> getUsers() {
-        logger.debug("Beginning fetching of all users.");
-        try (Session session = HibernateUtil.buildSessionFactory().openSession()){
-            TypedQuery<User> query = session.createQuery("from User", User.class);
-            return query.getResultList();
-        } catch (HibernateException hbe) {
-            logger.error(hbe.getMessage());
-            return null;
-        }
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+    private final UserService service;
+
+    public UserController(UserService service) {
+        this.service = service;
     }
 
     @PostMapping("/user")
     public boolean createUser(@RequestBody User user) {
         logger.debug("Beginning creating a new user.");
-        try (Session session = HibernateUtil.buildSessionFactory().openSession()) {
-            session.beginTransaction();
-            session.persist(user);
-            session.getTransaction().commit();
-            return true;
-        } catch (HibernateException hbe) {
-            logger.error(hbe.getMessage());
-            return false;
-        }
+        service.createUser(user);
+        return true;
     }
+
+    @DeleteMapping("/rm_user/{id}")
+    public boolean removeUser(@RequestBody Long id) {
+        logger.debug("Beginning removing a user from database.");
+        service.deleteUser(id);
+        return true;
+    }
+
+    @PostMapping("/login_user")
+    public ResponseEntity<String> validateUser(@RequestBody LoginRequest login) {
+        logger.debug("Beginning authentication process for user.");
+        HttpHeaders headers = new HttpHeaders();
+        if (!service.authenticateUser(login.username)) {
+            logger.error("Failed to authenticate user.");
+            return new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
+        }
+        List<String> access = new ArrayList<>();
+        access.add("Authorization");
+        headers.setAccessControlExposeHeaders(access);
+        headers.setBearerAuth(UserService.buildToken(login.username));
+        logger.info("Successfully logged in user.");
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+    }
+
 }

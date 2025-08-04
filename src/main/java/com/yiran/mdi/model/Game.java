@@ -11,25 +11,10 @@ import java.util.Date;
  */
 @Data
 @Entity
-@Table(name="games")
+@Table(name = "games")
 public class Game {
 
-    public Game(){}
-
-    /**
-     * Game Constructor.
-     * @param name Title of the game
-     * @param genre Genre of the game
-     * @param publisher Publisher of the game
-     * @param developer Main developer of the game
-     */
-    public Game(String name, String publisher, String genre, String developer, Date releaseDate) {
-        this.name = name;
-        this.genre = genre;
-        this.publisher = publisher;
-        this.developer = developer;
-        this.releaseDate = releaseDate;
-    }
+    public Game() {}
 
     @Override
     public String toString() {
