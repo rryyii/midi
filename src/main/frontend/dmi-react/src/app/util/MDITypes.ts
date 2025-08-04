@@ -5,3 +5,14 @@ export type Game = {
     developer: string | "Unset Developer",
     releaseDate: Date | "Unset Date",
 };
+
+export type User = {
+    username: string,
+    password: string,
+    email: string,
+}
+
+export type LoginType = {
+    username: string,
+    password: string,
+}

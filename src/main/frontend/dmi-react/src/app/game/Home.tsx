@@ -1,6 +1,6 @@
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {Link} from "react-router";
-import type {Game} from "../util/GameType.ts";
+import type {Game} from "../util/MDITypes.ts";
 
 /**
  * Returns a component that currently display's all Games in the Database
@@ -10,14 +10,14 @@ import type {Game} from "../util/GameType.ts";
 function Home() {
 
     const queryClient = useQueryClient();
-    const { data, error } = useQuery({
+    const {data, error} = useQuery({
         queryKey: ["test-key"],
         queryFn: () =>
             fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/games`).then((res) => res.json()),
     });
 
     const mutation = useMutation({
-        mutationFn: async (game : Game) => {
+        mutationFn: async (game: Game) => {
             const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/rm_game`, {
                 method: "DELETE",
                 headers: {"Content-Type": "application/json"},
@@ -33,7 +33,7 @@ function Home() {
         },
     });
 
-    const handleSubmit = (e : any, game : Game) => {
+    const handleSubmit = (e: any, game: Game) => {
         e.preventDefault();
         if (game) {
             mutation.mutate(game);
@@ -48,14 +48,16 @@ function Home() {
                 <Link to={"/add"}>
                     <button className={"btn"} type={"button"}>+</button>
                 </Link>
-                {data.map((game : any) => {
+                {data.map((game: any) => {
                     return (
                         <div className="game-container" key={`${game.name}-${game.developer}`}>
                             <h1>{game.name}</h1>
                             <h4>{game.developer}</h4>
                             <h4>{game.publisher}</h4>
                             <h4>{game.genre}</h4>
-                            <button onClick={(event) => handleSubmit(event, game)} type={"submit"} className={"btn del-btn"}>x</button>
+                            <button onClick={(event) => handleSubmit(event, game)} type={"submit"}
+                                    className={"btn del-btn"}>x
+                            </button>
                         </div>
                     );
                 })}

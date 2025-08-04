@@ -3,6 +3,11 @@ body {
     font-family: "Jost", sans-serif !important;
 }
 
+/* Nav Styles */
+nav {
+    margin: 0 0 4rem 0;
+}
+
 
 /* Home Styles  */
 .game-container {
@@ -15,21 +20,19 @@ body {
 }
 
 
+/* Button Styles */
+.del-btn {
+    color: white !important;
+}
 
-/* AddGame Styles  */
-#add-game {
+/* Form Styles  */
+#addGame, #registerForm, #loginForm {
     max-width: 40vw;
     border: solid black 1px;
     border-radius: .5rem;
     padding: 1rem;
 }
 
-#add-game > form > fieldset {
+#addGame > form > fieldset {
     padding-bottom: 1.5rem;
-}
-
-
-/* Button Styles */
-.del-btn {
-    color: white !important;
 }

@@ -4,10 +4,11 @@
  */
 function GameList() {
     return (
-      <div className={"container"}>
-          <h1>Your Currently Tracked Games</h1>
-      </div>
+        <div className={"container"}>
+            <h1>Your Currently Tracked Games</h1>
+        </div>
     );
 }
+
 
 export default GameList;
