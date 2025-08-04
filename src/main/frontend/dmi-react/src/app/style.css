@@ -1,0 +1,35 @@
+/* Base Styles */
+body {
+    font-family: "Jost", sans-serif !important;
+}
+
+
+/* Home Styles  */
+.game-container {
+    border-radius: .5rem;
+    background-color: black;
+    padding: 1rem;
+    margin: 1rem;
+    max-width: 40vw;
+    color: white;
+}
+
+
+
+/* AddGame Styles  */
+#add-game {
+    max-width: 40vw;
+    border: solid black 1px;
+    border-radius: .5rem;
+    padding: 1rem;
+}
+
+#add-game > form > fieldset {
+    padding-bottom: 1.5rem;
+}
+
+
+/* Button Styles */
+.del-btn {
+    color: white !important;
+}
