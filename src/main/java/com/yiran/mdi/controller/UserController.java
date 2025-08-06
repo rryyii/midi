@@ -45,19 +45,23 @@ public class UserController {
     }
 
     @PostMapping("/login_user")
-    public ResponseEntity<String> validateUser(@RequestBody LoginRequest login) {
+    public ResponseEntity<User> validateUser(@RequestBody LoginRequest login) {
         logger.debug("Beginning authentication process for user.");
         HttpHeaders headers = new HttpHeaders();
-        if (!service.authenticateUser(login.username)) {
+        long result = service.authenticateUser(login.username);
+        if (result == -1) {
             logger.error("Failed to authenticate user.");
             return new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
         }
+        User info =  service.getUser(result);
+        info.setPassword("");
+        logger.debug(info.toString());
         List<String> access = new ArrayList<>();
         access.add("Authorization");
         headers.setAccessControlExposeHeaders(access);
         headers.setBearerAuth(UserService.buildToken(login.username));
         logger.info("Successfully logged in user.");
-        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(info, headers, HttpStatus.CREATED);
     }
 
 }
