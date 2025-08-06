@@ -13,11 +13,6 @@ function Nav() {
                         Home
                     </Link>
                 </li>
-                <li className={"nav-item"}>
-                    <Link to={"/list"} className={"nav-link"}>
-                        Your List
-                    </Link>
-                </li>
                 {localStorage.getItem("username") == null ?
                     <>
                         <li className={"nav-item"}>
@@ -33,8 +28,29 @@ function Nav() {
                     </>
                     :
                     <>
+                        <li className={"nav-item"}>
+                            <Link to={"/list"} className={"nav-link"}>
+                                Your List
+                            </Link>
+                        </li>
+                        <li className={"nav-item dropdown"}>
+                            <a href={"#"} role={"button"} data-bs-toggle={"dropdown"} aria-expanded={"false"} className={"nav-link dropdown-toggle"}>
+                                Account
+                            </a>
+                            <ul className={"dropdown-menu"}>
+                                <li>
+                                    <Link to={"/profile"} className={"dropdown-item"}>
+                                        Profile
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to={"/logout"} className={"dropdown-item"}>
+                                        Logout
+                                    </Link>
+                                </li>
+                            </ul>
+                        </li>
                     </>
-
                 }
             </ul>
         </nav>

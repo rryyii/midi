@@ -16,12 +16,14 @@ function UserLogin() {
                     body: JSON.stringify(user),
                 });
             const token = request.headers.get("Authorization");
-            return {token: token};
+            const body = await request.json();
+            return {token: token, body: body};
         },
         onSuccess: (data) => {
             if (data.token) {
                 console.debug("Login success, storing JWT.");
                 localStorage.setItem("username", data.token);
+                localStorage.setItem("user-info", JSON.stringify(data.body));
             }
         },
         onError: (error: any) => {

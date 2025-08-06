@@ -12,7 +12,20 @@ export type User = {
     email: string,
 }
 
+export type ResponseUser = {
+    id: number,
+    username: string,
+    email: string,
+}
+
 export type LoginType = {
     username: string,
     password: string,
+}
+
+export type CurrentUser = {
+    username: string,
+    email: string,
+    trackedGames: Array<Game>,
+
 }

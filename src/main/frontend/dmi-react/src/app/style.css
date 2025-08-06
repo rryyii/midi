@@ -8,6 +8,11 @@ nav {
     margin: 0 0 4rem 0;
 }
 
+/* Profile Styles */
+.profile-img {
+    border-radius: 5rem;
+}
+
 
 /* Home Styles  */
 .game-container {
@@ -25,6 +30,10 @@ nav {
     color: white !important;
 }
 
+.game-btn {
+    max-width: 20vw;
+}
+
 /* Form Styles  */
 #addGame, #registerForm, #loginForm {
     max-width: 40vw;
@@ -35,4 +44,10 @@ nav {
 
 #addGame > form > fieldset {
     padding-bottom: 1.5rem;
+}
+
+
+/* User List Styles */
+.list-game {
+    max-width: 70vw;
 }
