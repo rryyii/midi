@@ -37,6 +37,7 @@ public class UserGameService {
         UserGame newUserGame = new UserGame();
         newUserGame.setGame(newGame);
         newUserGame.setUser(newUser);
+//        newUserGame.setIsFavorite(false);
         newUserGame.setDateAdded(new Date());
         repository.save(newUserGame);
         return false;

@@ -32,6 +32,7 @@ public class UserGame {
     private String status;
     private int hoursPlayed;
     private Date dateAdded;
+    private boolean isFavorite;
 
 
 }

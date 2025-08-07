@@ -1,6 +1,7 @@
 import {useMutation, useQuery} from "@tanstack/react-query";
 import type {ResponseUser} from "../util/MDITypes.ts";
 import {useState} from "react";
+import {Link} from "react-router";
 
 function AddUserGame() {
 
@@ -46,7 +47,15 @@ function AddUserGame() {
 
     if (data) {
         return (
-            <div>
+            <div className={"container"}>
+                <div className={"btn-group"}>
+                    <Link to={"/add"} className={"btn btn-outline-primary"}>
+                        +
+                    </Link>
+                    <Link to={"/delete"} className={"btn btn-outline-primary"}>
+                        -
+                    </Link>
+                </div>
                 {data.map((game: any) => {
                     return (
                         <div className="game-container" key={`${game.name}-${game.developer}`}>

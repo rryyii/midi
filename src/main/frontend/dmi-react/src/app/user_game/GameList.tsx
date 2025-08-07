@@ -52,6 +52,7 @@ function GameList() {
                             <div className={"p-3"}>
                                 <h4>Hours Played: {game.hoursPlayed}</h4>
                                 <h4>Date Added: {game.dateAdded}</h4>
+                                <h4>Status: {game.status}</h4>
                             </div>
                         </li>
                     ))}
