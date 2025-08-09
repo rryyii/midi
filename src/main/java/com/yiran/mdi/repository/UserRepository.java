@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Repository for users table.
+ *
  * @author rryyii
  */
 @Repository

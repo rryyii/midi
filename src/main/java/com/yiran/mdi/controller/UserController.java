@@ -17,7 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * REST controller for User POST, DELETE, UPDATE, and GET.
+ * REST controller for User POST, DELETE, and GET.
+ *
  * @author rryyii
  */
 @RestController
@@ -53,7 +54,7 @@ public class UserController {
             logger.error("Failed to authenticate user.");
             return new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
         }
-        User info =  service.getUser(result);
+        User info = service.getUser(result);
         info.setPassword("");
         logger.debug(info.toString());
         List<String> access = new ArrayList<>();

@@ -5,6 +5,11 @@ import lombok.Data;
 
 import java.util.Date;
 
+/**
+ * MySQL table containing UserGames with name "user_games".
+ *
+ * @author rryyii
+ */
 @Data
 @Entity
 @Table(name = "user_games")
@@ -26,6 +31,7 @@ public class UserGame {
     private Game game;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Column

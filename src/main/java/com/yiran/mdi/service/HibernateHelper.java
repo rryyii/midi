@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides session creation and retrieval.
+ *
  * @author rryyii
  */
 public class HibernateHelper {

@@ -3,10 +3,9 @@ package com.yiran.mdi.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Date;
-
 /**
- * Game table model class.
+ * Game table model class for name "games"
+ *
  * @author rryyii
  */
 @Data
@@ -14,22 +13,29 @@ import java.util.Date;
 @Table(name = "games")
 public class Game {
 
-    public Game() {}
+    public Game() {
+    }
 
     @Override
     public String toString() {
-        return String.format("Name: %s, Genre: %s, Publisher: %s, Developer: %s, Release Date: %s", name, genre, publisher, developer, releaseDate.toString());
+        return String.format("Name: %s, Summary: %s", name, summary);
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
     private String name;
-    private String genre;
-    private String publisher;
-    private String developer;
-    private Date releaseDate;
+    private int[] genres;
+
+    @Lob
+    @Column(columnDefinition = "TEXT")
+    private String summary;
+
+    @Column
+    private String cover;
+
+    @Version
+    private Long version;
 
 }

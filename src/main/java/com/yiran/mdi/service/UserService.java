@@ -13,6 +13,7 @@ import java.util.Optional;
 
 /**
  * Provides services for User actions.
+ *
  * @author rryyii
  */
 @Service
@@ -30,6 +31,7 @@ public class UserService {
         Optional<User> result = repository.findById(id);
         return result.orElse(null);
     }
+
     public void createUser(User user) {
         repository.save(user);
     }
@@ -41,7 +43,6 @@ public class UserService {
     public Long authenticateUser(String username) {
         logger.debug("Entered authentication function for user.");
         List<User> list = repository.findAll();
-        logger.info(list.toString());
         for (User user : list) {
             if (user.getUsername().equalsIgnoreCase(username)) {
                 logger.info("Successfully authenticated user.");

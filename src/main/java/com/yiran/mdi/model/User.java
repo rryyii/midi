@@ -15,7 +15,8 @@ import java.util.Date;
 @Table(name = "users")
 public class User {
 
-    public User() {}
+    public User() {
+    }
 
     @Override
     public String toString() {

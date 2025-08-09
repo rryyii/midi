@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Repository for games table.
+ *
  * @author rryyii
  */
 @Repository

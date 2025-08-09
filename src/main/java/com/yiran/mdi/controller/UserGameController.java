@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * REST controller for UserGame POST, DELETE, and GET.
+ *
+ * @author rryyii
+ */
 @RestController
 public class UserGameController {
 
@@ -32,9 +37,9 @@ public class UserGameController {
     }
 
     @DeleteMapping("/user/rm_game")
-    public boolean removeUserGame(@RequestBody Long userId, String gameName) {
+    public boolean removeUserGame(@RequestBody UserGameDto data) {
         logger.debug("Beginning removing a game to a user's list.");
-        return service.removeUserGame(userId, gameName);
+        return service.removeUserGame(data.getId());
     }
 
 }
