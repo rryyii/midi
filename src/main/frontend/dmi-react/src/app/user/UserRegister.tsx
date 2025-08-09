@@ -35,22 +35,20 @@ function UserRegister() {
 
     return (
         <div className={"container"}>
+            <h1>Registration</h1>
             <form id={"registerForm"} onSubmit={handleSubmit}>
                 <fieldset className={"userField"}>
-                    <label htmlFor={"userId"} className={"form-label"}>Username</label>
-                    <input value={username} onChange={(event) => {
+                    <input value={username} placeholder={"username"} onChange={(event) => {
                         setUsername(event.target.value)
                     }} id="userId" type={"text"} className={"form-control"}/>
-                    <label htmlFor={"passwordId"} className={"form-label"}>Password</label>
-                    <input value={password} onChange={(event) => {
+                    <input value={password} placeholder={"password"} onChange={(event) => {
                         setPassword(event.target.value)
                     }} id="passwordId" type={"password"} className={"form-control"}/>
-                    <label htmlFor={"emailId"} className={"form-label"}>Email</label>
-                    <input value={email} onChange={(event) => {
+                    <input value={email} placeholder={"email"} onChange={(event) => {
                         setEmail(event.target.value)
                     }} id="emailId" type={"email"} className={"form-control"}/>
                 </fieldset>
-                <button type={"submit"} className={"btn"}>Submit</button>
+                <button type={"submit"} className={"btn"}>Register</button>
             </form>
         </div>
     );

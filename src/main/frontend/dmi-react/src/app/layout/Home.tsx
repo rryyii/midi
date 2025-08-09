@@ -6,25 +6,53 @@
 function Home() {
     return (
         <div className={"container"}>
-            <h1>Welcome to DMI!</h1>
-            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sed enim nisi. Nullam molestie, ex eu
-                luctus laoreet, mi sem bibendum neque, in egestas eros tortor id orci. Sed pharetra varius ipsum, sed
-                blandit felis fringilla venenatis. Nam tempor ligula eget tortor mollis, non tincidunt nibh rutrum.
-                Mauris id leo est. Nunc nunc lacus, ornare vel dui placerat, semper condimentum augue. Aenean ac egestas
-                diam, eu vulputate orci. Aliquam laoreet, eros sed vehicula rhoncus, velit dolor gravida mi, et maximus
-                lacus ex at leo. Maecenas ut ligula dui. Maecenas molestie erat a purus ornare, vitae lacinia velit
-                consequat. Sed molestie, risus sit amet interdum consectetur, lacus nibh condimentum elit, sit amet
-                congue ligula massa in diam. Pellentesque dapibus ornare libero, vitae faucibus ligula efficitur nec.
-                Quisque tincidunt auctor lectus quis tincidunt. Quisque at tortor velit.
-            </p>
-            <p>Aliquam condimentum tellus sit amet mi venenatis tempor. Nam luctus blandit purus a pellentesque. In non
-                risus urna. Donec ut ipsum vitae diam iaculis porta. Donec malesuada faucibus justo in mattis. Nam odio
-                velit, pharetra in dignissim et, maximus vitae arcu. Quisque quis erat at magna porta bibendum. Integer
-                porttitor elit purus, ut euismod dui ultricies ac. Nulla non malesuada nisl. Aliquam varius vulputate
-                eros vitae venenatis.
-            </p>
+            <div className={"row"}>
+                <h1>What is DMI?</h1>
+                <p>Lorem ipsum dolor sit amet
+                    , consectetur adipiscing elit. Mauris nisl leo, commodo non ornare sed, iaculis ut nibh. Nulla
+                    mauris
+                    augue,
+                    mattis eget finibus eu, gravida in lacus. Donec blandit risus at felis posuere, non consequat velit
+                    gravida.
+                    Curabitur nibh purus, consectetur sed orci ut, feugiat feugiat metus. In rutrum, justo a luctus
+                    facilisis,
+                    eros sapien pretium erat, id iaculis libero tortor sit amet purus. Vivamus mattis interdum magna
+                    vitae
+                    porta. Maecenas in sollicitudin elit, et ullamcorper dui. Phasellus iaculis sem urna, ac euismod
+                    nisi
+                    euismod at. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                </p>
+            </div>
+            <div className={"row"}>
+                <h1>lorem ipsum</h1>
+                <p>
+                    Aliquam erat volutpat. Maecenas aliquet sapien nulla, non ullamcorper mauris faucibus vel. Etiam
+                    commodo id orci non fermentum. Mauris elementum urna eget nulla auctor, vitae facilisis libero
+                    dignissim. Aenean sit amet nulla sit amet quam molestie dictum. Aenean odio risus, volutpat id
+                    tempor ac, molestie nec lorem. Etiam semper cursus ligula, nec sodales erat varius eget. Maecenas
+                    tincidunt ante ac pretium ullamcorper. Pellentesque nibh quam, semper a condimentum eget, posuere
+                    consequat ipsum. Donec id bibendum tortor, vitae tempus ante. Proin sit amet urna sit amet massa
+                    suscipit condimentum. Phasellus a metus ultrices, malesuada tortor et, vehicula urna. Ut pretium
+                    sapien vitae tempus molestie. Phasellus non tristique ex.
+                </p>
+            </div>
+            <div className={"row"}>
+                <h1>lorem ipsum</h1>
+                <p>
+                    Aliquam erat volutpat. Maecenas aliquet sapien nulla, non ullamcorper mauris faucibus vel. Etiam
+                    commodo id orci non fermentum. Mauris elementum urna eget nulla auctor, vitae facilisis libero
+                    dignissim. Aenean sit amet nulla sit amet quam molestie dictum. Aenean odio risus, volutpat id
+                    tempor ac, molestie nec lorem. Etiam semper cursus ligula, nec sodales erat varius eget. Maecenas
+                    tincidunt ante ac pretium ullamcorper. Pellentesque nibh quam, semper a condimentum eget, posuere
+                    consequat ipsum. Donec id bibendum tortor, vitae tempus ante. Proin sit amet urna sit amet massa
+                    suscipit condimentum. Phasellus a metus ultrices, malesuada tortor et, vehicula urna. Ut pretium
+                    sapien vitae tempus molestie. Phasellus non tristique ex.
+                </p>
+            </div>
+
         </div>
-    );
+    )
+        ;
 }
 
 export default Home;
