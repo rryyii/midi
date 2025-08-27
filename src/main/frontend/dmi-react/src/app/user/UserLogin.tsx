@@ -1,11 +1,15 @@
 import {useState} from "react";
-import {useMutation} from "@tanstack/react-query";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 import type {LoginType} from "../util/MDITypes.ts";
+import {useNavigate} from "react-router";
 
 function UserLogin() {
 
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+
+    const queryClient = useQueryClient();
+    const navigate = useNavigate();
 
     const mutation = useMutation({
         mutationFn: async (user: LoginType) => {
@@ -24,6 +28,8 @@ function UserLogin() {
                 console.debug("Login success, storing JWT.");
                 localStorage.setItem("username", data.token);
                 localStorage.setItem("user-info", JSON.stringify(data.body));
+                queryClient.invalidateQueries({queryKey: ["user-info"]});
+                navigate("/");
             }
         },
         onError: (error: any) => {
@@ -41,7 +47,8 @@ function UserLogin() {
     }
 
     return (
-        <div className={"container d-flex justify-content-center"}>
+        <div className={"container d-flex justify-content-center align-items-center flex-grow-1 flex-column gap-3 p-3"}>
+            <h4>Welcome!</h4>
             <form id={"loginForm"} onSubmit={handleSubmit}>
                 <fieldset className={"userField"}>
                     <input value={username} placeholder={"username"} onChange={(event) => {

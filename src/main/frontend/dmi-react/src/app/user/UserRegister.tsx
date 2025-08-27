@@ -1,12 +1,14 @@
 import {useMutation} from "@tanstack/react-query";
 import {useState} from "react";
 import type {User} from "../util/MDITypes.ts";
+import {Dialog, DialogPanel} from "@headlessui/react";
 
 function UserRegister() {
 
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [email, setEmail] = useState<string>("");
+    const [isOpen, setIsOpen] = useState<boolean>(false);
 
     const mutation = useMutation({
         mutationFn: async (user: User) => {
@@ -19,7 +21,8 @@ function UserRegister() {
         },
         onError: (err) => console.error(err.message),
         onSuccess: () => {
-            console.log("success")
+            console.log("successfully registered user");
+            setIsOpen(true);
         },
     });
 
@@ -29,13 +32,14 @@ function UserRegister() {
             username: username,
             password: password,
             email: email,
+            bio: "",
         }
         mutation.mutate(user);
     }
 
     return (
-        <div className={"container"}>
-            <h1>Registration</h1>
+        <div className={"container d-flex flex-column justify-content-center align-items-center gap-3 p-3 flex-grow-1"}>
+            <h4>Registration</h4>
             <form id={"registerForm"} onSubmit={handleSubmit}>
                 <fieldset className={"userField"}>
                     <input value={username} placeholder={"username"} onChange={(event) => {
@@ -50,6 +54,16 @@ function UserRegister() {
                 </fieldset>
                 <button type={"submit"} className={"btn"}>Register</button>
             </form>
+            <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
+                <div className={"position-fixed d-flex flex-column top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-dark bg-opacity-50"}>
+                    <DialogPanel>
+                        <h2>Successfully registered!</h2>
+                    </DialogPanel>
+                    <button onClick={() => { setIsOpen(false);}} className={"btn btn-outline-primary"}>
+                        <i className="fa-solid fa-xmark icon-color"></i>
+                    </button>
+                </div>
+            </Dialog>
         </div>
     );
 }

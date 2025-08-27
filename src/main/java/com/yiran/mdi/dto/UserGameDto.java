@@ -1,4 +1,4 @@
-package com.yiran.mdi.model;
+package com.yiran.mdi.dto;
 
 import lombok.Data;
 
@@ -10,5 +10,5 @@ import lombok.Data;
 @Data
 public class UserGameDto {
     public Long id;
-    public Long userId;
+    public Long user_id;
 }

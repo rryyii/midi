@@ -1,36 +1,26 @@
-import {useQuery} from "@tanstack/react-query";
-import {Link} from "react-router";
+import {useState} from "react";
+import GamePage from "./GamePage.tsx";
 
 function GameList() {
+    const [page, setPage] = useState<number>(0);
 
-    const {data, error} = useQuery({
-        queryKey: ["main-games-list"],
-        queryFn: () =>
-            fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/games`)
-                .then((res) => res.json()),
-    });
-
-    if (error) return "An error occurred trying to fetch games list.";
-
-    if (data) {
-        return (
-            <div className={"container"}>
-                <div className={"row"}>
-                    {data.map((game: any) => {
-                        return (
-                            <div className="game-container col" key={`${game.name}-${game.developer}`}>
-                                <h1>{game.name}</h1>
-                                <Link to={"/game"} state={{game}} className={"btn btn-outline-primary"}>
-                                    View
-                                </Link>
-                            </div>
-                        );
-                    })}
+    return (
+        <div className={"container d-flex flex-column flex-grow-1 justify-content-center align-items-center"}>
+            <div className={"row"}>
+                <GamePage page={page}/>
+            </div>
+            <div className={"row"}>
+                <div>
+                    <button onClick={() => setPage(Math.max(page - 1, 0))} className={"btn btn-outline-primary"}>
+                        <i className="fa-solid fa-arrow-left icon-color"></i>
+                    </button>
+                    <button onClick={() => setPage(page + 1)} className={"btn btn-outline-primary"}>
+                        <i className="fa-solid fa-arrow-right icon-color"></i>
+                    </button>
                 </div>
             </div>
-        );
-    }
-
+        </div>
+    );
 }
 
 export default GameList;

@@ -3,6 +3,9 @@ package com.yiran.mdi.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.io.Serial;
+import java.util.List;
+
 /**
  * Game table model class for name "games"
  *
@@ -11,7 +14,32 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "games")
-public class Game {
+public class Game implements java.io.Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+    @Id
+    private Long id;
+    @Column
+    private String name;
+    @ElementCollection
+    private List<Genre> genres;
+    @Lob
+    @Column(columnDefinition = "TEXT")
+    private String summary;
+    @OneToOne(cascade = CascadeType.ALL)
+    private CoverImage cover;
+    @ElementCollection
+    private List<Company> involvedCompanies;
+    @ElementCollection
+    private List<Platform> platforms;
+    @Version
+    private Long version;
+    @Column(nullable = false)
+    private double total_rating;
+    private int total_rating_count;
+    private int[] involved_companies;
+    private long first_release_date;
 
     public Game() {
     }
@@ -20,22 +48,5 @@ public class Game {
     public String toString() {
         return String.format("Name: %s, Summary: %s", name, summary);
     }
-
-    @Id
-    private Long id;
-
-    @Column
-    private String name;
-    private int[] genres;
-
-    @Lob
-    @Column(columnDefinition = "TEXT")
-    private String summary;
-
-    @Column
-    private String cover;
-
-    @Version
-    private Long version;
 
 }

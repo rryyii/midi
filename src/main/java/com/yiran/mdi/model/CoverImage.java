@@ -1,10 +1,17 @@
 package com.yiran.mdi.model;
 
-import lombok.Data;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
-@Data
-public class CoverImage {
+import java.io.Serial;
+
+@Entity
+public class CoverImage implements java.io.Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    public Long id;
     public String url;
-    public int game;
-    public int image_id;
 }

@@ -1,3 +1,5 @@
+import {Link} from "react-router";
+
 /**
  * Returns a component that currently display's all Games in the Database
  * with the ability to DELETE and ADD new Games.
@@ -5,49 +7,47 @@
  */
 function Home() {
     return (
-        <div className={"container"}>
+        <div className={"container d-flex justify-content-center flex-grow-1 flex-column gap-5 p-3"}>
             <div className={"row"}>
-                <h1>What is DMI?</h1>
-                <p>Lorem ipsum dolor sit amet
-                    , consectetur adipiscing elit. Mauris nisl leo, commodo non ornare sed, iaculis ut nibh. Nulla
-                    mauris
-                    augue,
-                    mattis eget finibus eu, gravida in lacus. Donec blandit risus at felis posuere, non consequat velit
-                    gravida.
-                    Curabitur nibh purus, consectetur sed orci ut, feugiat feugiat metus. In rutrum, justo a luctus
-                    facilisis,
-                    eros sapien pretium erat, id iaculis libero tortor sit amet purus. Vivamus mattis interdum magna
-                    vitae
-                    porta. Maecenas in sollicitudin elit, et ullamcorper dui. Phasellus iaculis sem urna, ac euismod
-                    nisi
-                    euismod at. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                <h1>What is DIMI?</h1>
+                <p>
+                    DIMI lets you keep track of any video games that you want to keep track of, whether its something
+                    you own, want to own, have played, or want to play.
                 </p>
             </div>
             <div className={"row"}>
-                <h1>lorem ipsum</h1>
-                <p>
-                    Aliquam erat volutpat. Maecenas aliquet sapien nulla, non ullamcorper mauris faucibus vel. Etiam
-                    commodo id orci non fermentum. Mauris elementum urna eget nulla auctor, vitae facilisis libero
-                    dignissim. Aenean sit amet nulla sit amet quam molestie dictum. Aenean odio risus, volutpat id
-                    tempor ac, molestie nec lorem. Etiam semper cursus ligula, nec sodales erat varius eget. Maecenas
-                    tincidunt ante ac pretium ullamcorper. Pellentesque nibh quam, semper a condimentum eget, posuere
-                    consequat ipsum. Donec id bibendum tortor, vitae tempus ante. Proin sit amet urna sit amet massa
-                    suscipit condimentum. Phasellus a metus ultrices, malesuada tortor et, vehicula urna. Ut pretium
-                    sapien vitae tempus molestie. Phasellus non tristique ex.
-                </p>
+                <div className={"col d-flex flex-column"}>
+                    <h4>Features</h4>
+                    <p>
+                        <ul className={"home-list"}>
+                            <li>Keep track of your games</li>
+                            <li>Keep track of the hours you have played each game</li>
+                            <li>Keep track of the status of the game (whether you have finished it, are currently playing, or want to play)</li>
+                        </ul>
+                    </p>
+                </div>
+                <div className={"col d-flex flex-column"}>
+                    <h4>Plans</h4>
+                    <p>
+                        <ul className={"home-list"}>
+                            <li>Add a search bar</li>
+                            <li>Add the ability to filter by different categories</li>
+                            <li>Visit other user's profiles easily to see their bio/favorite games</li>
+                        </ul>
+                    </p>
+                </div>
             </div>
             <div className={"row"}>
-                <h1>lorem ipsum</h1>
-                <p>
-                    Aliquam erat volutpat. Maecenas aliquet sapien nulla, non ullamcorper mauris faucibus vel. Etiam
-                    commodo id orci non fermentum. Mauris elementum urna eget nulla auctor, vitae facilisis libero
-                    dignissim. Aenean sit amet nulla sit amet quam molestie dictum. Aenean odio risus, volutpat id
-                    tempor ac, molestie nec lorem. Etiam semper cursus ligula, nec sodales erat varius eget. Maecenas
-                    tincidunt ante ac pretium ullamcorper. Pellentesque nibh quam, semper a condimentum eget, posuere
-                    consequat ipsum. Donec id bibendum tortor, vitae tempus ante. Proin sit amet urna sit amet massa
-                    suscipit condimentum. Phasellus a metus ultrices, malesuada tortor et, vehicula urna. Ut pretium
-                    sapien vitae tempus molestie. Phasellus non tristique ex.
-                </p>
+                <div className={"d-flex justify-content-evenly align-items-center"}>
+                    <p>
+                        <em>Get started by creating an account by <Link to={"/register"}>registering</Link></em>
+                    </p>
+                    <p>
+                       <em>Or get back to
+                        your gaming log by <Link to={"/login"}>logging in</Link>
+                       </em>
+                    </p>
+                </div>
             </div>
 
         </div>

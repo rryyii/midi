@@ -56,62 +56,28 @@ public class IGDBService {
         return wrapper;
     }
 
-    private String getImage(String game_id) {
-        logger.debug("Getting image for game ID: {}", game_id);
-        IGDBWrapper wrapper = getWrapper();
-        APICalypse apicalypse = new APICalypse()
-                .fields("*")
-                .where("game = " + game_id);
-        try {
-            String result = JsonRequestKt.jsonCovers(wrapper, apicalypse);
-            Gson gson = new Gson();
-            return result;
-        } catch (RequestException rqe) {
-            logger.error("Failed to get image: {}", rqe.getMessage());
-            return null;
-        }
-    }
-
-    public String getGenre(int id) {
-        IGDBWrapper wrapper = getWrapper();
-        APICalypse apicalypse = new APICalypse()
-                .fields("*")
-                .where("id = " + id);
-        try {
-            String result = JsonRequestKt.jsonGenres(wrapper, apicalypse);
-            Gson gson = new Gson();
-            return result;
-        } catch (RequestException rqe) {
-            return null;
-        }
-    }
-
-
     public List<Game> getGames() {
         IGDBWrapper wrapper = getWrapper();
         APICalypse apicalypse = new APICalypse()
-                .fields("*")
-                .sort("release_dates.date", Sort.DESCENDING)
-                .where("themes != 42")
-                .limit(20);
+                .fields("id,name,genres.name,total_rating,total_rating_count,first_release_date,summary,cover.url,platforms.name")
+                .sort("total_rating_count", Sort.DESCENDING)
+                .where("total_rating >= 85")
+                .limit(25);
         try {
             String result = JsonRequestKt.jsonGames(wrapper, apicalypse);
             Gson gson = new Gson();
-            Type gameListType = new TypeToken<List<Game>>() {
-            }.getType();
+            Type gameListType = new TypeToken<List<Game>>() {}.getType();
             List<Game> gameResult = gson.fromJson(result, gameListType);
-            // Fetch all existing game IDs
+
             Set<Long> existingIds = repository.findAll().stream()
                     .map(Game::getId)
                     .collect(Collectors.toSet());
 
-            // Filter out already existing games by ID
             List<Game> newGames = gameResult.stream()
                     .filter(game -> !existingIds.contains(game.getId()))
                     .collect(Collectors.toList());
-            getImage(String.valueOf((gameResult.getFirst().getId())));
+
             repository.saveAll(newGames);
-            getGenre(gameResult.getFirst().getGenres()[0]);
             return repository.findAll();
         } catch (RequestException rqe) {
             logger.error(rqe.getMessage());

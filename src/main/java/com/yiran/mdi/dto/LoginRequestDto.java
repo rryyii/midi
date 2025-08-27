@@ -1,4 +1,4 @@
-package com.yiran.mdi.model;
+package com.yiran.mdi.dto;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import lombok.Data;
  * @author rryyii
  */
 @Data
-public class LoginRequest {
+public class LoginRequestDto {
     public String username;
     public String password;
 }

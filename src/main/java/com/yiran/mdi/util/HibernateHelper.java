@@ -1,4 +1,4 @@
-package com.yiran.mdi.service;
+package com.yiran.mdi.util;
 
 import org.hibernate.HibernateError;
 import org.hibernate.SessionFactory;

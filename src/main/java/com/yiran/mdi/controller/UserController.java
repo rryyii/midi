@@ -1,17 +1,15 @@
 package com.yiran.mdi.controller;
 
-import com.yiran.mdi.model.LoginRequest;
+import com.yiran.mdi.dto.LoginRequestDto;
 import com.yiran.mdi.model.User;
+import com.yiran.mdi.dto.UserUpdateDto;
 import com.yiran.mdi.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,8 +43,17 @@ public class UserController {
         return true;
     }
 
+    @PutMapping("/update_user")
+    public ResponseEntity<User> updateUser(@RequestBody UserUpdateDto user) {
+        logger.debug("Beginning updating a user in database.");
+        logger.debug(user.toString());
+        service.updateUser(user.id, user.username, user.password, user.email, user.bio);
+        User newInfo = service.getUser(user.id);
+        return new ResponseEntity<>(newInfo, null, HttpStatus.ACCEPTED);
+    }
+
     @PostMapping("/login_user")
-    public ResponseEntity<User> validateUser(@RequestBody LoginRequest login) {
+    public ResponseEntity<User> validateUser(@RequestBody LoginRequestDto login) {
         logger.debug("Beginning authentication process for user.");
         HttpHeaders headers = new HttpHeaders();
         long result = service.authenticateUser(login.username);

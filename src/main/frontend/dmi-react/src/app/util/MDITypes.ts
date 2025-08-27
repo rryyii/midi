@@ -10,6 +10,7 @@ export type User = {
     username: string,
     password: string,
     email: string,
+    bio: string,
 }
 
 export type ResponseUser = {
@@ -21,11 +22,4 @@ export type ResponseUser = {
 export type LoginType = {
     username: string,
     password: string,
-}
-
-export type CurrentUser = {
-    username: string,
-    email: string,
-    trackedGames: Array<Game>,
-
 }

@@ -27,6 +27,13 @@ public class UserService {
         this.repository = repository;
     }
 
+    public static String buildToken(String username) {
+        return Jwts.builder()
+                .subject(username)
+                .signWith(key)
+                .compact();
+    }
+
     public User getUser(long id) {
         Optional<User> result = repository.findById(id);
         return result.orElse(null);
@@ -40,6 +47,27 @@ public class UserService {
         repository.deleteById(id);
     }
 
+    public void updateUser(long id, String username, String password, String email, String bio) {
+        User user = getUser(id);
+        if (username != null&& !username.isEmpty()) {
+            logger.debug("Updating user's username.");
+            user.setUsername(username);
+        }
+        if (password != null && !password.isEmpty()) {
+            logger.debug("Updating user's password.");
+            user.setPassword(password);
+        }
+        if (email != null && !email.isEmpty()) {
+            logger.debug("Updating user's email.");
+            user.setEmail(email);
+        }
+        if (bio != null && !bio.isEmpty()) {
+            logger.debug("Updating user's bio.");
+            user.setBio(bio);
+        }
+        repository.save(user);
+    }
+
     public Long authenticateUser(String username) {
         logger.debug("Entered authentication function for user.");
         List<User> list = repository.findAll();
@@ -50,13 +78,6 @@ public class UserService {
             }
         }
         return (long) -1;
-    }
-
-    public static String buildToken(String username) {
-        return Jwts.builder()
-                .subject(username)
-                .signWith(key)
-                .compact();
     }
 
 }
