@@ -1,6 +1,8 @@
 package com.yiran.mdi.service;
 
+import com.yiran.mdi.model.Game;
 import com.yiran.mdi.model.User;
+import com.yiran.mdi.repository.GameRepository;
 import com.yiran.mdi.repository.UserRepository;
 import io.jsonwebtoken.Jwts;
 import org.slf4j.Logger;
@@ -22,9 +24,11 @@ public class UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     private static final SecretKey key = Jwts.SIG.HS256.key().build();
     private final UserRepository repository;
+    private final GameRepository gameRepository;
 
-    public UserService(UserRepository repository) {
+    public UserService(UserRepository repository, GameRepository gameRepository) {
         this.repository = repository;
+        this.gameRepository = gameRepository;
     }
 
     public static String buildToken(String username) {
@@ -78,6 +82,10 @@ public class UserService {
             }
         }
         return (long) -1;
+    }
+
+    public List<Game> getFavorites(long id) {
+        return null;
     }
 
 }

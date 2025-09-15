@@ -6,9 +6,6 @@ import com.api.igdb.exceptions.RequestException;
 import com.api.igdb.request.IGDBWrapper;
 import com.api.igdb.request.JsonRequestKt;
 import com.api.igdb.request.TwitchAuthenticator;
-import com.api.igdb.utils.ImageBuilderKt;
-import com.api.igdb.utils.ImageSize;
-import com.api.igdb.utils.ImageType;
 import com.api.igdb.utils.TwitchToken;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -28,8 +25,8 @@ public class IGDBService {
 
     private static final Logger logger = LoggerFactory.getLogger(IGDBService.class);
     private final GameRepository repository;
-    private final String client_id = System.getenv("client_id");
-    private final String client_secret = System.getenv("client_secret");
+    private final String client_id = "7cgee1enzd8jie79ufcfe2pgylfnv9";
+    private final String client_secret = "6ahzl8e014lxp9klsentuuadcg35iy";
 
 
     public IGDBService(GameRepository repository) {
@@ -44,10 +41,6 @@ public class IGDBService {
         }
         TwitchAuthenticator auth = TwitchAuthenticator.INSTANCE;
         return auth.requestTwitchToken(client_id, client_secret);
-    }
-
-    private String buildImage(String image_id) {
-        return ImageBuilderKt.imageBuilder(image_id, ImageSize.LOGO_MEDIUM, ImageType.PNG);
     }
 
     private IGDBWrapper getWrapper() {

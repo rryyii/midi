@@ -11,14 +11,30 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class MidiMVCTests {
+public class GameMvcTests {
 
     @Autowired
     private MockMvc mvc;
-    
+
+    @Test
+    void testGetGame() throws Exception {
+        int id = 1;
+        String url = String.format("/game/%d", id);
+        mvc.perform(get(url))
+                .andExpect(status().isOk());
+    }
+
     @Test
     void testGetGames() throws Exception {
         mvc.perform(get("/games"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void testGetGamesPage() throws Exception {
+        int page = 1;
+        String url = String.format("/games/%d", page);
+        mvc.perform(get(url))
                 .andExpect(status().isOk());
     }
 }

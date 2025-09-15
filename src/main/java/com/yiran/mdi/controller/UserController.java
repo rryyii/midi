@@ -1,8 +1,9 @@
 package com.yiran.mdi.controller;
 
 import com.yiran.mdi.dto.LoginRequestDto;
-import com.yiran.mdi.model.User;
 import com.yiran.mdi.dto.UserUpdateDto;
+import com.yiran.mdi.model.Game;
+import com.yiran.mdi.model.User;
 import com.yiran.mdi.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,6 +71,11 @@ public class UserController {
         headers.setBearerAuth(UserService.buildToken(login.username));
         logger.info("Successfully logged in user.");
         return new ResponseEntity<>(info, headers, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/user_favorites/{id}")
+    public List<Game> getUserFavorites(@PathVariable long id) {
+        return null;
     }
 
 }

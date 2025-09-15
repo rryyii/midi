@@ -4,8 +4,13 @@ WORKDIR /app
 
 COPY .mvn/ .mvn
 COPY mvnw pom.xml ./
-RUN ./mvnw dependency:go-offline
+RUN ./mvnw dependency:resolve
 
 COPY src ./src
 
-CMD ["./mvnw", "spring-boot:run"]
+RUN ./mvnw clean package -DskipTests
+
+ENV PORT=8080
+EXPOSE 8080
+
+CMD ["java", "-jar", "target/mdi-0.0.1-SNAPSHOT.jar"]
