@@ -3,6 +3,19 @@ import {Link} from "react-router";
 
 function UserProfile() {
     const userString = localStorage.getItem("user-info");
+
+    const {data, error} = useQuery({
+        queryKey: ["user", userString],
+        queryFn: async () => {
+            const request = await fetch(`https://localhost:${import.meta.env.VITE_APP_PORT}/user_favorite/${id}`,
+                {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" },
+                })
+            return await request.json();
+        }
+    });
+
     if (userString) {
         const userInfo: User = JSON.parse(userString);
         return (
@@ -16,8 +29,12 @@ function UserProfile() {
                             </Link>
                         </div>
                         <p>{userInfo.email}</p>
-                        <p className={"user-bio"}>{userInfo.bio}</p>
                     </section>
+                </div>
+                <div>
+                    <h4>Bio</h4>
+                    <div className="border-bottom w-25"></div>
+                    <p className={"user-bio"}>{userInfo.bio}</p>
                 </div>
                 <div>
                     <h4>Your Favorites</h4>

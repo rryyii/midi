@@ -39,14 +39,24 @@ function Home() {
             </div>
             <div className={"row"}>
                 <div className={"d-flex justify-content-evenly align-items-center"}>
-                    <p>
-                        <em>Get started by creating an account by <Link to={"/register"}>registering</Link></em>
-                    </p>
-                    <p>
-                       <em>Or get back to
-                        your gaming log by <Link to={"/login"}>logging in</Link>
-                       </em>
-                    </p>
+                    <div className="d-flex flex-column justify-content-center align-items-center">
+                        <h4>
+                            <em>Get started by creating an account</em>
+                        </h4>
+                        <Link to={"/register"}>
+                            register
+                        </Link>
+                    </div>
+                    <div className="d-flex flex-column align-items-center">
+                        <h4>
+                           <em>Or get back to
+                            your gaming log
+                           </em>
+                        </h4>
+                        <Link to={"/login"}>
+                            login
+                        </Link>
+                    </div>
                 </div>
             </div>
 

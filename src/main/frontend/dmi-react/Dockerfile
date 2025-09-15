@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:22.19.0
 
 WORKDIR /app
 
@@ -8,12 +8,7 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 5174
+ENV VITE_PORT=5173
+EXPOSE 5173
 
-CMD ["run", "dev"]
-
-ENTRYPOINT ["npm"]
-
-
-
-
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "5173"]

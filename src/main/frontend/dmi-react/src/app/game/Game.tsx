@@ -16,8 +16,8 @@ function Game() {
     }
     const userInfo: ResponseUser = JSON.parse(userString);
     const [gameId, setGameId] = useState<number>(0);
-    let [isOpen, setIsOpen] = useState<boolean>(false)
-    let [failed, setFailed] = useState<boolean>(false)
+    const [isOpen, setIsOpen] = useState<boolean>(false)
+    const [failed, setFailed] = useState<boolean>(false)
 
     const {data, error} = useQuery({
         queryKey: ["game", game],

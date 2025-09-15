@@ -158,7 +158,6 @@ footer {
 
 /* User Profile Styles */
 .user-bio {
-    border: solid white .1rem;
     padding: 1rem;
     border-radius: .5rem;
 }
