@@ -47,7 +47,6 @@ public class UserController {
     @PutMapping("/update_user")
     public ResponseEntity<User> updateUser(@RequestBody UserUpdateDto user) {
         logger.debug("Beginning updating a user in database.");
-        logger.debug(user.toString());
         service.updateUser(user.id, user.username, user.password, user.email, user.bio);
         User newInfo = service.getUser(user.id);
         return new ResponseEntity<>(newInfo, null, HttpStatus.ACCEPTED);
@@ -75,7 +74,8 @@ public class UserController {
 
     @GetMapping("/user_favorites/{id}")
     public List<Game> getUserFavorites(@PathVariable long id) {
-        return null;
+        logger.debug("Fetching user's favorite games");
+        return service.getFavorites(id);
     }
 
 }

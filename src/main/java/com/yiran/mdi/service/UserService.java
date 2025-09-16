@@ -2,7 +2,8 @@ package com.yiran.mdi.service;
 
 import com.yiran.mdi.model.Game;
 import com.yiran.mdi.model.User;
-import com.yiran.mdi.repository.GameRepository;
+import com.yiran.mdi.model.UserGame;
+import com.yiran.mdi.repository.UserGameRepository;
 import com.yiran.mdi.repository.UserRepository;
 import io.jsonwebtoken.Jwts;
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,9 +26,9 @@ public class UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     private static final SecretKey key = Jwts.SIG.HS256.key().build();
     private final UserRepository repository;
-    private final GameRepository gameRepository;
+    private final UserGameRepository gameRepository;
 
-    public UserService(UserRepository repository, GameRepository gameRepository) {
+    public UserService(UserRepository repository, UserGameRepository gameRepository) {
         this.repository = repository;
         this.gameRepository = gameRepository;
     }
@@ -85,7 +87,14 @@ public class UserService {
     }
 
     public List<Game> getFavorites(long id) {
-        return null;
+        List<UserGame> list = gameRepository.findAll();
+        List<Game> result = new ArrayList<>();
+        for (UserGame game : list) {
+            if (game.isFavorite() && game.getUser().getId() == id) {
+                result.add(game.getGame());
+            }
+        }
+        return result;
     }
 
 }

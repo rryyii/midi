@@ -25,8 +25,8 @@ public class IGDBService {
 
     private static final Logger logger = LoggerFactory.getLogger(IGDBService.class);
     private final GameRepository repository;
-    private final String client_id = "7cgee1enzd8jie79ufcfe2pgylfnv9";
-    private final String client_secret = "6ahzl8e014lxp9klsentuuadcg35iy";
+    private final String client_id = "";
+    private final String client_secret = "";
 
 
     public IGDBService(GameRepository repository) {
@@ -45,8 +45,12 @@ public class IGDBService {
 
     private IGDBWrapper getWrapper() {
         IGDBWrapper wrapper = IGDBWrapper.INSTANCE;
-        wrapper.setCredentials(client_id, getToken().getAccess_token());
-        return wrapper;
+        String token = getToken().getAccess_token();
+        if (!token.isEmpty()){
+            wrapper.setCredentials(client_id, token);
+            return wrapper;
+        }
+        return null;
     }
 
     public List<Game> getGames() {
@@ -56,6 +60,7 @@ public class IGDBService {
                 .sort("total_rating_count", Sort.DESCENDING)
                 .where("total_rating >= 85")
                 .limit(25);
+        assert(wrapper != null);
         try {
             String result = JsonRequestKt.jsonGames(wrapper, apicalypse);
             Gson gson = new Gson();
