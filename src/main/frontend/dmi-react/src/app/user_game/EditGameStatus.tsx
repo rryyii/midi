@@ -13,7 +13,7 @@ function EditGameStatus({game}: { game: any }) {
             const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/user/update_game`,
                 {
                     method: "PUT",
-                    headers: {"Content-Type": "application/json"},
+                    headers: {"Content-Type": "application/json", "Authorization": localStorage.getItem("username")},
                     body: JSON.stringify({id: game.id, status: status, hoursPlayed: hours, isFavorite: isFavorite}),
                 });
             const response = await request.json();

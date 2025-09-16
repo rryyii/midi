@@ -24,7 +24,7 @@ function UserGameList() {
             const response = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/user/games/${userInfo.id}`,
                 {
                     method: "GET",
-                    headers: {"Content-Type": "application/json"},
+                    headers: {"Content-Type": "application/json", "Authorization": localStorage.getItem("username")},
                 });
             return await response.json();
         },
@@ -35,8 +35,8 @@ function UserGameList() {
             const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/user/rm_game`,
                 {
                     method: "DELETE",
-                    headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify({id: userGameId}),
+                    headers: {"Content-Type": "application/json", "Authorization": localStorage.getItem("username")},
+                    body: JSON.stringify({id: userGameId, user_id: userInfo.id}),
                 });
             return await request.json();
         },

@@ -36,7 +36,7 @@ function Game() {
             const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/user/add_game`,
                 {
                     method: "POST",
-                    headers: {"Content-Type": "application/json"},
+                    headers: {"Content-Type": "application/json", "Authorization": localStorage.getItem("username")},
                     body: JSON.stringify({id: gameId, user_id: userInfo.id}),
                 }
             );

@@ -12,7 +12,7 @@ function UserProfile() {
             const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/user_favorites/${userInfo.id}`,
                 {
                     method: "GET",
-                    headers: { "Content-Type": "application/json" },
+                    headers: { "Content-Type": "application/json", "Authorization": localStorage.getItem("username")},
                 })
             return await request.json();
         }

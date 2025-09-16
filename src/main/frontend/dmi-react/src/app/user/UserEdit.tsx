@@ -22,7 +22,7 @@ function UserEdit() {
             const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/update_user`,
                 {
                     method: "PUT",
-                    headers: {"Content-Type": "application/json"},
+                    headers: {"Content-Type": "application/json", "Authorization": localStorage.getItem("username")},
                     body: JSON.stringify({
                         id: userInfo.id,
                         username: name,
