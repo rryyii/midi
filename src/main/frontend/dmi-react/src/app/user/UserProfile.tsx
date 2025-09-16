@@ -1,13 +1,15 @@
 import type {User} from "../util/MDITypes.ts";
 import {Link} from "react-router";
+import { useQuery } from "@tanstack/react-query";
 
 function UserProfile() {
     const userString = localStorage.getItem("user-info");
+    const userInfo: User = JSON.parse(userString);
 
     const {data, error} = useQuery({
         queryKey: ["user", userString],
         queryFn: async () => {
-            const request = await fetch(`https://localhost:${import.meta.env.VITE_APP_PORT}/user_favorite/${id}`,
+            const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/user_favorites/${userInfo.id}`,
                 {
                     method: "GET",
                     headers: { "Content-Type": "application/json" },
@@ -16,15 +18,14 @@ function UserProfile() {
         }
     });
 
-    if (userString) {
-        const userInfo: User = JSON.parse(userString);
+    if (data) {
         return (
             <div className={"container d-flex flex-grow-1 flex-column gap-3 p-3"}>
                 <div>
                     <section className={"d-flex flex-column align-items-start gap-3"}>
                         <div className={"d-flex flex-row gap-3"}>
                             <h4>{userInfo.username}</h4>
-                            <Link to={"/profile/edit"} className={"btn btn-outline-primary"}>
+                            <Link to={"/profile/edit"} className={"btn btn-outline-custom"}>
                                 Edit Profile
                             </Link>
                         </div>
@@ -39,9 +40,17 @@ function UserProfile() {
                 <div>
                     <h4>Your Favorites</h4>
                     <div className={"border-bottom w-50"}></div>
+                    <ul className="favorites-list">
+                        {data.map((game: any) => (
+                            <li>
+                                {game.name}
+                            </li>
+                            ))
+                        }
+                    </ul>
                 </div>
             </div>
-        );
+        )
     }
 }
 

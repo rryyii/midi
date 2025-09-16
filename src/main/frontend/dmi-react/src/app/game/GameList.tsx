@@ -11,10 +11,10 @@ function GameList() {
             </div>
             <div className={"row"}>
                 <div>
-                    <button onClick={() => setPage(Math.max(page - 1, 0))} className={"btn btn-outline-primary"}>
+                    <button onClick={() => setPage(Math.max(page - 1, 0))} className={"btn btn-outline-custom"}>
                         <i className="fa-solid fa-arrow-left icon-color"></i>
                     </button>
-                    <button onClick={() => setPage(page + 1)} className={"btn btn-outline-primary"}>
+                    <button onClick={() => setPage(page + 1)} className={"btn btn-outline-custom"}>
                         <i className="fa-solid fa-arrow-right icon-color"></i>
                     </button>
                 </div>

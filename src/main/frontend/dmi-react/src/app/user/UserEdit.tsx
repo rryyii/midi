@@ -78,7 +78,7 @@ function UserEdit() {
                     }} placeholder={"Tell us about yourself"} className={"form-control w-25"}></textarea>
                 </div>
                 <div>
-                    <button type={"submit"} className={"btn btn-outline-primary"}>Update</button>
+                    <button type={"submit"} className={"btn btn-outline-custom"}>Update</button>
                 </div>
             </div>
         </form>

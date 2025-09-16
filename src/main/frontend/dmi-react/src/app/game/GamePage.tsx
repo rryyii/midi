@@ -1,7 +1,7 @@
 import {Link} from "react-router";
 import {useQuery} from "@tanstack/react-query";
 
-function GamePage({page}: { page: number}) {
+function GamePage({page}: { page: number }) {
 
     const {data, error} = useQuery({
         queryKey: ["main-games-list", page],
@@ -13,13 +13,13 @@ function GamePage({page}: { page: number}) {
 
     if (data) {
     return (
-        <div className={"d-flex flex-row flex-wrap gap-3 p-3"}>
+        <div className={"d-flex flex-row flex-wrap gap-3 justify-content-center p-3"}>
             {data.content.map((game: any) => {
                 return (
                     <div className="d-flex flex-column" key={`${game.name}-${game.developer}`}>
-                        {game.cover != null ? <img src={`${game.cover.url}`} alt={`cover image of ${game.name}`}/> :
+                        {game.cover != null ? <img src={`${game.cover.url}`} alt={`cover image of ${game.name}`} className="game-img"/> :
                             <h4>{game.name}</h4>}
-                        <Link to={`/games/${game.id}`} className={"btn btn-outline-primary"}>
+                        <Link to={`/games/${game.id}`} className={"btn btn-outline-custom"}>
                             View
                         </Link>
                     </div>

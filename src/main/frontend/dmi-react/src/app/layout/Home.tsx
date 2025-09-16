@@ -43,7 +43,7 @@ function Home() {
                         <h4>
                             <em>Get started by creating an account</em>
                         </h4>
-                        <Link to={"/register"}>
+                        <Link to={"/register"} className="btn btn-outline-custom">
                             register
                         </Link>
                     </div>
@@ -53,7 +53,7 @@ function Home() {
                             your gaming log
                            </em>
                         </h4>
-                        <Link to={"/login"}>
+                        <Link to={"/login"} className="btn btn-outline-custom">
                             login
                         </Link>
                     </div>

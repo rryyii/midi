@@ -3,6 +3,15 @@
     --bg-secondary: #37414F;
 }
 
+a {
+    color: #B54A74 !important;
+    transition: color 0.2s ease-in-out;
+    text-decoration: none !important;
+}
+
+a:hover {
+  color: #d37c9e !important;
+ }
 
 #root {
     display: flex;
@@ -31,12 +40,6 @@ nav {
 .link-text {
     color: white !important;
     background-color: transparent !important;
-    border-radius: .5rem;
-    transition: background-color .15s ease-in-out !important;
-}
-
-.link-text:hover {
-    background-color: var(--bg-secondary) !important;
     border-radius: .5rem;
 }
 
@@ -76,6 +79,12 @@ nav {
 }
 
 
+/*  Table Styles */
+.table-custom {
+    background-color: red !important;
+}
+
+
 /* Button Styles */
 .del-btn {
     color: white !important;
@@ -83,6 +92,18 @@ nav {
 
 .game-btn {
     max-width: 20vw;
+}
+
+.btn-outline-custom {
+    border: .1rem solid #B54A74 !important;
+    color: #B54A74 !important;
+    transition: border 0.3s ease-in-out !important;
+    transition: color 0.3s ease-in-out !important;
+}
+
+.btn-outline-custom:hover {
+    border: .1rem solid #d37c9e !important;
+    color: #d37c9e !important;
 }
 
 /* Form Styles  */
@@ -121,6 +142,10 @@ nav {
     padding: 1rem;
 }
 
+.favorites-list {
+    list-style: none;
+}
+
 /* Footer Styles */
 footer {
     width: 100%;
@@ -137,10 +162,16 @@ footer {
     font-size: 1rem;
 }
 
+.game-img {
+    border-radius: 0.5rem;
+    width: 85px;
+    height: 85px;
+}
+
 
 /* Icon Styles */
 .icon-color {
-    color: red;
+    color: white;
 }
 
 

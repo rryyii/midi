@@ -65,7 +65,7 @@ function Game() {
             <div className={"container"}>
                 <form onSubmit={handleSubmit}>
                     <button onClick={() => setGameId(data.id)} type={"submit"}
-                            className={"btn btn-outline-primary"}>
+                            className={"btn btn-outline-custom"}>
                         +
                     </button>
                     <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
@@ -75,7 +75,7 @@ function Game() {
                                 <DialogTitle>
                                     <p>Successfully added game to your list!</p>
                                 </DialogTitle>
-                                <button onClick={() => setIsOpen(false)} className={"btn btn-outline-primary"}>
+                                <button onClick={() => setIsOpen(false)} className={"btn btn-outline-custom"}>
                                     <i className="fa-solid fa-xmark icon-color"></i>
                                 </button>
                             </DialogPanel>
@@ -86,7 +86,7 @@ function Game() {
                             <DialogTitle>
                                 <p>Failed to add the game to your list.</p>
                             </DialogTitle>
-                            <button onClick={() => setIsOpen(false)} className={"btn btn-outline-primary"}>
+                            <button onClick={() => setIsOpen(false)} className={"btn btn-outline-custom"}>
                                 <i className="fa-solid fa-xmark icon-color"></i>
                             </button>
                         </DialogPanel>

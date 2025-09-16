@@ -58,7 +58,7 @@ function UserGameList() {
     if (data) {
         return (
             <div className={"container d-flex flex-grow-1 flex-column gap-5"}>
-                <table className={"table table-dark"}>
+                <table className={""}>
                     <thead>
                         <tr>
                             <th scope="col">Game</th>

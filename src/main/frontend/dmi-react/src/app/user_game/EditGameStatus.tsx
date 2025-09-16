@@ -64,7 +64,7 @@ function EditGameStatus({game}: { game: any }) {
                             setIsFavorite(event.target.checked)
                         }} className={"form-check-input"}/>
                     </div>
-                    <button type={"submit"} className={"btn btn-outline-primary"}>Update</button>
+                    <button type={"submit"} className={"btn btn-outline-custom"}>Update</button>
                 </form>
             </MenuItems>
         </Menu>

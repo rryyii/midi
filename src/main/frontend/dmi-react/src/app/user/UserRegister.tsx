@@ -59,7 +59,7 @@ function UserRegister() {
                     <DialogPanel>
                         <h2>Successfully registered!</h2>
                     </DialogPanel>
-                    <button onClick={() => { setIsOpen(false);}} className={"btn btn-outline-primary"}>
+                    <button onClick={() => { setIsOpen(false);}} className={"btn btn-outline-custom"}>
                         <i className="fa-solid fa-xmark icon-color"></i>
                     </button>
                 </div>
