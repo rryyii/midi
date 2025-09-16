@@ -44,7 +44,7 @@ public class GameController {
     @GetMapping("/games/{page}")
     public Page<Game> getGamePage(@PathVariable int page) {
         logger.debug("Beginning get request for a page of games.");
-        return gameService.getGamePage(page, 25);
+        return gameService.getGamePage(page, 30);
     }
 
 }

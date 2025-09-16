@@ -4,32 +4,49 @@ import com.yiran.mdi.model.Game;
 import com.yiran.mdi.model.User;
 import com.yiran.mdi.model.UserGame;
 import com.yiran.mdi.repository.UserGameRepository;
+import com.yiran.mdi.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserGameService {
 
     private final Logger logger = LoggerFactory.getLogger(UserGameService.class);
     private final UserGameRepository repository;
+    private final UserRepository userRepository;
     private final UserService userService;
     private final GameService gameService;
 
-    public UserGameService(UserGameRepository repository, UserService userService, GameService gameService) {
+    public UserGameService(UserGameRepository repository, UserRepository userRepository, UserService userService, GameService gameService) {
         this.repository = repository;
         this.userService = userService;
         this.gameService = gameService;
+        this.userRepository = userRepository;
     }
 
-    public List<UserGame> getUserGames(long id) {
-        return repository.findByUserId(id);
+    private boolean handleUserAuth(long id, String authHeader) {
+        Optional<User> user = userRepository.findById(id);
+        return user.isPresent() && UserService.checkToken(authHeader, user.get().getUsername());
     }
 
-    public boolean addUserGame(long id, long userId) {
+    public List<UserGame> getUserGames(long id, String authHeader) {
+        if (handleUserAuth(id, authHeader)) {
+            logger.debug("Authorized user");
+            return repository.findByUserId(id);
+        }
+        logger.debug("Failed to authorize");
+        return null;
+    }
+
+    public boolean addUserGame(long id, long userId, String authHeader) {
+        if (!handleUserAuth(userId, authHeader)) {
+            return false;
+        }
         Game newGame = gameService.getGame(id);
         User newUser = userService.getUser(userId);
         UserGame newUserGame = new UserGame();
@@ -43,14 +60,19 @@ public class UserGameService {
         return true;
     }
 
-    public boolean removeUserGame(long id) {
+    public boolean removeUserGame(long id, long userId, String authHeader) {
+        if (!handleUserAuth(userId, authHeader)) {
+            return false;
+        }
         repository.deleteById(id);
         return true;
     }
 
-    public boolean updateUserGame(long id, String status, int hoursPlayed, boolean isFavorite) {
+    public boolean updateUserGame(long id, String status, int hoursPlayed, boolean isFavorite, String authHeader) {
         UserGame userGame = repository.findById(id).orElse(null);
-        if (userGame == null) {
+        assert userGame != null;
+        if (!handleUserAuth(userGame.getUser().getId(), authHeader)) {
+            logger.error("Failed to authenticate user token");
             return false;
         }
         if (status != null && !status.isEmpty()) {

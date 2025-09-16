@@ -26,27 +26,27 @@ public class UserGameController {
     }
 
     @GetMapping("/user/games/{id}")
-    public List<UserGame> getUserGame(@PathVariable String id) {
+    public List<UserGame> getUserGame(@PathVariable String id, @RequestHeader("Authorization") String authHeader) {
         logger.debug("Fetching user's game list.");
-        return service.getUserGames(Long.parseLong(id));
+        return service.getUserGames(Long.parseLong(id), authHeader);
     }
 
     @PostMapping("/user/add_game")
-    public boolean addUserGame(@RequestBody UserGameDto data) {
+    public boolean addUserGame(@RequestBody UserGameDto data, @RequestHeader("Authorization") String authHeader) {
         logger.debug("Beginning adding a game to a user's list.");
-        return service.addUserGame(data.id, data.getUser_id());
+        return service.addUserGame(data.id, data.getUser_id(), authHeader);
     }
 
     @DeleteMapping("/user/rm_game")
-    public boolean removeUserGame(@RequestBody UserGameDto data) {
+    public boolean removeUserGame(@RequestBody UserGameDto data, @RequestHeader("Authorization") String authHeader) {
         logger.debug("Beginning removing a game to a user's list.");
-        return service.removeUserGame(data.getId());
+        return service.removeUserGame(data.getId(), data.getUser_id(), authHeader);
     }
 
     @PutMapping("/user/update_game")
-    public boolean updateUserGame(@RequestBody UserGameUpdateDto data) {
+    public boolean updateUserGame(@RequestBody UserGameUpdateDto data, @RequestHeader("Authorization") String authHeader) {
         logger.debug("Beginning updating a game in a user's list.");
-        return service.updateUserGame(data.id, data.status, data.hoursPlayed, data.isFavorite);
+        return service.updateUserGame(data.id, data.status, data.hoursPlayed, data.isFavorite, authHeader);
     }
 
 }

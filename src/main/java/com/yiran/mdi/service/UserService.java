@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.crypto.SecretKey;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -31,6 +32,10 @@ public class UserService {
     public UserService(UserRepository repository, UserGameRepository gameRepository) {
         this.repository = repository;
         this.gameRepository = gameRepository;
+    }
+
+    public static boolean checkToken(String token, String username) {
+        return Objects.equals(buildToken(username), token.split(" ")[1]);
     }
 
     public static String buildToken(String username) {
@@ -53,8 +58,12 @@ public class UserService {
         repository.deleteById(id);
     }
 
-    public void updateUser(long id, String username, String password, String email, String bio) {
+    public void updateUser(long id, String username, String password, String email, String bio, String authHeader) {
         User user = getUser(id);
+        if (!checkToken(authHeader, user.getUsername())) {
+            logger.error("Failed to authentication token");
+            return;
+        }
         if (username != null&& !username.isEmpty()) {
             logger.debug("Updating user's username.");
             user.setUsername(username);
@@ -86,15 +95,20 @@ public class UserService {
         return (long) -1;
     }
 
-    public List<Game> getFavorites(long id) {
-        List<UserGame> list = gameRepository.findAll();
-        List<Game> result = new ArrayList<>();
-        for (UserGame game : list) {
-            if (game.isFavorite() && game.getUser().getId() == id) {
-                result.add(game.getGame());
+    public List<Game> getFavorites(long id, String authHeader) {
+        Optional<User> user = repository.findById(id);
+        if (user.isPresent() && checkToken(authHeader, user.get().getUsername())) {
+            List<UserGame> list = gameRepository.findAll();
+            List<Game> result = new ArrayList<>();
+            for (UserGame game : list) {
+                if (game.isFavorite() && user.get().getId() == id) {
+                    result.add(game.getGame());
+                }
             }
+            return result;
         }
-        return result;
+        return null;
+
     }
 
 }

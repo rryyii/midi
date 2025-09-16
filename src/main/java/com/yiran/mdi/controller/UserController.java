@@ -45,9 +45,9 @@ public class UserController {
     }
 
     @PutMapping("/update_user")
-    public ResponseEntity<User> updateUser(@RequestBody UserUpdateDto user) {
+    public ResponseEntity<User> updateUser(@RequestBody UserUpdateDto user, @RequestHeader("Authorization") String authHeader) {
         logger.debug("Beginning updating a user in database.");
-        service.updateUser(user.id, user.username, user.password, user.email, user.bio);
+        service.updateUser(user.id, user.username, user.password, user.email, user.bio, authHeader);
         User newInfo = service.getUser(user.id);
         return new ResponseEntity<>(newInfo, null, HttpStatus.ACCEPTED);
     }
@@ -73,9 +73,9 @@ public class UserController {
     }
 
     @GetMapping("/user_favorites/{id}")
-    public List<Game> getUserFavorites(@PathVariable long id) {
+    public List<Game> getUserFavorites(@PathVariable long id, @RequestHeader("Authorization") String authHeader) {
         logger.debug("Fetching user's favorite games");
-        return service.getFavorites(id);
+        return service.getFavorites(id, authHeader);
     }
 
 }

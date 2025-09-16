@@ -25,8 +25,8 @@ public class IGDBService {
 
     private static final Logger logger = LoggerFactory.getLogger(IGDBService.class);
     private final GameRepository repository;
-    private final String client_id = "";
-    private final String client_secret = "";
+    private final String client_id = "7cgee1enzd8jie79ufcfe2pgylfnv9";
+    private final String client_secret = "6ahzl8e014lxp9klsentuuadcg35iy";
 
 
     public IGDBService(GameRepository repository) {
@@ -59,7 +59,7 @@ public class IGDBService {
                 .fields("id,name,genres.name,total_rating,total_rating_count,first_release_date,summary,cover.url,platforms.name")
                 .sort("total_rating_count", Sort.DESCENDING)
                 .where("total_rating >= 85")
-                .limit(25);
+                .limit(500);
         assert(wrapper != null);
         try {
             String result = JsonRequestKt.jsonGames(wrapper, apicalypse);
