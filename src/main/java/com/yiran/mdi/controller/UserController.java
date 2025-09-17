@@ -4,6 +4,7 @@ import com.yiran.mdi.dto.LoginRequestDto;
 import com.yiran.mdi.dto.UserUpdateDto;
 import com.yiran.mdi.model.Game;
 import com.yiran.mdi.model.User;
+import com.yiran.mdi.model.UserLogin;
 import com.yiran.mdi.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +54,7 @@ public class UserController {
     }
 
     @PostMapping("/login_user")
-    public ResponseEntity<User> validateUser(@RequestBody LoginRequestDto login) {
+    public ResponseEntity<UserLogin> validateUser(@RequestBody LoginRequestDto login) {
         logger.debug("Beginning authentication process for user.");
         HttpHeaders headers = new HttpHeaders();
         long result = service.authenticateUser(login.username);
@@ -62,14 +63,17 @@ public class UserController {
             return new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
         }
         User info = service.getUser(result);
-        info.setPassword("");
+        UserLogin secureLogin = new UserLogin();
+        secureLogin.setId(info.getId());
+        secureLogin.setUsername(info.getUsername());
+        secureLogin.setBio(info.getBio());
         logger.debug(info.toString());
         List<String> access = new ArrayList<>();
         access.add("Authorization");
         headers.setAccessControlExposeHeaders(access);
         headers.setBearerAuth(UserService.buildToken(login.username));
         logger.info("Successfully logged in user.");
-        return new ResponseEntity<>(info, headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(secureLogin, headers, HttpStatus.CREATED);
     }
 
     @GetMapping("/user_favorites/{id}")

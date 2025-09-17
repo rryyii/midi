@@ -18,23 +18,20 @@ function Home() {
             <div className={"row"}>
                 <div className={"col d-flex flex-column"}>
                     <h4>Features</h4>
-                    <p>
                         <ul className={"home-list"}>
                             <li>Keep track of your games</li>
                             <li>Keep track of the hours you have played each game</li>
                             <li>Keep track of the status of the game (whether you have finished it, are currently playing, or want to play)</li>
                         </ul>
-                    </p>
                 </div>
                 <div className={"col d-flex flex-column"}>
                     <h4>Plans</h4>
-                    <p>
+
                         <ul className={"home-list"}>
                             <li>Add a search bar</li>
                             <li>Add the ability to filter by different categories</li>
                             <li>Visit other user's profiles easily to see their bio/favorite games</li>
                         </ul>
-                    </p>
                 </div>
             </div>
             <div className={"row"}>

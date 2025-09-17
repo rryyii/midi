@@ -39,12 +39,13 @@ public class UserGameService {
             logger.debug("Authorized user");
             return repository.findByUserId(id);
         }
-        logger.debug("Failed to authorize");
+        logger.debug("Failed to authorize for getting user's games.");
         return null;
     }
 
     public boolean addUserGame(long id, long userId, String authHeader) {
         if (!handleUserAuth(userId, authHeader)) {
+            logger.error("Failed to authorize for adding a game to a user.");
             return false;
         }
         Game newGame = gameService.getGame(id);
@@ -62,6 +63,7 @@ public class UserGameService {
 
     public boolean removeUserGame(long id, long userId, String authHeader) {
         if (!handleUserAuth(userId, authHeader)) {
+            logger.error("Failed to authenticate for removing a user's game.");
             return false;
         }
         repository.deleteById(id);
@@ -72,7 +74,7 @@ public class UserGameService {
         UserGame userGame = repository.findById(id).orElse(null);
         assert userGame != null;
         if (!handleUserAuth(userGame.getUser().getId(), authHeader)) {
-            logger.error("Failed to authenticate user token");
+            logger.error("Failed to authenticate user token for updating user game");
             return false;
         }
         if (status != null && !status.isEmpty()) {

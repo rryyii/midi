@@ -35,6 +35,8 @@ public class UserService {
     }
 
     public static boolean checkToken(String token, String username) {
+        logger.debug(token);
+        logger.debug(buildToken(username));
         return Objects.equals(buildToken(username), token.split(" ")[1]);
     }
 
@@ -61,7 +63,7 @@ public class UserService {
     public void updateUser(long id, String username, String password, String email, String bio, String authHeader) {
         User user = getUser(id);
         if (!checkToken(authHeader, user.getUsername())) {
-            logger.error("Failed to authentication token");
+            logger.error("Failed to authentication token for updating user.");
             return;
         }
         if (username != null&& !username.isEmpty()) {
@@ -101,12 +103,13 @@ public class UserService {
             List<UserGame> list = gameRepository.findAll();
             List<Game> result = new ArrayList<>();
             for (UserGame game : list) {
-                if (game.isFavorite() && user.get().getId() == id) {
+                if (game.isFavorite() && Objects.equals(user.get().getId(), game.getUser().getId())) {
                     result.add(game.getGame());
                 }
             }
             return result;
         }
+        logger.error("Failed to authenticate for favorites");
         return null;
 
     }

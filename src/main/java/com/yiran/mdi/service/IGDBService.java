@@ -25,8 +25,8 @@ public class IGDBService {
 
     private static final Logger logger = LoggerFactory.getLogger(IGDBService.class);
     private final GameRepository repository;
-    private final String client_id = "7cgee1enzd8jie79ufcfe2pgylfnv9";
-    private final String client_secret = "6ahzl8e014lxp9klsentuuadcg35iy";
+    private final String client_id = System.getenv("CLIENT_ID");
+    private final String client_secret = System.getenv("CLIENT_SECRET");
 
 
     public IGDBService(GameRepository repository) {
