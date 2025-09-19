@@ -1,5 +1,6 @@
 import {Link} from "react-router";
 import {useQuery} from "@tanstack/react-query";
+import type {Game} from "../util/MDITypes";
 
 function GamePage({page}: { page: number }) {
 
@@ -14,9 +15,9 @@ function GamePage({page}: { page: number }) {
     if (data) {
     return (
         <div className={"d-flex flex-row flex-wrap gap-3 justify-content-center p-3"}>
-            {data.content.map((game: any) => {
+            {data.content.map((game: Game) => {
                 return (
-                    <div className="d-flex flex-column" key={`${game.name}-${game.developer}`}>
+                    <div className="d-flex flex-column" key={`${game.name}-${game.id}`}>
                         {game.cover != null ? <img src={`${game.cover.url}`} alt={`cover image of ${game.name}`} className="game-img"/> :
                             <h4>{game.name}</h4>}
                         <Link to={`/games/${game.id}`} className={"btn btn-outline-custom"}>

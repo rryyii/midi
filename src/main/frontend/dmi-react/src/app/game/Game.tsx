@@ -5,6 +5,7 @@ import {useState} from "react";
 import Genres from "./Genres.tsx";
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import Platforms from "./Platforms.tsx";
+import type {Game} from "../util/MDITypes.ts";
 
 function Game() {
 
@@ -19,7 +20,7 @@ function Game() {
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const [failed, setFailed] = useState<boolean>(false)
 
-    const {data, error} = useQuery({
+    const {data, error} = useQuery<Game>({
         queryKey: ["game", game],
         queryFn: async () => {
             const response = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/game/${game}`,

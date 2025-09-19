@@ -86,7 +86,7 @@ function UserGameList() {
                                     {game.favorite ? <i className="fa-sharp fa-solid fa-star"></i> : ""}
                                 </td>
                                 <td className={"d-flex"}>
-                                    <EditGameStatus game={game}/>
+                                    <EditGameStatus gameId={game.id}/>
                                     <div>
                                         <button onClick={() => {
                                             handleSubmit(game.id)

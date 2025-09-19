@@ -1,12 +1,21 @@
-import {useMutation} from "@tanstack/react-query";
+import {useMutation, useQueryClient } from "@tanstack/react-query";
 import {useState} from "react";
 import {Menu, MenuButton, MenuItems} from "@headlessui/react";
 
-function EditGameStatus({game}: { game: any }) {
+function EditGameStatus({gameId}: { gameId: number }) {
 
+    const userString = localStorage.getItem("user-info");
+    if (userString == null) {
+        console.error("Failed to retrieve user info.")
+        return;
+    }
+    const userInfo: ResponseUser = JSON.parse(userString);
+
+    const queryClient = useQueryClient();
     const [status, setStatus] = useState<string>("");
     const [hours, setHours] = useState<number>(0);
     const [isFavorite, setIsFavorite] = useState<boolean>(false);
+    const [unFavorite, setUnFavorite] = useState<boolean>(false);
 
     const mutation = useMutation({
         mutationFn: async () => {
@@ -14,7 +23,7 @@ function EditGameStatus({game}: { game: any }) {
                 {
                     method: "PUT",
                     headers: {"Content-Type": "application/json", "Authorization": localStorage.getItem("username")},
-                    body: JSON.stringify({id: game.id, status: status, hoursPlayed: hours, isFavorite: isFavorite}),
+                    body: JSON.stringify({id: gameId, status: status, hoursPlayed: hours, isFavorite: isFavorite, unFavorite: unFavorite}),
                 });
             const response = await request.json();
             return response as any;
@@ -24,6 +33,8 @@ function EditGameStatus({game}: { game: any }) {
         },
         onSuccess: () => {
             console.log("Successfully updated game info.");
+            queryClient.invalidateQueries({queryKey: ["user-game-list", userInfo.id]});
+
         }
     })
 
@@ -46,6 +57,7 @@ function EditGameStatus({game}: { game: any }) {
                             setStatus(event.target.value)
                         }} id={"optionsList"}>
                             <option value={""}>Select a status</option>
+                            <option value={"Playing"}>Playing</option>
                             <option value={"Played"}>Played</option>
                             <option value={"Completed"}>Completed</option>
                             <option value={"Dropped"}>Dropped</option>
@@ -62,6 +74,10 @@ function EditGameStatus({game}: { game: any }) {
                         <label htmlFor={"isFavorite"}>Is Favorite:</label>
                         <input type={"checkbox"} id={"isFavorite"} onChange={(event) => {
                             setIsFavorite(event.target.checked)
+                        }} className={"form-check-input"}/>
+                        <label htmlFor={"unFavorite"}>Un-Favorite:</label>
+                        <input type={"checkbox"} id={"unFavorite"} onChange={(event) => {
+                            setUnFavorite(event.target.checked)
                         }} className={"form-check-input"}/>
                     </div>
                     <button type={"submit"} className={"btn btn-outline-custom"}>Update</button>

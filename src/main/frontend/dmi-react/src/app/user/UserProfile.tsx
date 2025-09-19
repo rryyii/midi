@@ -1,10 +1,15 @@
 import type {User} from "../util/MDITypes.ts";
 import {Link} from "react-router";
 import { useQuery } from "@tanstack/react-query";
+import type {Game} from "../util/MDITypes.ts";
 
 function UserProfile() {
     const userString = localStorage.getItem("user-info");
+    if (!userString) {
+        return null;
+    }
     const userInfo: User = JSON.parse(userString);
+    const auth = localStorage.getItem("username") ?? undefined;
 
     const {data, error} = useQuery({
         queryKey: ["user", userString],
@@ -12,7 +17,7 @@ function UserProfile() {
             const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/user_favorites/${userInfo.id}`,
                 {
                     method: "GET",
-                    headers: { "Content-Type": "application/json", "Authorization": localStorage.getItem("username")},
+                    headers: { "Content-Type": "application/json", "Authorization": auth},
                 })
             return await request.json();
         }
@@ -41,7 +46,7 @@ function UserProfile() {
                     <h4>Your Favorites</h4>
                     <div className={"border-bottom w-50"}></div>
                     <ul className="favorites-list">
-                        {data.map((game: any) => (
+                        {data.map((game: Game) => (
                             <li>
                                 {game.name}
                             </li>
