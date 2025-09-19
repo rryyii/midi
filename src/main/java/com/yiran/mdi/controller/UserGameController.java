@@ -46,7 +46,7 @@ public class UserGameController {
     @PutMapping("/user/update_game")
     public boolean updateUserGame(@RequestBody UserGameUpdateDto data, @RequestHeader("Authorization") String authHeader) {
         logger.debug("Beginning updating a game in a user's list.");
-        return service.updateUserGame(data.id, data.status, data.hoursPlayed, data.isFavorite, authHeader);
+        return service.updateUserGame(data.getId(), data.getStatus(), data.getHoursPlayed(), data.isFavorite(), data.isUnFavorite(), authHeader);
     }
 
 }

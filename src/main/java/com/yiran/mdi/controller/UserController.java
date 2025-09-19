@@ -48,8 +48,8 @@ public class UserController {
     @PutMapping("/update_user")
     public ResponseEntity<User> updateUser(@RequestBody UserUpdateDto user, @RequestHeader("Authorization") String authHeader) {
         logger.debug("Beginning updating a user in database.");
-        service.updateUser(user.id, user.username, user.password, user.email, user.bio, authHeader);
-        User newInfo = service.getUser(user.id);
+        service.updateUser(user.getId(), user.getUsername(), user.getPassword(), user.getEmail(), user.getBio(), authHeader);
+        User newInfo = service.getUser(user.getId());
         return new ResponseEntity<>(newInfo, null, HttpStatus.ACCEPTED);
     }
 
@@ -57,7 +57,7 @@ public class UserController {
     public ResponseEntity<UserLogin> validateUser(@RequestBody LoginRequestDto login) {
         logger.debug("Beginning authentication process for user.");
         HttpHeaders headers = new HttpHeaders();
-        long result = service.authenticateUser(login.username);
+        long result = service.authenticateUser(login.getUsername());
         if (result == -1) {
             logger.error("Failed to authenticate user.");
             return new ResponseEntity<>(headers, HttpStatus.NOT_FOUND);
@@ -71,7 +71,7 @@ public class UserController {
         List<String> access = new ArrayList<>();
         access.add("Authorization");
         headers.setAccessControlExposeHeaders(access);
-        headers.setBearerAuth(UserService.buildToken(login.username));
+        headers.setBearerAuth(UserService.buildToken(login.getUsername()));
         logger.info("Successfully logged in user.");
         return new ResponseEntity<>(secureLogin, headers, HttpStatus.CREATED);
     }

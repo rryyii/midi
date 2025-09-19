@@ -36,7 +36,6 @@ public class UserGameService {
 
     public List<UserGame> getUserGames(long id, String authHeader) {
         if (handleUserAuth(id, authHeader)) {
-            logger.debug("Authorized user");
             return repository.findByUserId(id);
         }
         logger.debug("Failed to authorize for getting user's games.");
@@ -70,7 +69,7 @@ public class UserGameService {
         return true;
     }
 
-    public boolean updateUserGame(long id, String status, int hoursPlayed, boolean isFavorite, String authHeader) {
+    public boolean updateUserGame(long id, String status, int hoursPlayed, boolean isFavorite, boolean isUnFavorite, String authHeader) {
         UserGame userGame = repository.findById(id).orElse(null);
         assert userGame != null;
         if (!handleUserAuth(userGame.getUser().getId(), authHeader)) {
@@ -83,7 +82,13 @@ public class UserGameService {
         if (hoursPlayed >= 0) {
             userGame.setHoursPlayed(hoursPlayed);
         }
-        userGame.setFavorite(isFavorite);
+        logger.debug(String.valueOf(isFavorite));
+        if (isUnFavorite) {
+            userGame.setFavorite(false);
+        }
+        if (isFavorite) {
+            userGame.setFavorite(true);
+        }
         repository.save(userGame);
         return true;
     }
