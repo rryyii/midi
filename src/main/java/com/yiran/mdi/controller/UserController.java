@@ -33,10 +33,15 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    public boolean createUser(@RequestBody User user) {
+    public ResponseEntity<String> createUser(@RequestBody User user) {
         logger.debug("Beginning creating a new user.");
+        if (user.getUsername().isBlank() || user.getPassword().isBlank() || user.getEmail().isEmpty()) {
+            return ResponseEntity.badRequest()
+                    .body("Username, password, and email cannot be blank");
+        }
         service.createUser(user);
-        return true;
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body("User created successfully");
     }
 
     @DeleteMapping("/rm_user/{id}")

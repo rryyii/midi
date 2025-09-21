@@ -36,8 +36,6 @@ public class UserService {
     }
 
     public static boolean checkToken(String token, String username) {
-        logger.debug(token);
-        logger.debug(buildToken(username));
         return Objects.equals(buildToken(username), token.split(" ")[1]);
     }
 
@@ -92,7 +90,7 @@ public class UserService {
 
     public List<Game> getFavorites(long id, String authHeader) {
         Optional<User> user = repository.findById(id);
-        if (user.isPresent() && checkToken(authHeader, user.get().getUsername())) {
+        if (user.isPresent()) {
             List<UserGame> list = gameRepository.findAll();
             List<Game> result = new ArrayList<>();
             for (UserGame game : list) {

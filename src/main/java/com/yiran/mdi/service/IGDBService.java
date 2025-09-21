@@ -63,7 +63,6 @@ public class IGDBService {
         assert(wrapper != null);
         try {
             String result = JsonRequestKt.jsonGames(wrapper, apicalypse);
-            logger.debug(result);
             Gson gson = new Gson();
             Type gameListType = new TypeToken<List<Game>>() {}.getType();
             List<Game> gameResult = gson.fromJson(result, gameListType);
