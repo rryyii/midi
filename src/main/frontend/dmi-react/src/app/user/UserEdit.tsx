@@ -1,6 +1,7 @@
 import {useState} from "react";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import type {ResponseUser} from "../util/MDITypes.ts";
+import { Link } from "react-router";
 
 function UserEdit() {
 
@@ -81,6 +82,9 @@ function UserEdit() {
                     <button type={"submit"} className={"btn btn-outline-custom"}>Update</button>
                 </div>
             </div>
+            <Link to="/profile/edit/account">
+                    Update email/password
+            </Link>
         </form>
     );
 }

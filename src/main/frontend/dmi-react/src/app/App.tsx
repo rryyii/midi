@@ -11,6 +11,8 @@ import UserEdit from "./user/UserEdit.tsx";
 import GameList from "./game/GameList.tsx";
 import Game from "./game/Game.tsx";
 import Footer from "./layout/Footer.tsx";
+import UserPrivacy from "./user/UserPrivacy.tsx";
+import GameSearch from "./game/GameSearch.tsx";
 
 const queryClient = new QueryClient();
 
@@ -32,8 +34,10 @@ function App() {
                         <Route path={"/logout"} element={<UserLogout/>}/>
                         <Route path={"/profile"} element={<UserProfile/>}/>
                         <Route path={"/profile/edit"} element={<UserEdit/>}/>
+                        <Route path={"profile/edit/account"} element={<UserPrivacy/>}/>
                         <Route path={"/games"} element={<GameList/>}/>
                         <Route path={`/games/:gameId`} element={<Game/>}/>
+                        <Route path={`/search/:gameName`} element={<GameSearch/>}/>
                     </Routes>
                     <Footer/>
                 </Router>

@@ -96,7 +96,7 @@ function Game() {
                 <div className={"d-flex flex-column gap-3 p-3"}>
                     <div className={"d-flex align-items-center gap-3"}>
                         <h2>{data.name}</h2>
-                        {data.cover != null ? <img src={`${data.cover.url}`} width={"100px"} height={"100px"} alt={`cover image of ${data.name}`}/> :
+                        {data.cover != null ? <img src={`https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${data.cover.image_id}.jpg`} loading="lazy" className="game-img" alt={`cover image of ${data.name}`}/> :
                             <h4>{data.name}</h4>}
                     </div>
                     <Genres value={data.genres}/>

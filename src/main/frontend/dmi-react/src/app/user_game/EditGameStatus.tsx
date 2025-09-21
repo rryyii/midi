@@ -23,7 +23,7 @@ function EditGameStatus({gameId}: { gameId: number }) {
                 {
                     method: "PUT",
                     headers: {"Content-Type": "application/json", "Authorization": localStorage.getItem("username")},
-                    body: JSON.stringify({id: gameId, status: status, hoursPlayed: hours, isFavorite: isFavorite, unFavorite: unFavorite}),
+                    body: JSON.stringify({id: gameId, status: status, hoursPlayed: hours, favorite: isFavorite, unFavorite: unFavorite}),
                 });
             const response = await request.json();
             return response as any;

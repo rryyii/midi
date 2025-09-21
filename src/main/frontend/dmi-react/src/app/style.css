@@ -164,8 +164,18 @@ footer {
 
 .game-img {
     border-radius: 0.5rem;
-    width: 85px;
-    height: 85px;
+    width: 110px;
+    height: 110px;
+}
+
+.game-card {
+    border: .1rem solid transparent !important;
+    border-radius: 0.5rem;
+    transition: border 0.15s ease-in-out !important;
+}
+
+.game-card:hover {
+     border: .1rem solid #d37c9e !important;
 }
 
 

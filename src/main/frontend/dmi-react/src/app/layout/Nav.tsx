@@ -1,6 +1,7 @@
 import {Link, useNavigate} from "react-router";
 import {useUser} from "../util/UserHook.tsx";
 import {useQueryClient} from "@tanstack/react-query";
+import Search from "./Search.tsx"
 
 /**
  * Returns the component for the Navigation Bar.
@@ -68,6 +69,9 @@ function Nav() {
                         </li>
                     </>
                 }
+            <li>
+                <Search />
+            </li>
             </ul>
         </nav>
     );

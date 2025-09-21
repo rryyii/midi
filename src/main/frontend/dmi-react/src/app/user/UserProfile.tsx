@@ -24,6 +24,7 @@ function UserProfile() {
     });
 
     if (data) {
+        console.log(data);
         return (
             <div className={"container d-flex flex-grow-1 flex-column gap-3 p-3"}>
                 <div>
@@ -45,10 +46,10 @@ function UserProfile() {
                 <div>
                     <h4>Your Favorites</h4>
                     <div className={"border-bottom w-50"}></div>
-                    <ul className="favorites-list">
+                    <ul className="favorites-list d-flex flex-row gap-3 p-3">
                         {data.map((game: Game) => (
                             <li>
-                                {game.name}
+                                <img src={`https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${game.cover.image_id}.jpg`} loading="lazy" className="game-img shadow" alt={`cover image of ${game.name}`}/>
                             </li>
                             ))
                         }
