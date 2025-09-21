@@ -40,8 +40,8 @@ function UserRegister() {
     return (
         <div className={"container d-flex flex-column justify-content-center align-items-center gap-3 p-3 flex-grow-1"}>
             <h4>Registration</h4>
-            <form id={"registerForm"} onSubmit={handleSubmit}>
-                <fieldset className={"userField"}>
+            <form id={"registerForm"} className={"d-flex flex-column"} onSubmit={handleSubmit}>
+                <fieldset className={"userField d-flex flex-column gap-3"}>
                     <input value={username} placeholder={"username"} onChange={(event) => {
                         setUsername(event.target.value)
                     }} id="userId" type={"text"} className={"form-control"}/>
@@ -52,7 +52,7 @@ function UserRegister() {
                         setEmail(event.target.value)
                     }} id="emailId" type={"email"} className={"form-control"}/>
                 </fieldset>
-                <button type={"submit"} className={"btn"}>Register</button>
+                <button type={"submit"} className={"btn btn-outline-custom"}>Register</button>
             </form>
             <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
                 <div className={"position-fixed d-flex flex-column top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-dark bg-opacity-50"}>

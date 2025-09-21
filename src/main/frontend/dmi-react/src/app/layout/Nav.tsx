@@ -40,7 +40,7 @@ function Nav() {
                             </a>
                             <ul className={"dropdown-menu drop-down"}>
                                 <li>
-                                    <Link to={"/profile"} className={"dropdown-item"}>
+                                    <Link to={`/profile/${user.id}`} className={"dropdown-item"}>
                                         Profile
                                     </Link>
                                 </li>

@@ -12,7 +12,7 @@ function UserPrivacy({id} : {id: number}) {
             const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/user_account`, 
                 {
                     method: "POST",
-                    headers: { "Content-Type": "application/json", "Authorization": localStorage.getItem("username")},
+                    headers: { "Content-Type": "application/json", "Authorization": localStorage.getItem("username") || "none"},
                     body: JSON.stringify({
                         id: id,
                         email: email,
@@ -35,21 +35,21 @@ function UserPrivacy({id} : {id: number}) {
     }
 
     return (
-        <div className="container">
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="email-input">Email</label>
-                    <input value={email} type="email" placeholder="new email" className="form-control w-25" id="email-input" onChange={(event) => setEmail(event.target.value)}/>
+                <div className="container">
+                    <div>
+                        <label htmlFor="email-input">Email</label>
+                        <input value={email} type="email" placeholder="new email" className="form-control w-25" id="email-input" onChange={(event) => setEmail(event.target.value)}/>
+                    </div>
+                    <div>
+                        <label htmlFor="password-input">New Password</label>
+                        <input value={password} type="password" placeholder="enter new password" id="password-input" className="form-control w-25" onChange={(event) => setPassword(event.target.value)}/>
+                        <label htmlFor="repeat-password-input">Re-enter Your New Password</label>
+                        <input value={repeatPassword} type="password" placeholder="re-enter new password" id="repeat-password-input" className="form-control w-25" onChange={(event) => setRepeatPassword(event.target.value)}/>
+                    </div>
+                    <button type="submit" className="btn btn-outline-custom">Save</button>
                 </div>
-                <div>
-                    <label htmlFor="password-input">New Password</label>
-                    <input value={password} type="password" placeholder="enter new password" id="password-input" className="form-control w-25" onChange={(event) => setPassword(event.target.value)}/>
-                    <label htmlFor="repeat-password-input">Re-enter Your New Password</label>
-                    <input value={repeatPassword} type="password" placeholder="re-enter new password" id="repeat-password-input" className="form-control w-25" onChange={(event) => setRepeatPassword(event.target.value)}/>
-                </div>
-                <button type="submit" className="btn btn-outline-custom">Save</button>
             </form>
-        </div>
     );
 }
 

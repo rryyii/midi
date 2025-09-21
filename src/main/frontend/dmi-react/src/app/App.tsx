@@ -32,7 +32,7 @@ function App() {
                         <Route path={"/login"} element={<UserLogin/>}/>
                         <Route path={"/register"} element={<UserRegister/>}/>
                         <Route path={"/logout"} element={<UserLogout/>}/>
-                        <Route path={"/profile"} element={<UserProfile/>}/>
+                        <Route path={"/profile/:userId"} element={<UserProfile/>}/>
                         <Route path={"/profile/edit"} element={<UserEdit/>}/>
                         <Route path={"profile/edit/account"} element={<UserPrivacy/>}/>
                         <Route path={"/games"} element={<GameList/>}/>

@@ -7,8 +7,6 @@ function UserEdit() {
 
     const queryClient = useQueryClient();
     const [name, setName] = useState<string>("");
-    const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
     const [bio, setBio] = useState<string>("");
 
     const userString = localStorage.getItem("user-info");
@@ -23,12 +21,10 @@ function UserEdit() {
             const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/update_user`,
                 {
                     method: "PUT",
-                    headers: {"Content-Type": "application/json", "Authorization": localStorage.getItem("username")},
+                    headers: {"Content-Type": "application/json", "Authorization": localStorage.getItem("username") || "none"},
                     body: JSON.stringify({
                         id: userInfo.id,
                         username: name,
-                        password: password,
-                        email: email,
                         bio: bio,
                     }),
                 });
@@ -59,18 +55,6 @@ function UserEdit() {
                     <input value={name} onChange={(event) => {
                         setName(event.target.value)
                     }} type={"text"} id={"name-input"} placeholder={"username"} className={"form-control w-25"}/>
-                </div>
-                <div className={"edit-form"}>
-                    <label htmlFor={"password-input"}>Password</label>
-                    <input value={password} onChange={(event) => {
-                        setPassword(event.target.value)
-                    }} placeholder={"password"} className={"form-control w-25"}></input>
-                </div>
-                <div className={"edit-form"}>
-                    <label htmlFor={"email-input"}>Email</label>
-                    <input value={email} onChange={(event) => {
-                        setEmail(event.target.value)
-                    }} type={"email"} id={"email-input"} placeholder={"email"} className={"form-control w-25"}/>
                 </div>
                 <div className={"edit-form"}>
                     <label htmlFor={"bio-input"}>Bio</label>

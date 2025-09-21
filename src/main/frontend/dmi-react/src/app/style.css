@@ -1,16 +1,17 @@
 :root {
     --bg-primary: #222831;
     --bg-secondary: #37414F;
+    --btn-color: #395dc6;
 }
 
 a {
-    color: #B54A74 !important;
+    color: var(--btn-color) !important;
     transition: color 0.2s ease-in-out;
     text-decoration: none !important;
 }
 
 a:hover {
-  color: #d37c9e !important;
+  color: #b0bee8 !important;
  }
 
 #root {
@@ -95,15 +96,15 @@ nav {
 }
 
 .btn-outline-custom {
-    border: .1rem solid #B54A74 !important;
-    color: #B54A74 !important;
+    border: .1rem solid var(--btn-color) !important;
+    color: var(--btn-color)!important;
     transition: border 0.3s ease-in-out !important;
     transition: color 0.3s ease-in-out !important;
 }
 
 .btn-outline-custom:hover {
-    border: .1rem solid #d37c9e !important;
-    color: #d37c9e !important;
+    border: .1rem solid #b0bee8 !important;
+    color: #b0bee8 !important;
 }
 
 /* Form Styles  */
@@ -111,7 +112,6 @@ nav {
     max-width: 65vw;
     border-radius: .5rem;
     padding: 1rem;
-    background-color: white;
     color: black;
 }
 
@@ -164,8 +164,8 @@ footer {
 
 .game-img {
     border-radius: 0.5rem;
-    width: 110px;
-    height: 110px;
+    width: 120px;
+    height: 150px;
 }
 
 .game-card {
@@ -175,7 +175,7 @@ footer {
 }
 
 .game-card:hover {
-     border: .1rem solid #d37c9e !important;
+     border: .1rem solid #b0bee8 !important;
 }
 
 

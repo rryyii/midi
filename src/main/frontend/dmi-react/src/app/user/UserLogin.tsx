@@ -49,8 +49,8 @@ function UserLogin() {
     return (
         <div className={"container d-flex justify-content-center align-items-center flex-grow-1 flex-column gap-3 p-3"}>
             <h4>Welcome!</h4>
-            <form id={"loginForm"} onSubmit={handleSubmit}>
-                <fieldset className={"userField"}>
+            <form id={"loginForm"} className={"d-flex flex-column justify-content-center"} onSubmit={handleSubmit}>
+                <fieldset className={"userField d-flex flex-column gap-3"}>
                     <input value={username} placeholder={"username"} onChange={(event) => {
                         setUsername(event.target.value)
                     }} id="userId" type={"text"} className={"form-control"}/>
@@ -58,7 +58,7 @@ function UserLogin() {
                         setPassword(event.target.value)
                     }} id="passwordId" type={"password"} className={"form-control"}/>
                 </fieldset>
-                <button type={"submit"} className={"btn"}>Log In</button>
+                <button type={"submit"} className={"btn btn-outline-custom"}>Log In</button>
             </form>
         </div>
     );

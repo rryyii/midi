@@ -3,7 +3,7 @@ function Footer() {
         <footer className={"footer"}>
             <span>Made by rryyii </span>
             <span>
-                • Powered by <a href={"https://www.igdb.com/"} target={"_blank"}>IGDB</a>
+                Data from <a href={"https://www.igdb.com/"} target={"_blank"}>IGDB</a>
             </span>
         </footer>
     );

@@ -21,6 +21,7 @@ export type UserGame = {
 }
 
 export type User = {
+    id: number,
     username: string,
     password: string,
     email: string,

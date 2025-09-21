@@ -37,7 +37,7 @@ function Game() {
             const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/user/add_game`,
                 {
                     method: "POST",
-                    headers: {"Content-Type": "application/json", "Authorization": localStorage.getItem("username")},
+                    headers: {"Content-Type": "application/json", "Authorization": localStorage.getItem("username") || "none"},
                     body: JSON.stringify({id: gameId, user_id: userInfo.id}),
                 }
             );
@@ -93,19 +93,21 @@ function Game() {
                         </DialogPanel>
                     </Dialog>
                 </form>
-                <div className={"d-flex flex-column gap-3 p-3"}>
-                    <div className={"d-flex align-items-center gap-3"}>
-                        <h2>{data.name}</h2>
-                        {data.cover != null ? <img src={`https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${data.cover.image_id}.jpg`} loading="lazy" className="game-img" alt={`cover image of ${data.name}`}/> :
-                            <h4>{data.name}</h4>}
+                <div className={"d-flex flex-column gap-5 p-3"}>
+                    <div className={"d-flex flex-row align-items-center gap-3"}>
+                        <div>
+                            {data.cover != null ? <img src={`https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${data.cover.image_id}.jpg`} loading="lazy" className="game-img" alt={`cover image of ${data.name}`}/> :
+                                <h4>{data.name}</h4>}
+                            <h2>{data.name}</h2>
+                        </div>
+                        <div className="d-flex flex-column gap-3">
+                            <Genres value={data.genres}/>
+                            <Platforms value={data.platforms}/>
+                            <p>First Released - {new Date(data.first_release_date * 1000).toDateString()}</p>
+                            <p>{data.total_rating}/100 out of {data.total_rating_count} reviews</p>
+                        </div>
                     </div>
-                    <Genres value={data.genres}/>
-                    <Platforms value={data.platforms}/>
-                    <p>First Released: {new Date(data.first_release_date * 1000).toDateString()}</p>
-                    <div>
-                        <p>{parseInt(data.total_rating)}/100 out of {data.total_rating_count} reviews</p>
-                    </div>
-                    <p>{data.summary}</p>
+                    <p className="fs-5">{data.summary}</p>
                 </div>
             </div>
         );
