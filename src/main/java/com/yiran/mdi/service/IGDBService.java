@@ -56,13 +56,14 @@ public class IGDBService {
     public List<Game> getGames() {
         IGDBWrapper wrapper = getWrapper();
         APICalypse apicalypse = new APICalypse()
-                .fields("id,name,genres.name,total_rating,total_rating_count,first_release_date,summary,cover.url,platforms.name")
+                .fields("id,name,genres.name,total_rating,total_rating_count,first_release_date,summary,cover.image_id,platforms.name")
                 .sort("total_rating_count", Sort.DESCENDING)
                 .where("total_rating >= 85")
                 .limit(500);
         assert(wrapper != null);
         try {
             String result = JsonRequestKt.jsonGames(wrapper, apicalypse);
+            logger.debug(result);
             Gson gson = new Gson();
             Type gameListType = new TypeToken<List<Game>>() {}.getType();
             List<Game> gameResult = gson.fromJson(result, gameListType);

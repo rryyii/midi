@@ -1,5 +1,6 @@
 package com.yiran.mdi.service;
 
+import com.yiran.mdi.dto.UserAccountDto;
 import com.yiran.mdi.model.Game;
 import com.yiran.mdi.model.User;
 import com.yiran.mdi.model.UserGame;
@@ -60,23 +61,15 @@ public class UserService {
         repository.deleteById(id);
     }
 
-    public void updateUser(long id, String username, String password, String email, String bio, String authHeader) {
+    public void updateUser(long id, String username, String bio, String authHeader) {
         User user = getUser(id);
         if (!checkToken(authHeader, user.getUsername())) {
             logger.error("Failed to authentication token for updating user.");
             return;
         }
-        if (username != null&& !username.isEmpty()) {
+        if (username != null && !username.isEmpty()) {
             logger.debug("Updating user's username.");
             user.setUsername(username);
-        }
-        if (password != null && !password.isEmpty()) {
-            logger.debug("Updating user's password.");
-            user.setPassword(password);
-        }
-        if (email != null && !email.isEmpty()) {
-            logger.debug("Updating user's email.");
-            user.setEmail(email);
         }
         if (bio != null && !bio.isEmpty()) {
             logger.debug("Updating user's bio.");
@@ -112,6 +105,27 @@ public class UserService {
         logger.error("Failed to authenticate for favorites");
         return null;
 
+    }
+
+    public boolean changeAccountInfo(UserAccountDto data, String authHeader) {
+        Optional<User> findUser = repository.findById(data.getId());
+        if (findUser.isEmpty() || !checkToken(authHeader, findUser.get().getUsername())) {
+            return false;
+        }
+        User user = findUser.get();
+        String password = data.getPassword();
+        String repeat = data.getRepeatPassword();
+        String email = data.getEmail();
+        if (!password.isEmpty() && !repeat.isEmpty()) {
+            if (!password.equals(repeat)) {
+                return false;
+            }
+            user.setPassword(password);
+        }
+        if (!email.isEmpty()) {
+            user.setEmail(email);
+        }
+        return true;
     }
 
 }

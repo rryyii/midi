@@ -69,7 +69,7 @@ public class UserGameService {
         return true;
     }
 
-    public boolean updateUserGame(long id, String status, int hoursPlayed, boolean isFavorite, boolean isUnFavorite, String authHeader) {
+    public boolean updateUserGame(long id, String status, int hoursPlayed, boolean isFavorite, String authHeader) {
         UserGame userGame = repository.findById(id).orElse(null);
         assert userGame != null;
         if (!handleUserAuth(userGame.getUser().getId(), authHeader)) {
@@ -83,9 +83,6 @@ public class UserGameService {
             userGame.setHoursPlayed(hoursPlayed);
         }
         logger.debug(String.valueOf(isFavorite));
-        if (isUnFavorite) {
-            userGame.setFavorite(false);
-        }
         if (isFavorite) {
             userGame.setFavorite(true);
         }

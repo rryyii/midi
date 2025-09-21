@@ -13,5 +13,5 @@ public class CoverImage implements java.io.Serializable {
 
     @Id
     public Long id;
-    public String url;
+    public String image_id;
 }

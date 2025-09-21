@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,6 +38,13 @@ public class GameService {
         }
         logger.warn("No games found on page {}.", page);
         return null;
+    }
+
+    public List<Game> getGames(String name) {
+
+        List<Game> t = repository.findByNameContainingIgnoreCase(name);
+        logger.debug(t.toString());
+        return repository.findByNameContainingIgnoreCase(name);
     }
 
 

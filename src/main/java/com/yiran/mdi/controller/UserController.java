@@ -1,6 +1,7 @@
 package com.yiran.mdi.controller;
 
 import com.yiran.mdi.dto.LoginRequestDto;
+import com.yiran.mdi.dto.UserAccountDto;
 import com.yiran.mdi.dto.UserUpdateDto;
 import com.yiran.mdi.model.Game;
 import com.yiran.mdi.model.User;
@@ -48,7 +49,7 @@ public class UserController {
     @PutMapping("/update_user")
     public ResponseEntity<User> updateUser(@RequestBody UserUpdateDto user, @RequestHeader("Authorization") String authHeader) {
         logger.debug("Beginning updating a user in database.");
-        service.updateUser(user.getId(), user.getUsername(), user.getPassword(), user.getEmail(), user.getBio(), authHeader);
+        service.updateUser(user.getId(), user.getUsername(), user.getBio(), authHeader);
         User newInfo = service.getUser(user.getId());
         return new ResponseEntity<>(newInfo, null, HttpStatus.ACCEPTED);
     }
@@ -80,6 +81,12 @@ public class UserController {
     public List<Game> getUserFavorites(@PathVariable long id, @RequestHeader("Authorization") String authHeader) {
         logger.debug("Fetching user's favorite games");
         return service.getFavorites(id, authHeader);
+    }
+
+    @PostMapping("/user_account")
+    public boolean changeAccountInfo(@RequestBody UserAccountDto data, @RequestHeader("Authorization") String authHeader) {
+        logger.debug("Changing user's account information");
+        return service.changeAccountInfo(data, authHeader);
     }
 
 }
