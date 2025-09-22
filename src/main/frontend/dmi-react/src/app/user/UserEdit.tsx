@@ -49,6 +49,8 @@ function UserEdit() {
 
     return (
         <form onSubmit={handleSubmit} className={"container"}>
+            <h4>Profile</h4>
+            <div className={"border-bottom w-50"}></div>
             <div className={"edit-container d-flex flex-grow-1 flex-column gap-3"}>
                 <div className={"edit-form"}>
                     <label htmlFor={"name-input"}>Name</label>

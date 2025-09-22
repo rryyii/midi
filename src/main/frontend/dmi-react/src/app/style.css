@@ -20,11 +20,23 @@ a:hover {
     flex: 1 0 auto;
 }
 
+.dropdown-custom {
+    background-color: var(--bg-secondary) !important;
+}
+
+.dropdown-item {
+    color: white!important;
+}
+
+.dropdown-item:hover {
+    background-color: inherit !important;
+}
+
 /* Base Styles */
 body {
     display: flex;
     flex-direction: column;
-    font-family: "Jost", sans-serif !important;
+    font-family: "Roboto", sans-serif !important;
     background-color: var(--bg-primary) !important;
     color: white !important;
     min-height: 100vh;
@@ -154,6 +166,13 @@ footer {
     padding: 2rem;
 }
 
+.pop-up {
+    background-color: var(--bg-secondary) !important;
+    border-radius: .5rem;
+    animation-name: fadeIn;
+    animation-duration: 0.3s;
+}
+
 /* Game Styles */
 .genre {
     padding: .5rem;
@@ -172,6 +191,8 @@ footer {
     border: .1rem solid transparent !important;
     border-radius: 0.5rem;
     transition: border 0.15s ease-in-out !important;
+    width: 120px;
+    height: 150px;
 }
 
 .game-card:hover {
@@ -209,3 +230,21 @@ footer {
     list-style: none;
 }
 
+
+
+/* Search Styles  */
+.search-bar {
+    background-color: var(--bg-primary);
+    color: white;
+    padding-left: 1rem;
+    border-radius: 1rem;
+}
+
+
+.log-custom {
+    border: solid var(--bg-secondary) .2rem;
+    width: 45vw;
+    height: 50vh;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}

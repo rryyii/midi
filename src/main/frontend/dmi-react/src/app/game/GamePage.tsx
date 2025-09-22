@@ -17,13 +17,10 @@ function GamePage({page}: { page: number }) {
             <div className={"d-flex flex-row flex-wrap gap-3 justify-content-center p-3"}>
                 {data.content.map((game: Game) => {
                     return (
-                        <div className="d-flex flex-column shadow game-card" key={`${game.name}-${game.id}`}>
-                            {game.cover != null ? <img src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover.image_id}.jpg`} loading="lazy" alt={`cover image of ${game.name}`} className="game-img"/> :
-                                <h4>{game.name}</h4>}
-                            <Link to={`/games/${game.id}`} className={"btn btn-outline-custom"}>
-                                View
-                            </Link>
-                        </div>
+                        <Link to={`/games/${game.id}`} key={`${game.id}-page`}>
+                                {game.cover != null ? <img src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover.image_id}.jpg`} loading="lazy" alt={`cover image of ${game.name}`} className="game-card"/> :
+                                    <h4>{game.name}</h4>}
+                        </Link>
                     );
                 })}
             </div>

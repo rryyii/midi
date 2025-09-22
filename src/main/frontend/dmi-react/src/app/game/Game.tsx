@@ -64,14 +64,28 @@ function Game() {
     if (data) {
         return (
             <div className={"container"}>
-                <form onSubmit={handleSubmit}>
+                <div className={"d-flex flex-column gap-5 p-3"}>
+                    <div className={"d-flex flex-row align-items-center gap-3"}>
+                        <div className={"d-flex flex-column align-items-center gap-3"}>
+                            {data.cover != null ? <img src={`https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${data.cover.image_id}.jpg`} loading="lazy" className="game-img" alt={`cover image of ${data.name}`}/> :
+                                <h4>{data.name}</h4>}
+                            <h4>{data.name}</h4>
+                        </div>
+                        <div className="d-flex flex-column gap-3">
+                            <Genres value={data.genres}/>
+                            <Platforms value={data.platforms}/>
+                            <p>First Released - {new Date(data.first_release_date * 1000).toDateString()}</p>
+                            <p>{data.total_rating}/100 out of {data.total_rating_count} reviews</p>
+                        </div>
+                    </div>
+                     <form onSubmit={handleSubmit}>
                     <button onClick={() => setGameId(data.id)} type={"submit"}
                             className={"btn btn-outline-custom"}>
-                        +
+                        Add To List
                     </button>
                     <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
                         <div
-                            className={"position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-dark bg-opacity-50"}>
+                            className={"position-fixed top-0 m-5 start-0 p-5 w-45 h-45 d-flex justify-content-center align-items-center pop-up shadow"}>
                             <DialogPanel>
                                 <DialogTitle>
                                     <p>Successfully added game to your list!</p>
@@ -93,21 +107,8 @@ function Game() {
                         </DialogPanel>
                     </Dialog>
                 </form>
-                <div className={"d-flex flex-column gap-5 p-3"}>
-                    <div className={"d-flex flex-row align-items-center gap-3"}>
-                        <div>
-                            {data.cover != null ? <img src={`https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${data.cover.image_id}.jpg`} loading="lazy" className="game-img" alt={`cover image of ${data.name}`}/> :
-                                <h4>{data.name}</h4>}
-                            <h2>{data.name}</h2>
-                        </div>
-                        <div className="d-flex flex-column gap-3">
-                            <Genres value={data.genres}/>
-                            <Platforms value={data.platforms}/>
-                            <p>First Released - {new Date(data.first_release_date * 1000).toDateString()}</p>
-                            <p>{data.total_rating}/100 out of {data.total_rating_count} reviews</p>
-                        </div>
-                    </div>
-                    <p className="fs-5">{data.summary}</p>
+                    <p className="fs-6">{data.summary}</p>
+                    
                 </div>
             </div>
         );

@@ -1,6 +1,7 @@
 import {useMutation, useQueryClient } from "@tanstack/react-query";
 import {useState} from "react";
 import {Menu, MenuButton, MenuItems} from "@headlessui/react";
+import type { ResponseUser } from "../util/MDITypes";
 
 function EditGameStatus({gameId}: { gameId: number }) {
 
@@ -22,7 +23,7 @@ function EditGameStatus({gameId}: { gameId: number }) {
             const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/user/update_game`,
                 {
                     method: "PUT",
-                    headers: {"Content-Type": "application/json", "Authorization": localStorage.getItem("username")},
+                    headers: {"Content-Type": "application/json", "Authorization": localStorage.getItem("username") || "none"},
                     body: JSON.stringify({id: gameId, status: status, hoursPlayed: hours, favorite: isFavorite, unFavorite: unFavorite}),
                 });
             const response = await request.json();

@@ -48,7 +48,8 @@ function UserLogin() {
 
     return (
         <div className={"container d-flex justify-content-center align-items-center flex-grow-1 flex-column gap-3 p-3"}>
-            <h4>Welcome!</h4>
+            <h4>Welcome to DIMI!</h4>
+            <div className={"border-bottom w-25"}></div>
             <form id={"loginForm"} className={"d-flex flex-column justify-content-center"} onSubmit={handleSubmit}>
                 <fieldset className={"userField d-flex flex-column gap-3"}>
                     <input value={username} placeholder={"username"} onChange={(event) => {

@@ -23,8 +23,8 @@ function GameSearch() {
                 <h3>Results for: {name}</h3>
                 <div className="border-bottom p-2"></div>
                 {data.map((game : Game) => (
-                    <Link to={`/games/${game.id}`}>
-                        <div key={`${game.id}-${game.name}`} className="d-flex align-items-center gap-5 justify-content-center">
+                    <Link to={`/games/${game.id}`} key={`${game.id}-${game.name}`} >
+                        <div className="d-flex align-items-center gap-5 justify-content-start">
                             <h4>{game.name}</h4>
                             <img src={`https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${game.cover.image_id}.jpg`} loading="lazy" className="game-img" alt={`cover image of ${game.name}`}/>
                         </div>

@@ -40,6 +40,7 @@ function UserRegister() {
     return (
         <div className={"container d-flex flex-column justify-content-center align-items-center gap-3 p-3 flex-grow-1"}>
             <h4>Registration</h4>
+            <div className={"border-bottom w-25"}></div>
             <form id={"registerForm"} className={"d-flex flex-column"} onSubmit={handleSubmit}>
                 <fieldset className={"userField d-flex flex-column gap-3"}>
                     <input value={username} placeholder={"username"} onChange={(event) => {

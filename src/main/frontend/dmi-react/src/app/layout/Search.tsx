@@ -16,8 +16,8 @@ function Search() {
     return (
         <div>
             <form onSubmit={handleSubmit} className="d-flex">
-                <input value={input} className="form-control" onChange={(event) => setInput(event.target.value)} type="search" placeholder="Search"/>
-                <button type="submit" className="btn border">
+                <input value={input} className={"search-bar"} onChange={(event) => setInput(event.target.value)} type="search" placeholder="Search"/>
+                <button type="submit" className="btn">
                     <i className="fa-solid fa-search icon-color"></i>
                 </button>
             </form>

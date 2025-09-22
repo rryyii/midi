@@ -35,8 +35,10 @@ function UserPrivacy({id} : {id: number}) {
     }
 
     return (
-            <form onSubmit={handleSubmit}>
-                <div className="container">
+            <form onSubmit={handleSubmit} className={"container"}>
+                <h4>Password and Email</h4>
+                <div className={"border-bottom w-50"}></div>
+                <div className="d-flex flex-column gap-3 p-3">
                     <div>
                         <label htmlFor="email-input">Email</label>
                         <input value={email} type="email" placeholder="new email" className="form-control w-25" id="email-input" onChange={(event) => setEmail(event.target.value)}/>
@@ -47,7 +49,7 @@ function UserPrivacy({id} : {id: number}) {
                         <label htmlFor="repeat-password-input">Re-enter Your New Password</label>
                         <input value={repeatPassword} type="password" placeholder="re-enter new password" id="repeat-password-input" className="form-control w-25" onChange={(event) => setRepeatPassword(event.target.value)}/>
                     </div>
-                    <button type="submit" className="btn btn-outline-custom">Save</button>
+                    <button type="submit" className="btn btn-outline-custom w-25">Save</button>
                 </div>
             </form>
     );
