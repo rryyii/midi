@@ -1,7 +1,5 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Link } from "react-router";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { ResponseUser } from "../util/MDITypes.ts";
-import EditGameStatus from "./EditGameStatus.tsx";
 import { useState } from "react";
 import UserGameLog from "./UserGameLog.tsx";
 
@@ -9,9 +7,7 @@ import UserGameLog from "./UserGameLog.tsx";
  * Returns a component that display's a User's tracked Games.
  * @constructor
  */
-function UserGameList() {
-
-    const queryClient = useQueryClient();
+function UserGameList({status} : {status: string}) {
 
     const userString = localStorage.getItem("user-info");
     if (userString == null) {
@@ -23,9 +19,9 @@ function UserGameList() {
     const [selectedGame, setSelectedGame] = useState<any>();
 
     const { data, error } = useQuery({
-        queryKey: ["user-game-list", userInfo.id],
+        queryKey: ["user-game-list", userInfo.id, status],
         queryFn: async () => {
-            const response = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/user/games/${userInfo.id}`,
+            const response = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/user/games/${userInfo.id}/${status}`,
                 {
                     method: "GET",
                     headers: { "Content-Type": "application/json", "Authorization": localStorage.getItem("username") || "none" },
@@ -37,11 +33,11 @@ function UserGameList() {
 
     if (error) return "An error occurred";
 
+    if (data && data.length == 0) return "No Games";
+
     if (data) {
         return (
             <div className={"container d-flex flex-grow-1 flex-column gap-3"}>
-                <h4>Your Log</h4>
-                <div className={"border-bottom w-85"}></div>
                 <div className={"row"}>
                     <div className={"col d-flex flex-column gap-3"}>
                         {data.map((game: any) => (

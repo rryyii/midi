@@ -58,11 +58,11 @@ function EditGameStatus({gameId}: { gameId: number }) {
                             setStatus(event.target.value)
                         }} id={"optionsList"}>
                             <option value={""}>Select a status</option>
-                            <option value={"Playing"}>Playing</option>
-                            <option value={"Played"}>Played</option>
+                            <option value={"Playing"}>Currently Playing</option>
                             <option value={"Completed"}>Completed</option>
                             <option value={"Dropped"}>Dropped</option>
-                            <option value={"Planned"}>Planned</option>
+                            <option value={"On Hold"}>On Hold</option>
+                            <option value={"Planned"}>Plan to Play</option>
                         </select>
                     </div>
                     <div className={"d-flex flex-column"}>

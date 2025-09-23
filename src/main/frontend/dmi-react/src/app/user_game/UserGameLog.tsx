@@ -1,10 +1,11 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import EditGameStatus from "./EditGameStatus.tsx";
 import type { ResponseUser } from "../util/MDITypes.ts";
 
 function UserGameLog({game, userInfo} : {game : any, userInfo: ResponseUser}) {
 
     const queryClient = useQueryClient();
+    const dateObject = new Date(Date.parse(game.dateAdded));
     
     const mutation = useMutation({
         mutationFn: async ({ userGameId }: { userGameId: number }) => {
@@ -30,11 +31,11 @@ function UserGameLog({game, userInfo} : {game : any, userInfo: ResponseUser}) {
     };
 
     return (
-        <div className={"d-flex flex-column log-custom"}>
-            <h4>{game.game.name}</h4>
-            <h4>{game.hoursPlayed}</h4>
-            <h4>{game.status}</h4>
-            <h4>{game.dateAdded}</h4>
+        <div className={"d-flex flex-column log-custom shadow"}>
+            <p>{game.game.name}</p>
+            <p>Played for {game.hoursPlayed} hours</p>
+            <p>Status: {game.status}</p>
+            <p>You added on {dateObject.toDateString()}</p>
             <div className={"d-flex"}>
                 <EditGameStatus gameId={game.id}/>
                 <div>

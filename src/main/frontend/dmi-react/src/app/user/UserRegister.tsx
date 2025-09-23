@@ -28,7 +28,7 @@ function UserRegister() {
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
-        const user: User = {
+        const user: any = {
             username: username,
             password: password,
             email: email,
