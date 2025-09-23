@@ -34,12 +34,14 @@ public class UserGameService {
         return user.isPresent() && UserService.checkToken(authHeader, user.get().getUsername());
     }
 
-    public List<UserGame> getUserGames(long id, String authHeader) {
-        if (handleUserAuth(id, authHeader)) {
-            return repository.findByUserId(id);
+    public List<UserGame> getUserGames(long id, String status, String authHeader) {
+        if (!handleUserAuth(id, authHeader)) {
+           return null;
         }
-        logger.debug("Failed to authorize for getting user's games.");
-        return null;
+        if (!status.equalsIgnoreCase("default")) {
+            return repository.findByStatus(status);
+        }
+        return repository.findByUserId(id);
     }
 
     public boolean addUserGame(long id, long userId, String authHeader) {
@@ -49,13 +51,13 @@ public class UserGameService {
         }
         Game newGame = gameService.getGame(id);
         User newUser = userService.getUser(userId);
+        newUser.setPassword("");
+        newUser.setEmail("");
         UserGame newUserGame = new UserGame();
         newUserGame.setGame(newGame);
         newUserGame.setUser(newUser);
         newUserGame.setDateAdded(new Date());
         newUserGame.setStatus("Unplayed");
-        logger.debug(newUser.toString());
-        logger.debug(newGame.toString());
         repository.save(newUserGame);
         return true;
     }

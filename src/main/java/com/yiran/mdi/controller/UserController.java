@@ -73,7 +73,6 @@ public class UserController {
         secureLogin.setId(info.getId());
         secureLogin.setUsername(info.getUsername());
         secureLogin.setBio(info.getBio());
-        logger.debug(info.toString());
         List<String> access = new ArrayList<>();
         access.add("Authorization");
         headers.setAccessControlExposeHeaders(access);

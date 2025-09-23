@@ -41,9 +41,10 @@ public class GameService {
     }
 
     public List<Game> getGames(String name) {
-
-        List<Game> t = repository.findByNameContainingIgnoreCase(name);
-        logger.debug(t.toString());
+        if (name.isEmpty()) {
+            logger.error("Empty search request");
+            return null;
+        }
         return repository.findByNameContainingIgnoreCase(name);
     }
 
