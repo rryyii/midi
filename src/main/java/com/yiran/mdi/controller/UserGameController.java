@@ -25,8 +25,8 @@ public class UserGameController {
         this.service = service;
     }
 
-    @GetMapping("/user/games/{id}/{status}")
-    public List<UserGame> getUserGame(@PathVariable String id, @PathVariable String status, @RequestHeader("Authorization") String authHeader) {
+    @GetMapping("/user/games/{id}")
+    public List<UserGame> getUserGame(@PathVariable String id, @RequestParam String status, @RequestHeader("Authorization") String authHeader) {
         logger.debug("Fetching user's game list.");
         return service.getUserGames(Long.parseLong(id), status, authHeader);
     }

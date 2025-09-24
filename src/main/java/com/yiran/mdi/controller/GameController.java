@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -47,9 +48,9 @@ public class GameController {
     }
 
     @GetMapping("/games/{page}")
-    public Page<Game> getGamePage(@PathVariable int page) {
+    public Page<Game> getGamePage(@PathVariable int page, @RequestParam String filter) {
         logger.debug("Beginning get request for a page of games.");
-        return gameService.getGamePage(page, 30);
+        return gameService.getGamePage(page, filter, 30);
     }
 
 }

@@ -35,11 +35,12 @@ public class Game implements java.io.Serializable {
     private List<Platform> platforms;
     @Version
     private Long version;
-    @Column(nullable = false)
-    private double total_rating;
-    private int total_rating_count;
-    private int[] involved_companies;
-    private long first_release_date;
+    @Column(nullable = false, name="total_rating")
+    private double totalRating;
+    @Column(nullable = false, name="total_rating_count")
+    private int totalRatingCount;
+    @Column(nullable = false, name="first_release_date")
+    private long firstReleaseDate;
 
     public Game() {
     }

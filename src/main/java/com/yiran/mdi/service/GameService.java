@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,18 +27,19 @@ public class GameService {
         return result.orElse(null);
     }
 
-    public Page<Game> getGamePage(int page, int size) {
+    public Page<Game> getGamePage(int page, String filter, int size) {
         logger.debug("Getting page {} of {} games.", page, size);
         if (page < 0 || size < 0) {
             logger.warn("Invalid page or size.");
             return null;
         }
-        Page<Game> result = repository.findAll(PageRequest.of(page, size));
-        if (result.hasContent()) {
-            return result;
-        }
-        logger.warn("No games found on page {}.", page);
-        return null;
+        return switch (filter) {
+            case "none" -> repository.findAll(PageRequest.of(page, size));
+            case "date" -> repository.findAll(PageRequest.of(page, size, Sort.by("firstReleaseDate").descending()));
+            case "popularity" -> repository.findAll(PageRequest.of(page, size, Sort.by("totalRatingCount").descending()));
+            case "rating" -> repository.findAll(PageRequest.of(page, size, Sort.by("totalRating").descending()));
+            default -> null;
+        };
     }
 
     public List<Game> getGames(String name) {
