@@ -2,12 +2,12 @@ import {Link} from "react-router";
 import {useQuery} from "@tanstack/react-query";
 import type {Game} from "../util/MDITypes";
 
-function GamePage({page}: { page: number }) {
+function GamePage({page, filter}: { page: number, filter: string}) {
 
     const {data, error} = useQuery({
-        queryKey: ["main-games-list", page],
+        queryKey: ["main-games-list", page, filter],
         queryFn: () =>
-            fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/games/${page}`)
+            fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/games/${page}?filter=${filter}`)
                 .then((res) => res.json()),
     });
     if (error) return "An error occurred trying to fetch games list.";

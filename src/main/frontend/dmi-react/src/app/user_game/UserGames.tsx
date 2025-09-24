@@ -3,7 +3,6 @@ import UserGameList from "./UserGameList";
 
 function UserGames() {
     const [status, setStatus] = useState<string>("default");
-    console.log(status);
     return (
         <div className={"container d-flex flex-column p-3 gap-3"}>
             <div className={"btn-group"}>

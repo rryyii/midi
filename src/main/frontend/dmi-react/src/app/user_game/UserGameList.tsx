@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery} from "@tanstack/react-query";
 import type { ResponseUser } from "../util/MDITypes.ts";
 import { useState } from "react";
 import UserGameLog from "./UserGameLog.tsx";
@@ -21,7 +21,7 @@ function UserGameList({status} : {status: string}) {
     const { data, error } = useQuery({
         queryKey: ["user-game-list", userInfo.id, status],
         queryFn: async () => {
-            const response = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/user/games/${userInfo.id}/${status}`,
+            const response = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/user/games/${userInfo.id}?status=${status}`,
                 {
                     method: "GET",
                     headers: { "Content-Type": "application/json", "Authorization": localStorage.getItem("username") || "none" },
