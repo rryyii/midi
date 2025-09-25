@@ -29,23 +29,26 @@ public class UserGameService {
         this.userRepository = userRepository;
     }
 
-    private boolean handleUserAuth(long id, String authHeader) {
+    private boolean handleUserAuth(long id, String jwt) {
         Optional<User> user = userRepository.findById(id);
-        return user.isPresent() && UserService.checkToken(authHeader, user.get().getUsername());
+        return user.isEmpty() || !UserService.checkToken(jwt, user.get().getUsername());
     }
 
-    public List<UserGame> getUserGames(long id, String status, String authHeader) {
-        if (!handleUserAuth(id, authHeader)) {
+    public List<UserGame> getUserGames(long id, String status, String jwt) {
+        if (handleUserAuth(id, jwt)) {
            return null;
         }
         if (!status.equalsIgnoreCase("default")) {
-            return repository.findByStatus(status);
+            return repository.findByStatus(status)
+                    .stream()
+                    .filter((user) -> user.getUser().getId() == id)
+                    .toList();
         }
         return repository.findByUserId(id);
     }
 
-    public boolean addUserGame(long id, long userId, String authHeader) {
-        if (!handleUserAuth(userId, authHeader)) {
+    public boolean addUserGame(long id, long userId, String jwt) {
+        if (handleUserAuth(userId, jwt)) {
             logger.error("Failed to authorize for adding a game to a user.");
             return false;
         }
@@ -62,8 +65,8 @@ public class UserGameService {
         return true;
     }
 
-    public boolean removeUserGame(long id, long userId, String authHeader) {
-        if (!handleUserAuth(userId, authHeader)) {
+    public boolean removeUserGame(long id, long userId, String jwt) {
+        if (handleUserAuth(userId, jwt)) {
             logger.error("Failed to authenticate for removing a user's game.");
             return false;
         }
@@ -71,10 +74,10 @@ public class UserGameService {
         return true;
     }
 
-    public boolean updateUserGame(long id, String status, int hoursPlayed, boolean isFavorite, String authHeader) {
+    public boolean updateUserGame(long id, String status, int hoursPlayed, boolean isFavorite, String jwt) {
         UserGame userGame = repository.findById(id).orElse(null);
         assert userGame != null;
-        if (!handleUserAuth(userGame.getUser().getId(), authHeader)) {
+        if (handleUserAuth(userGame.getUser().getId(), jwt)) {
             logger.error("Failed to authenticate user token for updating user game");
             return false;
         }
@@ -84,9 +87,8 @@ public class UserGameService {
         if (hoursPlayed >= 0) {
             userGame.setHoursPlayed(hoursPlayed);
         }
-        logger.debug(String.valueOf(isFavorite));
         if (isFavorite) {
-            userGame.setFavorite(true);
+            userGame.setFavorite(!userGame.isFavorite());
         }
         repository.save(userGame);
         return true;

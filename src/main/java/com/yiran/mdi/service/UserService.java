@@ -6,6 +6,7 @@ import com.yiran.mdi.model.User;
 import com.yiran.mdi.model.UserGame;
 import com.yiran.mdi.repository.UserGameRepository;
 import com.yiran.mdi.repository.UserRepository;
+import com.yiran.mdi.util.PasswordEncryptor;
 import io.jsonwebtoken.Jwts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +37,7 @@ public class UserService {
     }
 
     public static boolean checkToken(String token, String username) {
-        return Objects.equals(buildToken(username), token.split(" ")[1]);
+        return Objects.equals(buildToken(username), token);
     }
 
     public static String buildToken(String username) {
@@ -52,16 +53,23 @@ public class UserService {
     }
 
     public void createUser(User user) {
-        repository.save(user);
+        User newUser = new User();
+        newUser.setId(user.getId());
+        newUser.setEmail(user.getEmail());
+        newUser.setPassword(PasswordEncryptor.encryptPassword(user.getPassword()));
+        newUser.setUsername(user.getUsername());
+        newUser.setBio(user.getBio());
+        newUser.setCreationDate(user.getCreationDate());
+        repository.save(newUser);
     }
 
     public void deleteUser(Long id) {
         repository.deleteById(id);
     }
 
-    public void updateUser(long id, String username, String bio, String authHeader) {
+    public void updateUser(long id, String username, String bio, String jwt) {
         User user = getUser(id);
-        if (!checkToken(authHeader, user.getUsername())) {
+        if (!checkToken(jwt, user.getUsername())) {
             logger.error("Failed to authentication token for updating user.");
             return;
         }
@@ -76,11 +84,11 @@ public class UserService {
         repository.save(user);
     }
 
-    public Long authenticateUser(String username) {
+    public Long authenticateUser(String username, String password) {
         logger.debug("Entered authentication function for user.");
         List<User> list = repository.findAll();
         for (User user : list) {
-            if (user.getUsername().equalsIgnoreCase(username)) {
+            if (user.getUsername().equalsIgnoreCase(username) && PasswordEncryptor.checkPassword(password, user.getPassword())) {
                 logger.info("Successfully authenticated user.");
                 return user.getId();
             }
@@ -88,9 +96,9 @@ public class UserService {
         return (long) -1;
     }
 
-    public List<Game> getFavorites(long id, String authHeader) {
+    public List<Game> getFavorites(long id, String jwt) {
         Optional<User> user = repository.findById(id);
-        if (user.isPresent()) {
+        if (user.isPresent() && checkToken(jwt, user.get().getUsername())) {
             List<UserGame> list = gameRepository.findAll();
             List<Game> result = new ArrayList<>();
             for (UserGame game : list) {
@@ -105,9 +113,9 @@ public class UserService {
 
     }
 
-    public boolean changeAccountInfo(UserAccountDto data, String authHeader) {
+    public boolean changeAccountInfo(UserAccountDto data, String jwt) {
         Optional<User> findUser = repository.findById(data.getId());
-        if (findUser.isEmpty() || !checkToken(authHeader, findUser.get().getUsername())) {
+        if (findUser.isEmpty() || !checkToken(jwt, findUser.get().getUsername())) {
             return false;
         }
         User user = findUser.get();
@@ -118,7 +126,7 @@ public class UserService {
             if (!password.equals(repeat)) {
                 return false;
             }
-            user.setPassword(password);
+            user.setPassword(PasswordEncryptor.encryptPassword(password));
         }
         if (!email.isEmpty()) {
             user.setEmail(email);

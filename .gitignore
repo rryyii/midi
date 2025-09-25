@@ -6,6 +6,7 @@ target/
 .env
 
 src/main/resources/hibernate.cfg.xml
+src/main/java/util
 
 ### STS ###
 .apt_generated

@@ -26,27 +26,27 @@ public class UserGameController {
     }
 
     @GetMapping("/user/games/{id}")
-    public List<UserGame> getUserGame(@PathVariable String id, @RequestParam String status, @RequestHeader("Authorization") String authHeader) {
+    public List<UserGame> getUserGame(@PathVariable Long id, @RequestParam String status, @CookieValue(value="jwt") String jwt) {
         logger.debug("Fetching user's game list.");
-        return service.getUserGames(Long.parseLong(id), status, authHeader);
+        return service.getUserGames(id, status, jwt);
     }
 
     @PostMapping("/user/add_game")
-    public boolean addUserGame(@RequestBody UserGameDto data, @RequestHeader("Authorization") String authHeader) {
+    public boolean addUserGame(@RequestBody UserGameDto data, @CookieValue(value="jwt") String jwt) {
         logger.debug("Beginning adding a game to a user's list.");
-        return service.addUserGame(data.id, data.getUser_id(), authHeader);
+        return service.addUserGame(data.getId(), data.getUser_id(), jwt);
     }
 
     @DeleteMapping("/user/rm_game")
-    public boolean removeUserGame(@RequestBody UserGameDto data, @RequestHeader("Authorization") String authHeader) {
+    public boolean removeUserGame(@RequestBody UserGameDto data, @CookieValue(value="jwt") String jwt) {
         logger.debug("Beginning removing a game to a user's list.");
-        return service.removeUserGame(data.getId(), data.getUser_id(), authHeader);
+        return service.removeUserGame(data.getId(), data.getUser_id(), jwt);
     }
 
     @PutMapping("/user/update_game")
-    public boolean updateUserGame(@RequestBody UserGameUpdateDto data, @RequestHeader("Authorization") String authHeader) {
+    public boolean updateUserGame(@RequestBody UserGameUpdateDto data, @CookieValue(value="jwt") String jwt) {
         logger.debug("Beginning updating a game in a user's list.");
-        return service.updateUserGame(data.getId(), data.getStatus(), data.getHoursPlayed(), data.isFavorite(), authHeader);
+        return service.updateUserGame(data.getId(), data.getStatus(), data.getHoursPlayed(), data.isFavorite(), jwt);
     }
 
 }
