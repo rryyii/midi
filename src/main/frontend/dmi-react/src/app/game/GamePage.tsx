@@ -1,6 +1,7 @@
 import {Link} from "react-router";
 import {useQuery} from "@tanstack/react-query";
 import type {Game} from "../util/MDITypes";
+import styles from "./game.module.css"
 
 function GamePage({page, filter}: { page: number, filter: string}) {
 
@@ -18,7 +19,7 @@ function GamePage({page, filter}: { page: number, filter: string}) {
                 {data.content.map((game: Game) => {
                     return (
                         <Link to={`/games/${game.id}`} key={`${game.id}-page`}>
-                                {game.cover != null ? <img src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover.image_id}.jpg`} loading="lazy" alt={`cover image of ${game.name}`} className="game-card"/> :
+                                {game.cover != null ? <img src={`https://images.igdb.com/igdb/image/upload/t_cover_big/${game.cover.image_id}.jpg`} loading="lazy" alt={`cover image of ${game.name}`} className={`${styles.gameCard}`}/> :
                                     <h4>{game.name}</h4>}
                         </Link>
                     );

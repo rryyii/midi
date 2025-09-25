@@ -10,7 +10,6 @@ function Search() {
     const handleSubmit = (e : any) => {
         navigate(`/search/${input}`);
         queryClient.invalidateQueries({queryKey: ["current-search"]}).then(r => console.log(r));
-
     }
 
     return (

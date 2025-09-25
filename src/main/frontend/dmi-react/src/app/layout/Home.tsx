@@ -1,4 +1,5 @@
 import {Link} from "react-router";
+import styles from "./layout.module.css"
 
 /**
  * Returns a component that currently display's all Games in the Database
@@ -18,7 +19,7 @@ function Home() {
             <div className={"row"}>
                 <div className={"col d-flex flex-column"}>
                     <h4>Features</h4>
-                        <ul className={"home-list"}>
+                        <ul className={`${styles.homeList}`}>
                             <li>Keep track of your games</li>
                             <li>Keep track of the hours you have played each game</li>
                             <li>Keep track of the status of the game (whether you have finished it, are currently playing, or want to play)</li>
@@ -27,7 +28,7 @@ function Home() {
                 <div className={"col d-flex flex-column"}>
                     <h4>Plans</h4>
 
-                        <ul className={"home-list"}>
+                        <ul className={`${styles.homeList}`}>
                             <li>Add a search bar</li>
                             <li>Add the ability to filter by different categories</li>
                             <li>Visit other user's profiles easily to see their bio/favorite games</li>
@@ -41,7 +42,7 @@ function Home() {
                             <em>Get started by creating an account</em>
                         </h4>
                         <Link to={"/register"} className="btn btn-outline-custom">
-                            register
+                            Register
                         </Link>
                     </div>
                     <div className="d-flex flex-column align-items-center">
@@ -51,7 +52,7 @@ function Home() {
                            </em>
                         </h4>
                         <Link to={"/login"} className="btn btn-outline-custom">
-                            login
+                            Login
                         </Link>
                     </div>
                 </div>

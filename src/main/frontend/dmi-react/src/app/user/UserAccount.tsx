@@ -11,7 +11,7 @@ function UserAccount() {
             <input type="button" onClick={() => setPage("edit")}/>
             <input type="button" onClick={() => setPage("privacy")}/>
             {page == "edit" ? <UserEdit /> : ""}
-            <UserPrivacy id={1}/>
+            <UserPrivacy/>
         </div>
     )
 }

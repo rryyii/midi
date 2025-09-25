@@ -2,11 +2,13 @@ import {useMutation} from "@tanstack/react-query";
 import {useState} from "react";
 import type {User} from "../util/MDITypes.ts";
 import {Dialog, DialogPanel} from "@headlessui/react";
+import styles from "./user.module.css"
 
 function UserRegister() {
 
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [repassword, setRePassword] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -41,17 +43,21 @@ function UserRegister() {
         <div className={"container d-flex flex-column justify-content-center align-items-center gap-3 p-3 flex-grow-1"}>
             <h4>Registration</h4>
             <div className={"border-bottom w-25"}></div>
-            <form id={"registerForm"} className={"d-flex flex-column"} onSubmit={handleSubmit}>
-                <fieldset className={"userField d-flex flex-column gap-3"}>
+            <form id={`${styles.registerForm}`} className={"d-flex flex-column"} onSubmit={handleSubmit}>
+                <fieldset className={`${styles.userField} d-flex flex-column gap-3`}>
                     <input value={username} placeholder={"username"} onChange={(event) => {
                         setUsername(event.target.value)
-                    }} id="userId" type={"text"} className={"form-control"}/>
-                    <input value={password} placeholder={"password"} onChange={(event) => {
-                        setPassword(event.target.value)
-                    }} id="passwordId" type={"password"} className={"form-control"}/>
+                    }} id="userId" type={"text"} className={"search-bar"}/>
                     <input value={email} placeholder={"email"} onChange={(event) => {
                         setEmail(event.target.value)
-                    }} id="emailId" type={"email"} className={"form-control"}/>
+                    }} id="emailId" type={"email"} className={"search-bar"}/>
+                    <input value={password} placeholder={"password"} onChange={(event) => {
+                        setPassword(event.target.value)
+                    }} id="passwordId" type={"password"} className={"search-bar"}/>
+                    <p className={"side-text"}><small>Password must be at least 8 characters long</small></p>
+                    <input value={repassword} placeholder={"re-enter password"} onChange={(event) => {
+                        setRePassword(event.target.value)
+                     }} id="repasswordId" type={"password"} className={"search-bar"}/>
                 </fieldset>
                 <button type={"submit"} className={"btn btn-outline-custom"}>Register</button>
             </form>

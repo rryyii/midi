@@ -1,34 +1,32 @@
-import type {User} from "../util/MDITypes.ts";
 import {Link, useLocation} from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import type {Game} from "../util/MDITypes.ts";
 import { useEffect, useState } from "react";
+import styles from "./user.module.css"
+import { useUser } from "../util/UserHook.tsx";
 
 function UserProfile() {
 
     const location = useLocation();
     const userId = location.pathname.split("/")[2];
     const [currentUser, setCurrentUser] = useState<boolean>(false);
-    const userString = localStorage.getItem("user-info");
-    if (!userString) {
-        return null;
-    }
-    const userInfo: User = JSON.parse(userString);
+    const {data: userInfo} = useUser();
     const auth = localStorage.getItem("username") ?? undefined;
 
     useEffect(() => {
-        if (userInfo.id == parseInt(userId)) {
+        if (userInfo?.id == parseInt(userId)) {
             setCurrentUser(true);
         }
-    }, [userInfo.id, userId])
+    }, [userInfo?.id, userId])
 
     const {data, error} = useQuery({
-        queryKey: ["user", userString],
+        queryKey: ["user", userInfo],
         queryFn: async () => {
             const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/user_favorites/${userId}`,
                 {
                     method: "GET",
-                    headers: { "Content-Type": "application/json", "Authorization": auth || "none"},
+                    headers: { "Content-Type": "application/json" },
+                    credentials: "include",
                 })
             return await request.json();
         }
@@ -53,20 +51,20 @@ function UserProfile() {
                 <div>
                     <h4>Bio</h4>
                     <div className="border-bottom w-25"></div>
-                    <p className={"user-bio"}>{userInfo.bio}</p>
+                    {userInfo.bio ? <p className={`${styles.userBio}`}>{userInfo.bio}</p> : "No bio set"}
                 </div>
                 <div>
                     <h4>Your Favorites</h4>
                     <div className={"border-bottom w-50"}></div>
-                    <ul className="favorites-list d-flex flex-row gap-3 p-3">
-                        {data.map((game: Game) => (
+                    <ul className={`${styles.favoritesList} d-flex flex-row gap-3 p-3`}>
+                        {data.length > 0 ? data.map((game: Game) => (
                             <li key={`${game.id}-favorite`} className={"game-card"}>
                                 <Link to={`/games/${game.id}`}>
                                     <img src={`https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${game.cover.image_id}.jpg`} loading="lazy" className="game-img shadow" alt={`cover image of ${game.name}`}/>
                                 </Link>
                             </li>
                             ))
-                        }
+                        : "No favorited games"}
                     </ul>
                 </div>
             </div>

@@ -1,12 +1,14 @@
 import {useState} from "react";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import type {LoginType} from "../util/MDITypes.ts";
-import {useNavigate} from "react-router";
+import {useNavigate, Link} from "react-router";
+import styles from "./user.module.css"
 
 function UserLogin() {
 
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [visible, setVisible] = useState<boolean>(false);
 
     const queryClient = useQueryClient();
     const navigate = useNavigate();
@@ -18,22 +20,20 @@ function UserLogin() {
                     method: "POST",
                     headers: {"Content-Type": "application/json"},
                     body: JSON.stringify(user),
+                    credentials: "include",
                 });
-            const token = request.headers.get("Authorization");
             const body = await request.json();
-            return {token: token, body: body};
+            return {body: body};
         },
         onSuccess: (data) => {
-            if (data.token) {
-                console.debug("Login success, storing JWT.");
-                localStorage.setItem("username", data.token);
-                localStorage.setItem("user-info", JSON.stringify(data.body));
-                queryClient.invalidateQueries({queryKey: ["user-info"]});
-                navigate("/");
-            }
+            localStorage.setItem("user-info", JSON.stringify(data.body));
+            queryClient.invalidateQueries({queryKey: ["user-info"]});
+            navigate("/");
+
         },
         onError: (error: any) => {
             console.error("Login error:", error);
+            setVisible(true);
         },
     })
 
@@ -50,14 +50,18 @@ function UserLogin() {
         <div className={"container d-flex justify-content-center align-items-center flex-grow-1 flex-column gap-3 p-3"}>
             <h4>Welcome to DIMI!</h4>
             <div className={"border-bottom w-25"}></div>
-            <form id={"loginForm"} className={"d-flex flex-column justify-content-center"} onSubmit={handleSubmit}>
-                <fieldset className={"userField d-flex flex-column gap-3"}>
+            {visible ? <p>Either your username or password were incorrect</p> : ""}
+            <form id={`${styles.loginForm}`} className={"d-flex flex-column justify-content-center"} onSubmit={handleSubmit}>
+                <fieldset className={`${styles.userField} d-flex flex-column gap-3`}>
                     <input value={username} placeholder={"username"} onChange={(event) => {
                         setUsername(event.target.value)
-                    }} id="userId" type={"text"} className={"form-control"}/>
+                    }} id="userId" type={"text"} className={"search-bar"}/>
                     <input value={password} placeholder={"password"} onChange={(event) => {
                         setPassword(event.target.value)
-                    }} id="passwordId" type={"password"} className={"form-control"}/>
+                    }} id="passwordId" type={"password"} className={"search-bar"}/>
+                    <Link to={"/"}>
+                        <small>Forgot your password?</small>
+                    </Link>
                 </fieldset>
                 <button type={"submit"} className={"btn btn-outline-custom"}>Log In</button>
             </form>

@@ -1,0 +1,9 @@
+.edit-container {
+    max-width: 65vw;
+    width: 65vw;
+}
+
+.editStatusForm {
+    background-color: var(--bg-primary);
+    border-radius: .5rem;
+}

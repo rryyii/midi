@@ -1,0 +1,56 @@
+/* Nav Styles */
+nav {
+    color: white !important;
+    margin: 0 0 4rem 0;
+}
+
+.linkText {
+    color: white !important;
+    background-color: transparent !important;
+    border-radius: .5rem;
+}
+
+.dropDown {
+    animation-name: fadeIn;
+    animation-duration: 0.3s;
+}
+
+.dropdownCustom {
+    background-color: var(--bg-secondary) !important;
+}
+
+.dropdownItem {
+    color: white!important;
+}
+
+.dropdownItem:hover {
+    background-color: inherit !important;
+}
+
+.menuItem {
+    animation-name: fadeIn;
+    animation-duration: 0.3s;
+}
+
+/* Footer Styles */
+footer {
+    width: 100%;
+    background-color: var(--bg-secondary);
+    margin-top: 4rem;
+    padding: 2rem;
+}
+
+/* Home Styles */
+.homeList {
+    list-style: none;
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

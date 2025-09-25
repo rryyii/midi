@@ -5,9 +5,9 @@ export type Game = {
     summary: string,
     cover: any,
     platforms: Array<any>,
-    total_rating: number,
-    total_rating_count: number,
-    first_release_date: number,
+    totalRating: number,
+    totalRatingCount: number,
+    firstReleaseDate: number,
 };
 
 export type UserGame = {

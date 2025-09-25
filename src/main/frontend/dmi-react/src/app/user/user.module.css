@@ -1,0 +1,28 @@
+/* User Profile Styles */
+.userBio {
+    padding: 1rem;
+    border-radius: .5rem;
+}
+
+.favoritesList {
+    list-style: none;
+}
+
+
+
+/* Form Styles  */
+#registerForm, #loginForm {
+    max-width: 65vw;
+    border-radius: .5rem;
+    padding: 1rem;
+    color: black;
+}
+
+#addGame > form > fieldset {
+    padding-bottom: 1.5rem;
+}
+
+.userField {
+    padding: 1rem;
+}
+

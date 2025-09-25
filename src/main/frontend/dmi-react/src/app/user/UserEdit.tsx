@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import type {ResponseUser} from "../util/MDITypes.ts";
 import { Link } from "react-router";
+import { useUser } from "../util/UserHook.tsx";
 
 function UserEdit() {
 
@@ -9,24 +9,21 @@ function UserEdit() {
     const [name, setName] = useState<string>("");
     const [bio, setBio] = useState<string>("");
 
-    const userString = localStorage.getItem("user-info");
-    if (userString == null) {
-        console.error("Failed to retrieve user info.")
-        return;
-    }
-    const userInfo: ResponseUser = JSON.parse(userString);
+    const {data: userInfo} = useUser();
+    
 
     const mutation = useMutation({
         mutationFn: async () => {
             const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/update_user`,
                 {
                     method: "PUT",
-                    headers: {"Content-Type": "application/json", "Authorization": localStorage.getItem("username") || "none"},
+                    headers: {"Content-Type": "application/json"},
                     body: JSON.stringify({
-                        id: userInfo.id,
+                        id: userInfo?.id,
                         username: name,
                         bio: bio,
                     }),
+                    credentials: "include",
                 });
             const response = await request.json();
             return {body : response};
@@ -48,29 +45,28 @@ function UserEdit() {
     };
 
     return (
-        <form onSubmit={handleSubmit} className={"container"}>
+        <form onSubmit={handleSubmit} className={"container d-flex flex-column gap-3"}>
             <h4>Profile</h4>
             <div className={"border-bottom w-50"}></div>
             <div className={"edit-container d-flex flex-grow-1 flex-column gap-3"}>
                 <div className={"edit-form"}>
-                    <label htmlFor={"name-input"}>Name</label>
                     <input value={name} onChange={(event) => {
                         setName(event.target.value)
-                    }} type={"text"} id={"name-input"} placeholder={"username"} className={"form-control w-25"}/>
+                    }} type={"text"} id={"name-input"} placeholder={"username"} className={"search-bar w-25"}/>
                 </div>
                 <div className={"edit-form"}>
-                    <label htmlFor={"bio-input"}>Bio</label>
                     <textarea value={bio} onChange={(event) => {
                         setBio(event.target.value)
-                    }} placeholder={"Tell us about yourself"} className={"form-control w-25"}></textarea>
+                    }} placeholder={"Tell us about yourself"} className={"search-bar w-25"}></textarea>
                 </div>
                 <div>
                     <button type={"submit"} className={"btn btn-outline-custom"}>Update</button>
                 </div>
-            </div>
-            <Link to="/profile/edit/account">
+                <Link to="/profile/edit/account">
                     Update email/password
-            </Link>
+                </Link>
+            </div>
+    
         </form>
     );
 }

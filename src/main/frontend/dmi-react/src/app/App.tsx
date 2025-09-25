@@ -2,7 +2,6 @@ import {BrowserRouter as Router, Route, Routes} from "react-router";
 import Nav from "./layout/Nav.tsx";
 import {QueryClient, QueryClientProvider,} from '@tanstack/react-query'
 import Home from "./layout/Home.tsx";
-import UserGameList from "./user_game/UserGameList.tsx";
 import UserLogin from "./user/UserLogin.tsx";
 import UserRegister from "./user/UserRegister.tsx";
 import UserLogout from "./user/UserLogout.tsx";

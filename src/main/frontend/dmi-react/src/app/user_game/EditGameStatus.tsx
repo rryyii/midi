@@ -1,30 +1,26 @@
 import {useMutation, useQueryClient } from "@tanstack/react-query";
 import {useState} from "react";
 import {Menu, MenuButton, MenuItems} from "@headlessui/react";
-import type { ResponseUser } from "../util/MDITypes";
+import { useUser } from "../util/UserHook";
+import styles from "./user-game.module.css"
 
-function EditGameStatus({gameId}: { gameId: number }) {
+function EditGameStatus({gameId, gstatus}: { gameId: number, gstatus: string}) {
 
-    const userString = localStorage.getItem("user-info");
-    if (userString == null) {
-        console.error("Failed to retrieve user info.")
-        return;
-    }
-    const userInfo: ResponseUser = JSON.parse(userString);
+    const {data: userInfo} = useUser();
 
     const queryClient = useQueryClient();
     const [status, setStatus] = useState<string>("");
     const [hours, setHours] = useState<number>(0);
     const [isFavorite, setIsFavorite] = useState<boolean>(false);
-    const [unFavorite, setUnFavorite] = useState<boolean>(false);
 
     const mutation = useMutation({
         mutationFn: async () => {
             const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/user/update_game`,
                 {
                     method: "PUT",
-                    headers: {"Content-Type": "application/json", "Authorization": localStorage.getItem("username") || "none"},
-                    body: JSON.stringify({id: gameId, status: status, hoursPlayed: hours, favorite: isFavorite, unFavorite: unFavorite}),
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({id: gameId, status: status, hoursPlayed: hours, favorite: isFavorite}),
+                    credentials: "include",
                 });
             const response = await request.json();
             return response as any;
@@ -34,8 +30,7 @@ function EditGameStatus({gameId}: { gameId: number }) {
         },
         onSuccess: () => {
             console.log("Successfully updated game info.");
-            queryClient.invalidateQueries({queryKey: ["user-game-list", userInfo.id]});
-
+            queryClient.invalidateQueries({queryKey: ["user-game-list", userInfo?.id, gstatus]});
         }
     })
 
@@ -51,7 +46,7 @@ function EditGameStatus({gameId}: { gameId: number }) {
                 <i className="fa-solid fa-pen-to-square icon-color"></i>
             </MenuButton>
             <MenuItems className={"menu-item shadow-lg"} anchor={"bottom start"}>
-                <form onSubmit={handleSubmit} className={"container d-flex flex-column gap-3 edit-status-form p-3"}>
+                <form onSubmit={handleSubmit} className={`container d-flex flex-column gap-3 ${styles.editStatusForm} p-3`}>
                     <div className={"d-flex flex-column"}>
                         <label htmlFor={"myComboBox"}>Change Status:</label>
                         <select onChange={(event) => {
@@ -75,10 +70,6 @@ function EditGameStatus({gameId}: { gameId: number }) {
                         <label htmlFor={"isFavorite"}>Is Favorite:</label>
                         <input type={"checkbox"} id={"isFavorite"} onChange={(event) => {
                             setIsFavorite(event.target.checked)
-                        }} className={"form-check-input"}/>
-                        <label htmlFor={"unFavorite"}>Un-Favorite:</label>
-                        <input type={"checkbox"} id={"unFavorite"} onChange={(event) => {
-                            setUnFavorite(event.target.checked)
                         }} className={"form-check-input"}/>
                     </div>
                     <button type={"submit"} className={"btn btn-outline-custom"}>Update</button>

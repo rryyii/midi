@@ -2,6 +2,7 @@ import {Link, useNavigate} from "react-router";
 import {useUser} from "../util/UserHook.tsx";
 import {useQueryClient} from "@tanstack/react-query";
 import Search from "./Search.tsx"
+import styles from "./layout.module.css"
 
 /**
  * Returns the component for the Navigation Bar.
@@ -14,31 +15,31 @@ function Nav() {
     const queryClient = useQueryClient();
 
     return (
-        <nav className={"navbar navbar-expand justify-content-between p-3"}>
+        <nav className={`navbar navbar-expand justify-content-between p-3 ${styles.nav}`}>
             <ul className={"navbar-nav"}>
                 <li className={"nav-item"}>
-                    <Link to={"/"} className={"nav-link link-text"}>
+                    <Link to={"/"} className={`nav-link ${styles.linkText}`}>
                         Home
                     </Link>
                 </li>
                 {user ?
                     <>
                         <li className={"nav-item"}>
-                            <Link to={"/games"} className={"nav-link link-text"}>
+                            <Link to={"/games"} className={`nav-link ${styles.linkText}`}>
                                 Games
                             </Link>
                         </li>
                         <li className={"nav-item"}>
-                            <Link to={"/list"} className={"nav-link link-text"}>
+                            <Link to={"/list"} className={`nav-link ${styles.linkText}`}>
                                 Your List
                             </Link>
                         </li>
                         <li className={"nav-item dropdown"}>
                             <a href={"#"} role={"button"} data-bs-toggle={"dropdown"} aria-expanded={"false"}
-                               className={"nav-link dropdown-toggle link-text"}>
+                               className={`nav-link dropdown-toggle ${styles.linkText}`}>
                                 Account
                             </a>
-                            <ul className={"dropdown-menu drop-down dropdown-custom"}>
+                            <ul className={`dropdown-menu ${styles.dropDown} dropdown-custom`}>
                                 <li>
                                     <Link to={`/profile/${user.id}`} className={"dropdown-item"}>
                                         Profile
@@ -58,12 +59,12 @@ function Nav() {
                     :
                     <>
                         <li className={"nav-item"}>
-                            <Link to={"/login"} className={"nav-link link-text"}>
+                            <Link to={"/login"} className={`nav-link ${styles.linkText}`}>
                                 Login
                             </Link>
                         </li>
                         <li className={"nav-item"}>
-                            <Link to={"/register"} className={"nav-link link-text"}>
+                            <Link to={"/register"} className={`nav-link ${styles.linkText}`}>
                                 Register
                             </Link>
                         </li>
