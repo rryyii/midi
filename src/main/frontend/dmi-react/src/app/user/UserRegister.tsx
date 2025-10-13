@@ -1,6 +1,5 @@
 import {useMutation} from "@tanstack/react-query";
 import {useState} from "react";
-import type {User} from "../util/MDITypes.ts";
 import {Dialog, DialogPanel} from "@headlessui/react";
 import styles from "./user.module.css"
 
@@ -13,13 +12,13 @@ function UserRegister() {
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     const mutation = useMutation({
-        mutationFn: async (user: User) => {
+        mutationFn: async (user: any) => {
             const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/user`, {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(user),
             });
-            return await request.json() as Promise<User>;
+            return await request.text();
         },
         onError: (err) => console.error(err.message),
         onSuccess: () => {
@@ -40,22 +39,26 @@ function UserRegister() {
     }
 
     return (
-        <div className={"container d-flex flex-column justify-content-center align-items-center gap-3 p-3 flex-grow-1"}>
+        <div className={"container d-flex flex-column justify-content-center align-items-center gap-3 flex-grow-1"}>
             <h4>Registration</h4>
             <div className={"border-bottom w-25"}></div>
             <form id={`${styles.registerForm}`} className={"d-flex flex-column"} onSubmit={handleSubmit}>
                 <fieldset className={`${styles.userField} d-flex flex-column gap-3`}>
-                    <input value={username} placeholder={"username"} onChange={(event) => {
+                    <label htmlFor={"userId"} className={"label"}>Username</label>
+                    <input value={username} onChange={(event) => {
                         setUsername(event.target.value)
                     }} id="userId" type={"text"} className={"search-bar"}/>
-                    <input value={email} placeholder={"email"} onChange={(event) => {
+                    <label htmlFor={"emailId"} className={"label"}>Email</label>
+                    <input value={email} onChange={(event) => {
                         setEmail(event.target.value)
                     }} id="emailId" type={"email"} className={"search-bar"}/>
-                    <input value={password} placeholder={"password"} onChange={(event) => {
+                    <label htmlFor={"passwordId"} className={"label"}>Password</label>
+                    <input value={password} onChange={(event) => {
                         setPassword(event.target.value)
                     }} id="passwordId" type={"password"} className={"search-bar"}/>
                     <p className={"side-text"}><small>Password must be at least 8 characters long</small></p>
-                    <input value={repassword} placeholder={"re-enter password"} onChange={(event) => {
+                    <label htmlFor={"repasswordId"} className={"label"}>Re-enter Password</label>
+                    <input value={repassword} onChange={(event) => {
                         setRePassword(event.target.value)
                      }} id="repasswordId" type={"password"} className={"search-bar"}/>
                 </fieldset>

@@ -2,13 +2,14 @@ import {useState} from "react";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import { Link } from "react-router";
 import { useUser } from "../util/UserHook.tsx";
+import { Dialog, DialogPanel } from "@headlessui/react";
 
 function UserEdit() {
 
     const queryClient = useQueryClient();
     const [name, setName] = useState<string>("");
     const [bio, setBio] = useState<string>("");
-
+    const [isOpen, setIsOpen] = useState<boolean>(false);
     const {data: userInfo} = useUser();
     
 
@@ -35,6 +36,7 @@ function UserEdit() {
             console.log("Successfully updated user info.");
             localStorage.setItem("user-info", JSON.stringify(data.body));
             queryClient.invalidateQueries({queryKey: ["user-info"]}).then(r => console.log(r));
+            setIsOpen(true);
         },
     })
 
@@ -57,7 +59,7 @@ function UserEdit() {
                 <div className={"edit-form"}>
                     <textarea value={bio} onChange={(event) => {
                         setBio(event.target.value)
-                    }} placeholder={"Tell us about yourself"} className={"search-bar w-25"}></textarea>
+                    }} placeholder={"tell us about yourself"} className={"search-bar w-25"}></textarea>
                 </div>
                 <div>
                     <button type={"submit"} className={"btn btn-outline-custom"}>Update</button>
@@ -66,7 +68,16 @@ function UserEdit() {
                     Update email/password
                 </Link>
             </div>
-    
+            <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
+                <div className={"position-fixed top-0 m-5 start-0 p-5 w-45 h-45 d-flex justify-content-center align-items-center pop-up shadow"}>
+                        <DialogPanel>
+                            <h2>Successfully changed account information</h2>
+                        </DialogPanel>
+                        <button onClick={() => { setIsOpen(false);}} className={"btn btn-outline-custom"}>
+                            <i className="fa-solid fa-xmark icon-color"></i>
+                        </button>
+                    </div>
+            </Dialog>
         </form>
     );
 }

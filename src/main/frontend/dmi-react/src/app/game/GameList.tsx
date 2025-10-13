@@ -6,9 +6,10 @@ function GameList() {
     const [filter, setFilter] = useState<string>("none");
 
     return (
-        <div className={"container d-flex flex-column flex-grow-1 justify-content-center align-items-center"}>
+        <div className={"container d-flex flex-column flex-grow-1 justify-content-center align-items-start"}>
             <div className={"row"}>
-                <label htmlFor={"myComboBox"}>Apply Filters:</label>
+                <div className={"d-flex gap-2 align-items-center"}>
+                <label htmlFor={"myComboBox"}>Sort By</label>
                 <select onChange={(event) => {
                     setFilter(event.target.value)
                 }} id={"optionsList"}>
@@ -17,12 +18,13 @@ function GameList() {
                     <option value={"popularity"}>Popularity</option>
                     <option value={"rating"}>Rating</option>
                 </select>
+                </div>
             </div>
             <div className={"row"}>
                 <GamePage page={page} filter={filter}/>
             </div>
             <div className={"row"}>
-                <div>
+                <div className={"d-flex gap-3"}>
                     <button onClick={() => setPage(Math.max(page - 1, 0))} className={"btn btn-outline-custom"}>
                         <i className="fa-solid fa-arrow-left icon-color"></i>
                     </button>

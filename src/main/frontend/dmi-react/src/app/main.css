@@ -1,7 +1,7 @@
 :root {
     --bg-primary: #222831;
     --bg-secondary: #37414F;
-    --btn-color: #395dc6;
+    --btn-color: #FAB12F;
 }
 
 a {
@@ -11,7 +11,7 @@ a {
 }
 
 a:hover {
-  color: #b0bee8 !important;
+  color: #FA812F !important;
  }
 
 #root {
@@ -25,7 +25,7 @@ a:hover {
 body {
     display: flex;
     flex-direction: column;
-    font-family: "Roboto", sans-serif !important;
+    font-family: "Mona Sans", sans-serif !important;
     background-color: var(--bg-primary) !important;
     color: white !important;
     min-height: 100vh;
@@ -46,14 +46,15 @@ body {
 /* Button Styles */
 .btn-outline-custom {
     border: .1rem solid var(--btn-color) !important;
+    border-radius: 1.25rem !important;
     color: var(--btn-color)!important;
-    transition: border 0.3s ease-in-out !important;
-    transition: color 0.3s ease-in-out !important;
+    transition: border 0.15s ease-in-out !important;
+    transition: color 0.15s ease-in-out !important;
 }
 
 .btn-outline-custom:hover {
-    border: .1rem solid #b0bee8 !important;
-    color: #b0bee8 !important;
+    border: .1rem solid #FA812F!important;
+    color: #FA812F !important;
 }
 
 
@@ -78,6 +79,18 @@ body {
     height: 140px;
 }
 
+.gameCard {
+    border: .1rem solid transparent !important;
+    border-radius: 0.5rem;
+    transition: border 0.15s ease-in-out !important;
+    width: 120px;
+    height: 150px;
+}
+
+.gameCard:hover {
+     border: .1rem solid #b5b5b5 !important;
+}
+
 /* Icon Styles */
 .icon-color {
     color: white;
@@ -86,11 +99,16 @@ body {
 /* Search Styles  */
 .search-bar {
     background-color: var(--bg-primary);
+    border: solid #b5b5b5 .1rem;
     color: white;
     padding-left: 1rem;
-    border-radius: 1rem;
+    border-radius: .5rem;
 }
 
 .side-text {
+    color: white;
+}
+
+.label {
     color: white;
 }

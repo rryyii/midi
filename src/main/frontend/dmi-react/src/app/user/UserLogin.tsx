@@ -53,10 +53,12 @@ function UserLogin() {
             {visible ? <p>Either your username or password were incorrect</p> : ""}
             <form id={`${styles.loginForm}`} className={"d-flex flex-column justify-content-center"} onSubmit={handleSubmit}>
                 <fieldset className={`${styles.userField} d-flex flex-column gap-3`}>
-                    <input value={username} placeholder={"username"} onChange={(event) => {
+                    <label htmlFor={"userId"} className={"label"}>Username</label>
+                    <input value={username} onChange={(event) => {
                         setUsername(event.target.value)
                     }} id="userId" type={"text"} className={"search-bar"}/>
-                    <input value={password} placeholder={"password"} onChange={(event) => {
+                    <label htmlFor={"passwordId"} className={"label"}>Password</label>
+                    <input value={password} onChange={(event) => {
                         setPassword(event.target.value)
                     }} id="passwordId" type={"password"} className={"search-bar"}/>
                     <Link to={"/"}>

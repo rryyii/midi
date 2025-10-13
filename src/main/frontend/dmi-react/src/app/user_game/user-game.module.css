@@ -7,3 +7,31 @@
     background-color: var(--bg-primary);
     border-radius: .5rem;
 }
+
+.tableCustom {
+    font-size: .85rem;
+    max-width: 65vw;
+    width: 65vw;
+    max-height: 50vh;   
+}
+
+.tableCustom tr {
+    border-bottom: solid #ffff .05rem;
+}
+
+.tableCustom tr td {
+    padding: .5rem;
+}
+
+.btnCustom {
+    color: white !important;
+    border: solid white .5px !important;
+}
+
+.btnCustom:hover {
+    color: #FA812F !important;
+}
+
+.btnGroup {
+    max-height: 30vh !important;
+}

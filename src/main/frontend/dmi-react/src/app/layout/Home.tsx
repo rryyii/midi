@@ -8,7 +8,7 @@ import styles from "./layout.module.css"
  */
 function Home() {
     return (
-        <div className={"container d-flex justify-content-center flex-grow-1 flex-column gap-5 p-3"}>
+        <div className={`container d-flex justify-content-center flex-grow-1 flex-column gap-5 p-3 ${styles.home}`}>
             <div className={"row"}>
                 <h1>What is DIMI?</h1>
                 <p>

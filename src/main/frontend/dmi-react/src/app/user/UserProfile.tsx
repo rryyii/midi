@@ -58,9 +58,9 @@ function UserProfile() {
                     <div className={"border-bottom w-50"}></div>
                     <ul className={`${styles.favoritesList} d-flex flex-row gap-3 p-3`}>
                         {data.length > 0 ? data.map((game: Game) => (
-                            <li key={`${game.id}-favorite`} className={"game-card"}>
+                            <li key={`${game.id}-favorite`}>
                                 <Link to={`/games/${game.id}`}>
-                                    <img src={`https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${game.cover.image_id}.jpg`} loading="lazy" className="game-img shadow" alt={`cover image of ${game.name}`}/>
+                                    <img src={`https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${game.cover.image_id}.jpg`} className={"gameCard shadow"} loading="lazy" alt={`cover image of ${game.name}`}/>
                                 </Link>
                             </li>
                             ))

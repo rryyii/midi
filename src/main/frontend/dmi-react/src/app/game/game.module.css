@@ -1,15 +1,3 @@
-.gameCard {
-    border: .1rem solid transparent !important;
-    border-radius: 0.5rem;
-    transition: border 0.15s ease-in-out !important;
-    width: 120px;
-    height: 150px;
-}
-
-.gameCard:hover {
-     border: .1rem solid #b0bee8 !important;
-}
-
 .mainGameImg {
     border-radius: 0.5rem;
     width: 150px;
@@ -20,5 +8,13 @@
     padding: .5rem;
     border-radius: .5rem;
     background-color: #283038;
-    font-size: 1rem;
+    font-size: .75rem;
+}
+
+.dateP {
+    font-size: .65rem;
+}
+
+.summary {
+    max-width: 45vw;
 }
