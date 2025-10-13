@@ -40,7 +40,7 @@ public class UserController {
                     .body("Username, password, and email cannot be blank");
         }
         service.createUser(user);
-        return ResponseEntity.status(HttpStatus.CREATED)
+        return ResponseEntity.status(200)
                 .body("User created successfully");
     }
 

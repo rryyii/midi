@@ -1,4 +1,4 @@
-package com.yiran.mdi.service;
+package com.yiran.mdi.util;
 
 import com.api.igdb.apicalypse.APICalypse;
 import com.api.igdb.apicalypse.Sort;

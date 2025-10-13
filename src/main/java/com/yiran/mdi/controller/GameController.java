@@ -2,7 +2,7 @@ package com.yiran.mdi.controller;
 
 import com.yiran.mdi.model.Game;
 import com.yiran.mdi.service.GameService;
-import com.yiran.mdi.service.IGDBService;
+import com.yiran.mdi.util.IGDBService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;

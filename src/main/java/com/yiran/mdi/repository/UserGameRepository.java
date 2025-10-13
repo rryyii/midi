@@ -2,6 +2,7 @@ package com.yiran.mdi.repository;
 
 import com.yiran.mdi.model.UserGame;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
  *
  * @author rryyii
  */
+@Repository
 public interface UserGameRepository extends JpaRepository<UserGame, Long> {
 
     List<UserGame> findByUserId(long user_id);

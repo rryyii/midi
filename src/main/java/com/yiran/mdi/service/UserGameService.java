@@ -54,8 +54,6 @@ public class UserGameService {
         }
         Game newGame = gameService.getGame(id);
         User newUser = userService.getUser(userId);
-        newUser.setPassword("");
-        newUser.setEmail("");
         UserGame newUserGame = new UserGame();
         newUserGame.setGame(newGame);
         newUserGame.setUser(newUser);
