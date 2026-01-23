@@ -1,6 +1,6 @@
-import {useMutation} from "@tanstack/react-query";
-import {useState} from "react";
-import {Dialog, DialogPanel} from "@headlessui/react";
+import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
+import { Dialog, DialogPanel } from "@headlessui/react";
 import styles from "./user.module.css"
 
 function UserRegister() {
@@ -11,13 +11,19 @@ function UserRegister() {
     const [email, setEmail] = useState<string>("");
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
+    const [character, setCharacter] = useState<string>("");
+
     const mutation = useMutation({
         mutationFn: async (user: any) => {
             const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/user`, {
                 method: "POST",
-                headers: {"Content-Type": "application/json"},
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(user),
             });
+            if (!request.ok) {
+                const errorText = await request.text();
+                throw new Error(errorText || `HTTP error! status: ${request.status}`);
+            }
             return await request.text();
         },
         onError: (err) => console.error(err.message),
@@ -29,6 +35,9 @@ function UserRegister() {
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
+        if (password.length < 8) {
+            console.log("Password must be at least 8 characters");
+        }
         const user: any = {
             username: username,
             password: password,
@@ -47,20 +56,20 @@ function UserRegister() {
                     <label htmlFor={"userId"} className={"label"}>Username</label>
                     <input value={username} onChange={(event) => {
                         setUsername(event.target.value)
-                    }} id="userId" type={"text"} className={"search-bar"}/>
+                    }} id="userId" type={"text"} className={"search-bar"} />
                     <label htmlFor={"emailId"} className={"label"}>Email</label>
                     <input value={email} onChange={(event) => {
                         setEmail(event.target.value)
-                    }} id="emailId" type={"email"} className={"search-bar"}/>
+                    }} id="emailId" type={"email"} className={"search-bar"} />
                     <label htmlFor={"passwordId"} className={"label"}>Password</label>
                     <input value={password} onChange={(event) => {
-                        setPassword(event.target.value)
-                    }} id="passwordId" type={"password"} className={"search-bar"}/>
+                        setPassword(event.target.value); setCharacter(event.target.value);
+                    }} id="passwordId" type={"password"} className={"search-bar"} />
                     <p className={"side-text"}><small>Password must be at least 8 characters long</small></p>
                     <label htmlFor={"repasswordId"} className={"label"}>Re-enter Password</label>
                     <input value={repassword} onChange={(event) => {
                         setRePassword(event.target.value)
-                     }} id="repasswordId" type={"password"} className={"search-bar"}/>
+                    }} id="repasswordId" type={"password"} className={"search-bar"} />
                 </fieldset>
                 <button type={"submit"} className={"btn btn-outline-custom"}>Register</button>
             </form>
@@ -69,7 +78,7 @@ function UserRegister() {
                     <DialogPanel>
                         <h2>Successfully registered!</h2>
                     </DialogPanel>
-                    <button onClick={() => { setIsOpen(false);}} className={"btn btn-outline-custom"}>
+                    <button onClick={() => { setIsOpen(false); }} className={"btn btn-outline-custom"}>
                         <i className="fa-solid fa-xmark icon-color"></i>
                     </button>
                 </div>
