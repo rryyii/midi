@@ -3,13 +3,11 @@ package com.yiran.mdi.controller;
 import com.yiran.mdi.model.Game;
 import com.yiran.mdi.service.GameService;
 import com.yiran.mdi.util.IGDBService;
+import jakarta.validation.constraints.Positive;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,6 +17,7 @@ import java.util.List;
  * @author rryyii
  */
 @RestController
+@RequestMapping("/game")
 public class GameController {
 
     private static final Logger logger = LoggerFactory.getLogger(GameController.class);
@@ -30,24 +29,24 @@ public class GameController {
         this.gameService = gameService;
     }
 
-    @GetMapping("/games")
+    @GetMapping("/")
     public List<Game> getGames() {
         logger.debug("Beginning get request for all games.");
         return service.getGames();
     }
 
     @GetMapping("/game/{id}")
-    public Game getGame(@PathVariable Long id) {
+    public Game getGame(@Positive @PathVariable Long id) {
         logger.debug("Beginning get request for a game.");
         return gameService.getGame(id);
     }
 
-    @GetMapping("/search/games/{name}")
+    @GetMapping("/name/{name}")
     public List<Game> getGameName(@PathVariable String name) {
         return gameService.getGames(name);
     }
 
-    @GetMapping("/games/{page}")
+    @GetMapping("/{page}")
     public Page<Game> getGamePage(@PathVariable int page, @RequestParam String filter) {
         logger.debug("Beginning get request for a page of games.");
         return gameService.getGamePage(page, filter, 30);

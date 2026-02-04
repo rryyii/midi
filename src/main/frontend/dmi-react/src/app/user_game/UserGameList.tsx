@@ -20,7 +20,7 @@ function UserGameList({ status }: { status: string }) {
     const { data, error } = useQuery({
         queryKey: ["user-game-list", userInfo?.id, status],
         queryFn: async () => {
-            const response = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/user/games/${userInfo?.id}?status=${status}`,
+            const response = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/usergame/${userInfo?.id}?status=${status}`,
                 {
                     method: "GET",
                     headers: { "Content-Type": "application/json" },
@@ -32,7 +32,7 @@ function UserGameList({ status }: { status: string }) {
 
     const mutation = useMutation({
         mutationFn: async ({ userGameId }: { userGameId: number }) => {
-            const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/user/rm_game`,
+            const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/usergame/`,
                 {
                     method: "DELETE",
                     headers: { "Content-Type": "application/json" },

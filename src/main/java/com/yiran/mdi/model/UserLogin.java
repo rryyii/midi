@@ -1,8 +1,10 @@
 package com.yiran.mdi.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class UserLogin {
     private String username;
     private Long id;

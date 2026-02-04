@@ -15,7 +15,7 @@ function UserLogin() {
 
     const mutation = useMutation({
         mutationFn: async (user: LoginType) => {
-            const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/login_user`,
+            const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/user/login`,
                 {
                     method: "POST",
                     headers: {"Content-Type": "application/json"},

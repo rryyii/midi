@@ -9,7 +9,7 @@ function GameSearch() {
     const {data} = useQuery({
         queryKey: ["current-search"],
         queryFn: async () => {
-            const response = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/search/games/${name}`, {
+            const response = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/game/name/${name}`, {
                 method: "GET",
                 headers: {"Content-Type": "application/json"},
             });

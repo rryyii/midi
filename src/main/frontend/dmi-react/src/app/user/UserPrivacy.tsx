@@ -11,7 +11,7 @@ function UserPrivacy() {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const mutation = useMutation({
         mutationFn: async () => {
-            const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/user_account`, 
+            const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/user/account`,
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json"},

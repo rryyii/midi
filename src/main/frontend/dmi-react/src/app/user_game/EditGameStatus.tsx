@@ -18,7 +18,7 @@ function EditGameStatus({ gameId, gstatus }: { gameId: number, gstatus: string }
 
     const mutation = useMutation({
         mutationFn: async () => {
-            const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/user/update_game`,
+            const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/usergame/`,
                 {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },

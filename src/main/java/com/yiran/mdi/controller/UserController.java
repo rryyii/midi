@@ -7,6 +7,7 @@ import com.yiran.mdi.model.Game;
 import com.yiran.mdi.model.User;
 import com.yiran.mdi.model.UserLogin;
 import com.yiran.mdi.service.UserService;
+import jakarta.validation.constraints.Positive;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -23,6 +24,7 @@ import java.util.List;
  * @author rryyii
  */
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -32,7 +34,7 @@ public class UserController {
         this.service = service;
     }
 
-    @PostMapping("/user")
+    @PostMapping("/")
     public ResponseEntity<String> createUser(@RequestBody User user) {
         logger.debug("Beginning creating a new user.");
         if (user.getUsername().isBlank() || user.getPassword().isBlank() || user.getEmail().isEmpty()) {
@@ -44,14 +46,14 @@ public class UserController {
                 .body("User created successfully");
     }
 
-    @DeleteMapping("/rm_user/{id}")
-    public boolean removeUser(@RequestBody Long id) {
+    @DeleteMapping("/{id}")
+    public boolean removeUser(@Positive @RequestBody Long id) {
         logger.debug("Beginning removing a user from database.");
         service.deleteUser(id);
         return true;
     }
 
-    @PutMapping("/update_user")
+    @PutMapping("/")
     public ResponseEntity<User> updateUser(@RequestBody UserUpdateDto user, @CookieValue(value="jwt") String jwt) {
         logger.debug("Beginning updating a user in database.");
         service.updateUser(user.getId(), user.getUsername(), user.getBio(), jwt);
@@ -59,7 +61,7 @@ public class UserController {
         return new ResponseEntity<>(newInfo, null, HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("/login_user")
+    @PostMapping("/login")
     public ResponseEntity<UserLogin> validateUser(@RequestBody LoginRequestDto login) {
         logger.debug("Beginning authentication process for user.");
         long result = service.authenticateUser(login.getUsername(), login.getPassword());
@@ -86,13 +88,13 @@ public class UserController {
                 .body(secureLogin);
     }
 
-    @GetMapping("/user_favorites/{id}")
+    @GetMapping("/favorites/{id}")
     public List<Game> getUserFavorites(@PathVariable long id, @CookieValue(value="jwt") String jwt) {
         logger.debug("Fetching user's favorite games");
         return service.getFavorites(id, jwt);
     }
 
-    @PostMapping("/user_account")
+    @PostMapping("/account")
     public ResponseEntity<String> changeAccountInfo(@RequestBody UserAccountDto data, @CookieValue(value="jwt") String jwt) {
         logger.debug("Changing user's account information");
         boolean result = service.changeAccountInfo(data, jwt);

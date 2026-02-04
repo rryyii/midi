@@ -15,7 +15,7 @@ function UserEdit() {
 
     const mutation = useMutation({
         mutationFn: async () => {
-            const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/update_user`,
+            const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/user/`,
                 {
                     method: "PUT",
                     headers: {"Content-Type": "application/json"},

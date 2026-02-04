@@ -17,6 +17,7 @@ import java.util.List;
  * @author rryyii
  */
 @RestController
+@RequestMapping("/usergame")
 public class UserGameController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserGameController.class);
@@ -26,13 +27,15 @@ public class UserGameController {
         this.service = service;
     }
 
-    @GetMapping("/user/games/{id}")
-    public List<UserGame> getUserGame(@PathVariable Long id, @RequestParam String status, @CookieValue(value="jwt") String jwt) {
+    @GetMapping("/{id}")
+    public List<UserGame> getUserGame(@PathVariable Long id,
+                                      @RequestParam String status,
+                                      @CookieValue(value="jwt") String jwt) {
         logger.debug("Fetching user's game list.");
         return service.getUserGames(id, status, jwt);
     }
 
-    @PostMapping("/user/add_game")
+    @PostMapping("/")
     public ResponseEntity<String> addUserGame(@RequestBody UserGameDto data, @CookieValue(value="jwt") String jwt) {
         logger.debug("Beginning adding a game to a user's list.");
         if (service.addUserGame(data.getId(), data.getUser_id(), jwt)) {
@@ -43,7 +46,7 @@ public class UserGameController {
                 .body("Failed to add game to user's list");
     }
 
-    @DeleteMapping("/user/rm_game")
+    @DeleteMapping("/")
     public ResponseEntity<String> removeUserGame(@RequestBody UserGameDto data, @CookieValue(value="jwt") String jwt) {
         logger.debug("Beginning removing a game to a user's list.");
         if (service.removeUserGame(data.getId(), data.getUser_id(), jwt)) {
@@ -54,7 +57,7 @@ public class UserGameController {
                 .body("Failed to remove game from user's list");
     }
 
-    @PutMapping("/user/update_game")
+    @PutMapping("/")
     public ResponseEntity<String> updateUserGame(@RequestBody UserGameUpdateDto data, @CookieValue(value="jwt") String jwt) {
         logger.debug("Beginning updating a game in a user's list.");
         if (service.updateUserGame(data.getId(), data.getStatus(), data.getHoursPlayed(), data.isFavorite(), jwt)) {

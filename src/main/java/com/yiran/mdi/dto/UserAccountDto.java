@@ -1,8 +1,10 @@
 package com.yiran.mdi.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class UserAccountDto {
     private Long id;
     private String email;

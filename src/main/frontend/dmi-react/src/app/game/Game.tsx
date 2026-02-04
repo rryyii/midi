@@ -20,7 +20,7 @@ function Game() {
     const { data, error } = useQuery<Game>({
         queryKey: ["game", game],
         queryFn: async () => {
-            const response = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/game/${game}`,
+            const response = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/game/game/${game}`,
                 {
                     method: "GET",
                     headers: { "Content-Type": "application/json" },
@@ -31,7 +31,7 @@ function Game() {
 
     const mutation = useMutation({
         mutationFn: async (gameId: number) => {
-            const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/user/add_game`,
+            const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/usergame/`,
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },

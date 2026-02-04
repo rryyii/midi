@@ -1,13 +1,15 @@
 package com.yiran.mdi.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Basic DTO for a user login request.
  *
  * @author rryyii
  */
-@Data
+@Getter
+@Setter
 public class LoginRequestDto {
     private String username;
     private String password;

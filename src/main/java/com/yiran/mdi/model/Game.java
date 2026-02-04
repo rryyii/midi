@@ -1,7 +1,8 @@
 package com.yiran.mdi.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serial;
 import java.util.List;
@@ -11,7 +12,8 @@ import java.util.List;
  *
  * @author rryyii
  */
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "games")
 public class Game implements java.io.Serializable {

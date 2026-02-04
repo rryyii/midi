@@ -7,7 +7,7 @@ function GamePage({page, filter}: { page: number, filter: string}) {
     const {data, error} = useQuery({
         queryKey: ["main-games-list", page, filter],
         queryFn: () =>
-            fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/games/${page}?filter=${filter}`)
+            fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/game/${page}?filter=${filter}`)
                 .then((res) => res.json()),
     });
     if (error) return "An error occurred trying to fetch games list.";

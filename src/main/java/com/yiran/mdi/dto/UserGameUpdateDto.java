@@ -1,8 +1,10 @@
 package com.yiran.mdi.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class UserGameUpdateDto {
     private Long id;
     private String status;

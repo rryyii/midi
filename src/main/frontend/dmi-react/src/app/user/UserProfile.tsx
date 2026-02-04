@@ -22,7 +22,7 @@ function UserProfile() {
     const {data, error} = useQuery({
         queryKey: ["user", userInfo],
         queryFn: async () => {
-            const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/user_favorites/${userId}`,
+            const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/user/favorites/${userId}`,
                 {
                     method: "GET",
                     headers: { "Content-Type": "application/json" },

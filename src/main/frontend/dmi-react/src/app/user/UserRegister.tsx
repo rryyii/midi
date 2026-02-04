@@ -15,7 +15,7 @@ function UserRegister() {
 
     const mutation = useMutation({
         mutationFn: async (user: any) => {
-            const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/user`, {
+            const request = await fetch(`http://localhost:${import.meta.env.VITE_APP_PORT}/user/`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(user),

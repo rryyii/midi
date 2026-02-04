@@ -1,7 +1,8 @@
 package com.yiran.mdi.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serial;
 import java.util.Date;
@@ -11,7 +12,8 @@ import java.util.Date;
  *
  * @author rryyii
  */
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "users")
 public class User implements java.io.Serializable {
@@ -30,6 +32,11 @@ public class User implements java.io.Serializable {
 
 
     public User() {
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.creationDate = new Date();
     }
 
     @Override
