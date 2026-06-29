@@ -30,6 +30,8 @@ public class UserGame implements java.io.Serializable {
     private User user;
     @Column
     private String status;
+    private String notes;
+    private int rating;
     private int hoursPlayed;
     private Date dateAdded;
     private boolean isFavorite;

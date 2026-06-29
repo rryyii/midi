@@ -7,11 +7,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserAccountDto {
+public class UserAccountCreateDto {
+
     private String username;
-    private Long id;
     @Email
     private String email;
+    private Long id;
     @Size(min=8)
     private String password;
     @Size(min=8)

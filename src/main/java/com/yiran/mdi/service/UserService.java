@@ -1,5 +1,6 @@
 package com.yiran.mdi.service;
 
+import com.yiran.mdi.dto.UserAccountCreateDto;
 import com.yiran.mdi.dto.UserAccountDto;
 import com.yiran.mdi.model.Game;
 import com.yiran.mdi.model.User;
@@ -8,15 +9,15 @@ import com.yiran.mdi.repository.UserGameRepository;
 import com.yiran.mdi.repository.UserRepository;
 import com.yiran.mdi.util.PasswordEncryptor;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Provides services for User actions.
@@ -27,24 +28,38 @@ import java.util.Optional;
 public class UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
-    private static final SecretKey key = Jwts.SIG.HS256.key().build();
+    private final SecretKey key;
     private final UserRepository repository;
     private final UserGameRepository gameRepository;
 
-    public UserService(UserRepository repository, UserGameRepository gameRepository) {
+    public UserService(UserRepository repository,
+                       UserGameRepository gameRepository,
+                       @Value("${secret-key}") String secret) {
         this.repository = repository;
         this.gameRepository = gameRepository;
+        this.key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
     }
 
-    public static boolean checkToken(String token, String username) {
-        return Objects.equals(buildToken(username), token);
-    }
-
-    public static String buildToken(String username) {
+    public String buildToken(String username) {
         return Jwts.builder()
                 .subject(username)
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
                 .signWith(key)
                 .compact();
+    }
+
+    public boolean checkToken(String token, String username) {
+        try {
+            String subject = Jwts.parser()
+                    .verifyWith(key)
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload()
+                    .getSubject();
+            return subject.equals(username);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public User getUser(long id) {
@@ -52,14 +67,14 @@ public class UserService {
         return result.orElse(null);
     }
 
-    public void createUser(User user) {
+    public void createUser(UserAccountCreateDto user) {
         User newUser = new User();
         newUser.setId(user.getId());
         newUser.setEmail(user.getEmail());
         newUser.setPassword(PasswordEncryptor.encryptPassword(user.getPassword()));
         newUser.setUsername(user.getUsername());
-        newUser.setBio(user.getBio());
-        newUser.setCreationDate(user.getCreationDate());
+        newUser.setBio("Placeholder Biography!");
+        newUser.setCreationDate(new Date());
         repository.save(newUser);
     }
 
@@ -86,25 +101,22 @@ public class UserService {
 
     public Long authenticateUser(String username, String password) {
         logger.debug("Entered authentication function for user.");
-        List<User> list = repository.findAll();
-        for (User user : list) {
-            if (user.getUsername().equalsIgnoreCase(username) && PasswordEncryptor.checkPassword(password, user.getPassword())) {
-                logger.info("Successfully authenticated user.");
-                return user.getId();
-            }
+        User user = repository.findByUsernameIgnoreCase(username);
+        if (user == null) return (long) -1;
+        if (user.getUsername().equalsIgnoreCase(username) && PasswordEncryptor.checkPassword(password, user.getPassword())) {
+            logger.info("Successfully authenticated user.");
+            return user.getId();
         }
-        return (long) -1;
+        return (long) 0;
     }
 
     public List<Game> getFavorites(long id, String jwt) {
         Optional<User> user = repository.findById(id);
         if (user.isPresent() && checkToken(jwt, user.get().getUsername())) {
-            List<UserGame> list = gameRepository.findAll();
+            List<UserGame> list = gameRepository.findByUserIdAndIsFavoriteTrue(id);
             List<Game> result = new ArrayList<>();
             for (UserGame game : list) {
-                if (game.isFavorite() && Objects.equals(user.get().getId(), game.getUser().getId())) {
-                    result.add(game.getGame());
-                }
+                result.add(game.getGame());
             }
             return result;
         }
@@ -131,6 +143,7 @@ public class UserService {
         if (!email.isEmpty()) {
             user.setEmail(email);
         }
+        repository.save(user);
         return true;
     }
 

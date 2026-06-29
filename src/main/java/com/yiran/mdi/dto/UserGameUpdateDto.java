@@ -8,6 +8,8 @@ import lombok.Setter;
 public class UserGameUpdateDto {
     private Long id;
     private String status;
+    private String notes;
+    private int rating;
     private int hoursPlayed;
     private boolean favorite;
     private boolean unFavorite;

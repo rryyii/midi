@@ -1,5 +1,6 @@
 package com.yiran.mdi.service;
 
+import com.yiran.mdi.dto.UserGameUpdateDto;
 import com.yiran.mdi.model.Game;
 import com.yiran.mdi.model.User;
 import com.yiran.mdi.model.UserGame;
@@ -31,7 +32,7 @@ public class UserGameService {
 
     private boolean handleUserAuth(long id, String jwt) {
         Optional<User> user = userRepository.findById(id);
-        return user.isEmpty() || !UserService.checkToken(jwt, user.get().getUsername());
+        return user.isEmpty() || !userService.checkToken(jwt, user.get().getUsername());
     }
 
     public List<UserGame> getUserGames(long id, String status, String jwt) {
@@ -59,6 +60,7 @@ public class UserGameService {
         newUserGame.setUser(newUser);
         newUserGame.setDateAdded(new Date());
         newUserGame.setStatus("Unplayed");
+        newUserGame.setNotes("No Notes");
         repository.save(newUserGame);
         return true;
     }
@@ -72,21 +74,27 @@ public class UserGameService {
         return true;
     }
 
-    public boolean updateUserGame(long id, String status, int hoursPlayed, boolean isFavorite, String jwt) {
-        UserGame userGame = repository.findById(id).orElse(null);
+    public boolean updateUserGame(UserGameUpdateDto data, String jwt) {
+        UserGame userGame = repository.findById(data.getId()).orElse(null);
         assert userGame != null;
         if (handleUserAuth(userGame.getUser().getId(), jwt)) {
             logger.error("Failed to authenticate user token for updating user game");
             return false;
         }
-        if (status != null && !status.isEmpty()) {
-            userGame.setStatus(status);
+        if (data.getStatus() != null && !data.getStatus().isEmpty()) {
+            userGame.setStatus(data.getStatus());
         }
-        if (hoursPlayed >= 0) {
-            userGame.setHoursPlayed(hoursPlayed);
+        if (data.getNotes() != null && !data.getNotes().isEmpty()) {
+            userGame.setNotes(data.getNotes());
         }
-        if (isFavorite) {
+        if (data.getHoursPlayed() >= 0) {
+            userGame.setHoursPlayed(data.getHoursPlayed());
+        }
+        if (data.isFavorite()) {
             userGame.setFavorite(!userGame.isFavorite());
+        }
+        if (data.getRating() >= 0) {
+            userGame.setRating(data.getRating());
         }
         repository.save(userGame);
         return true;

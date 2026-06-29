@@ -13,6 +13,7 @@ import com.yiran.mdi.model.Game;
 import com.yiran.mdi.repository.GameRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Type;
@@ -25,8 +26,11 @@ public class IGDBService {
 
     private static final Logger logger = LoggerFactory.getLogger(IGDBService.class);
     private final GameRepository repository;
-    private final String client_id = System.getenv("CLIENT_ID");
-    private final String client_secret = System.getenv("CLIENT_SECRET");
+
+    @Value("${igdb.client-id")
+    private String client_id;
+    @Value("${igdb.client-secret")
+    private String client_secret;
 
 
     public IGDBService(GameRepository repository) {

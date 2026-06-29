@@ -1,6 +1,7 @@
 package com.yiran.mdi.controller;
 
 import com.yiran.mdi.dto.LoginRequestDto;
+import com.yiran.mdi.dto.UserAccountCreateDto;
 import com.yiran.mdi.dto.UserAccountDto;
 import com.yiran.mdi.dto.UserUpdateDto;
 import com.yiran.mdi.model.Game;
@@ -35,12 +36,8 @@ public class UserController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<String> createUser(@RequestBody User user) {
+    public ResponseEntity<String> createUser(@RequestBody UserAccountCreateDto user) {
         logger.debug("Beginning creating a new user.");
-        if (user.getUsername().isBlank() || user.getPassword().isBlank() || user.getEmail().isEmpty()) {
-            return ResponseEntity.badRequest()
-                    .body("Username, password, and email cannot be blank");
-        }
         service.createUser(user);
         return ResponseEntity.status(200)
                 .body("User created successfully");
@@ -65,6 +62,7 @@ public class UserController {
     public ResponseEntity<UserLogin> validateUser(@RequestBody LoginRequestDto login) {
         logger.debug("Beginning authentication process for user.");
         long result = service.authenticateUser(login.getUsername(), login.getPassword());
+        logger.warn(String.valueOf(result));
         if (result == -1) {
             logger.error("Failed to authenticate user.");
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -74,7 +72,7 @@ public class UserController {
         secureLogin.setId(info.getId());
         secureLogin.setUsername(info.getUsername());
         secureLogin.setBio(info.getBio());
-        String jwt = UserService.buildToken(login.getUsername());
+        String jwt = service.buildToken(login.getUsername());
         ResponseCookie cookie = ResponseCookie.from("jwt", jwt)
                 .httpOnly(true)
                 .secure(false)

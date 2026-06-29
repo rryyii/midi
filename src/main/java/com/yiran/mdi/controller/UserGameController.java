@@ -60,7 +60,7 @@ public class UserGameController {
     @PutMapping("/")
     public ResponseEntity<String> updateUserGame(@RequestBody UserGameUpdateDto data, @CookieValue(value="jwt") String jwt) {
         logger.debug("Beginning updating a game in a user's list.");
-        if (service.updateUserGame(data.getId(), data.getStatus(), data.getHoursPlayed(), data.isFavorite(), jwt)) {
+        if (service.updateUserGame(data, jwt)) {
             return ResponseEntity.status(200)
                     .body("Updated user's game information");
         }

@@ -17,5 +17,5 @@ public interface UserGameRepository extends JpaRepository<UserGame, Long> {
     List<UserGame> findByUserId(long user_id);
 
     List<UserGame> findByStatus(String status);
-
+    List<UserGame> findByUserIdAndIsFavoriteTrue(long userId);
 }
