@@ -83,7 +83,9 @@ function UserGameList({ status }: { status: string }) {
                             <th scope="col">Name</th>
                             <th scope="col">Status</th>
                             <th scope="col">Hours</th>
+                            <th scope="col">Rating</th>
                             <th scope="col">Favorite</th>
+                            <th scope="col">Notes</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -104,7 +106,13 @@ function UserGameList({ status }: { status: string }) {
                                     {game.hoursPlayed}
                                 </td>
                                 <td>
+                                    {game.rating} / 10
+                                </td>
+                                <td>
                                     {game.favorite ? <i className="fa-sharp fa-solid fa-star"></i> : ""}
+                                </td>
+                                <td>
+                                    <textarea className={"form-control"} readOnly={true}>{game.notes}</textarea>
                                 </td>
                                 <td >
                                     <EditGameStatus gameId={game.id} gstatus={status} />

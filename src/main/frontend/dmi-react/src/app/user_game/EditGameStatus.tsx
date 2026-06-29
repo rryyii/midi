@@ -15,6 +15,9 @@ function EditGameStatus({ gameId, gstatus }: { gameId: number, gstatus: string }
     const [hours, setHours] = useState<number>(0);
     const [isFavorite, setIsFavorite] = useState<boolean>(false);
     const [open, setOpen] = useState<boolean>(false);
+    const [rating, setRating] = useState<number>(0);
+    const [notes, setNotes] = useState<string>("");
+
 
     const mutation = useMutation({
         mutationFn: async () => {
@@ -22,7 +25,7 @@ function EditGameStatus({ gameId, gstatus }: { gameId: number, gstatus: string }
                 {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ id: gameId, status: status, hoursPlayed: hours, favorite: isFavorite }),
+                    body: JSON.stringify({ id: gameId, status: status,  rating: rating, notes: notes, hoursPlayed: hours, favorite: isFavorite }),
                     credentials: "include",
                 });
             const response = await request.text();
@@ -89,6 +92,18 @@ function EditGameStatus({ gameId, gstatus }: { gameId: number, gstatus: string }
                             <input type={"checkbox"} id={"isFavorite"} onChange={(event) => {
                                 setIsFavorite(event.target.checked)
                             }} className={"form-check-input"} />
+                        </div>
+                        <div className={"d-flex flex-column"}>
+                            <label htmlFor={"rating"}>Rating:</label>
+                            <input type={"range"} max={10} id={"rating"} className={"form-range"} onChange={(event) => {
+                                setRating(event.target.valueAsNumber)
+                            }} />
+                        </div>
+                        <div className={"d-flex flex-column"}>
+                            <label htmlFor={"notes"}>Notes:</label>
+                            <input type={"text"} id={"notes"} className={"form-control"} onChange={(event) => {
+                                setNotes(event.target.value)
+                            }} />
                         </div>
                         <button type={"submit"} className={"btn btn-outline-custom"}>Update</button>
                     </form>

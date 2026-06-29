@@ -15,6 +15,8 @@ export type UserGame = {
     game: Game,
     user: User,
     status: string,
+    rating: number,
+    notes: string,
     hoursPlayed: number,
     dateAdded: string,
     favorite: boolean,
