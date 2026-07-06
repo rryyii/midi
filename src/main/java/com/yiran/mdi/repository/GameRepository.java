@@ -15,5 +15,5 @@ import java.util.List;
 public interface GameRepository extends JpaRepository<Game, Long> {
     List<Game> findByNameContainingIgnoreCase(String name);
 
-
+    List<Game> findByGenres(String mainGenre);
 }

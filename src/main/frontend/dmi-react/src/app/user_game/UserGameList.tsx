@@ -112,7 +112,7 @@ function UserGameList({ status }: { status: string }) {
                                     {game.favorite ? <i className="fa-sharp fa-solid fa-star"></i> : ""}
                                 </td>
                                 <td>
-                                    <textarea className={"form-control"} readOnly={true}>{game.notes}</textarea>
+                                    <textarea className={"search-bar w-75"} readOnly={true}>{game.notes}</textarea>
                                 </td>
                                 <td >
                                     <EditGameStatus gameId={game.id} gstatus={status} />

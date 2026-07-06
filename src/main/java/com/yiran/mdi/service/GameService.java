@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,9 +46,17 @@ public class GameService {
     public List<Game> getGames(String name) {
         if (name.isEmpty()) {
             logger.error("Empty search request");
-            return null;
+            return new ArrayList<>();
         }
         return repository.findByNameContainingIgnoreCase(name);
+    }
+
+    public List<Game> getRelatedGames(String mainGenre) {
+        if (mainGenre.isEmpty()) {
+            logger.error("Empty genre");
+            return new ArrayList<>();
+        }
+        return repository.findByGenres(mainGenre);
     }
 
 

@@ -109,6 +109,10 @@ function Game() {
                         <div className={`${styles.summary}`}>
                             <p>{data.summary}</p>
                         </div>
+                        <div>
+                            <h5>Similar Games:</h5>
+                            
+                        </div>
                     </div>
                 </div>
             </div>
